@@ -1,8 +1,8 @@
 <?php
 //Descomenta la línea que se corresponde con tu proyecto de 
 //trabajo y comenta la línea que carga "db_orig.php".
-return require( 'db_orig.php');
-//return require( 'db_proyecto_01_comenta_libros.php');
+//return require( 'db_orig.php');
+return require( 'db_proyecto_01_comenta_libros.php');
 //return require( 'db_proyecto_02_establecimientos_hosteleros.php');
 ?>
 <pre>
