@@ -101,4 +101,10 @@ class Libros extends \yii\db\ActiveRecord
             'notas_admin' => 'Notas Admin',
         ];
     }
+
+    public function getIlustradores(){
+
+        return $this->hasOne(Ilustradores::class, ['id' => 'ilustrador_id']);
+        
+    }
 }

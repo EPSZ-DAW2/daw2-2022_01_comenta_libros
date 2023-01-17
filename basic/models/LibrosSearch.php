@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Libros;
+use app\models\ilustradores;
 
 /**
  * LibrosSearch represents the model behind the search form of `app\models\Libros`.
@@ -93,4 +94,5 @@ class LibrosSearch extends Libros
 
         return $dataProvider;
     }
+    
 }
