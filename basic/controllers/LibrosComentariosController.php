@@ -131,4 +131,33 @@ class LibroscomentariosController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    public function denunciarComentario($id)
+    {
+        $tipoUsuario=1; //Cambiar cuando haya usuarios
+        $comentario=$this->findModel($id);
+        if ($tipoUsuario === 1) {
+            $comentario->num_denuncias++;
+        } else if ($tipoUsuario === 0) {
+            $comentario->bloqueado = 2;
+        }
+
+        if ($comentario->num_denuncias === 50) {
+            $comentario->bloqueado = 1;
+        }
+    }
+
+    public function desbloquearComentario($id)
+    {
+        $tipoUsuario=1; //Cambiar cuando haya usuarios
+        $comentario=$this->findModel($id);
+        if ($tipoUsuario === 0) {
+            $comentario->bloqueado = 0;
+        } else {
+            $error = "No está autorizado para entrar en esta página";           
+            $this->render('error',array(
+                "message"=>$error
+            ));
+        }
+    }
 }
