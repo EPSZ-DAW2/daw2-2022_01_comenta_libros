@@ -131,4 +131,33 @@ class LibrosEventosController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    public function denunciarEvento($id)
+    {
+        $tipoUsuario=1; //Cambiar cuando haya usuarios
+        $evento=$this->findModel($id);
+        if ($tipoUsuario === 1) {
+            $evento->num_denuncias++;
+        } else if ($tipoUsuario === 0) {
+            $evento->bloqueado = 2;
+        }
+
+        if ($evento->num_denuncias === 50) {
+            $evento->bloqueado = 1;
+        }
+    }
+
+    public function desbloquearEvento($id)
+    {
+        $tipoUsuario=1; //Cambiar cuando haya usuarios
+        $evento=$this->findModel($id);
+        if ($tipoUsuario === 0) {
+            $evento->bloqueado = 0;
+        } else {
+            $error = "No está autorizado para entrar en esta página";           
+            $this->render('error',array(
+                "message"=>$error
+            ));
+        }
+    }
 }
