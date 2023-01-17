@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * UsuarioLibrosController implements the CRUD actions for UsuarioLibros model.
  */
-class UsuarioLibrosController extends Controller
+class UsuariolibrosController extends Controller
 {
     /**
      * @inheritDoc

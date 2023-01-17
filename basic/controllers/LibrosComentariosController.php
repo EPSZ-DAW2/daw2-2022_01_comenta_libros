@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * LibrosComentariosController implements the CRUD actions for LibrosComentarios model.
  */
-class LibrosComentariosController extends Controller
+class LibroscomentariosController extends Controller
 {
     /**
      * @inheritDoc
