@@ -135,7 +135,7 @@ class LibrosController extends Controller
     public function actionDenunciar($id)
     {
         $tipoUsuario=1; //Cambiar cuando haya usuarios
-        $libro=$this->findModel($id);
+        $libro=Libros::findOne(['id' => $id]);
         if ($tipoUsuario === 1) {
             $libro->num_denuncias++;
         } else if ($tipoUsuario === 0) {
@@ -145,6 +145,7 @@ class LibrosController extends Controller
         if ($libro->num_denuncias === 50) {
             $libro->bloqueado = 1;
         }
+        $libro->save();
         
         return $this->redirect(['index']);
     }
@@ -152,7 +153,7 @@ class LibrosController extends Controller
     public function actionDesbloquear($id)
     {
         $tipoUsuario=1; //Cambiar cuando haya usuarios
-        $libro=$this->findModel($id);
+        $libro=Libros::findOne(['id' => $id]);
         if ($tipoUsuario === 0) {
             $libro->bloqueado = 0;
         } else {
@@ -161,6 +162,7 @@ class LibrosController extends Controller
                 "message"=>$error
             ));
         }
+        $libro->save();
         
         return $this->redirect(['index']);
     }

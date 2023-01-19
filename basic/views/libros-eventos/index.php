@@ -49,7 +49,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'urlCreator' => function ($action, LibrosEventos $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
-            ],
+            ],            
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{bloquearEventos}, {desbloquearEventos}',  
+                'buttons' => [
+                    'bloquearEventos' => function($url, $model, $key) {    
+                        return Html::a(Yii::t('app', 'Bloquear'), ['denunciar', 'id'=>$model->id], ['class' => 'btn btn-danger']);
+                    },
+                    'desbloquearEventos' => function($url, $model, $key) {    
+                        return Html::a(Yii::t('app', 'Desbloquear'), ['desbloquear', 'id'=>$model->id], ['class' => 'btn btn-success mt-1']);
+                    }
+                ]
+            ]
         ],
     ]); ?>
 

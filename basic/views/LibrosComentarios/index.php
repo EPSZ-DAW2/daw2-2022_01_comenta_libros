@@ -51,6 +51,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{bloquearComentarios}, {desbloquearComentarios}',  
+                'buttons' => [
+                    'bloquearComentarios' => function($url, $model, $key) {    
+                        return Html::a(Yii::t('app', 'Bloquear'), ['denunciar', 'id'=>$model->id], ['class' => 'btn btn-danger']);
+                    },
+                    'desbloquearComentarios' => function($url, $model, $key) {    
+                        return Html::a(Yii::t('app', 'Desbloquear'), ['desbloquear', 'id'=>$model->id], ['class' => 'btn btn-success mt-1']);
+                    }
+                ]
+            ]
         ],
     ]); ?>
 

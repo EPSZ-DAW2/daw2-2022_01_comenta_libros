@@ -132,10 +132,10 @@ class LibroscomentariosController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-    public function denunciarComentario($id)
+    public function actionDenunciar($id)
     {
         $tipoUsuario=1; //Cambiar cuando haya usuarios
-        $comentario=$this->findModel($id);
+        $comentario=LibrosComentarios::findOne(['id' => $id]);
         if ($tipoUsuario === 1) {
             $comentario->num_denuncias++;
         } else if ($tipoUsuario === 0) {
@@ -145,12 +145,15 @@ class LibroscomentariosController extends Controller
         if ($comentario->num_denuncias === 50) {
             $comentario->bloqueado = 1;
         }
+        $comentario->save();
+
+        return $this->redirect(['index']);
     }
 
-    public function desbloquearComentario($id)
+    public function actionDesbloquear($id)
     {
         $tipoUsuario=1; //Cambiar cuando haya usuarios
-        $comentario=$this->findModel($id);
+        $comentario=LibrosComentarios::findOne(['id' => $id]);
         if ($tipoUsuario === 0) {
             $comentario->bloqueado = 0;
         } else {
@@ -159,5 +162,8 @@ class LibroscomentariosController extends Controller
                 "message"=>$error
             ));
         }
+        $comentario->save();
+
+        return $this->redirect(['index']);
     }
 }
