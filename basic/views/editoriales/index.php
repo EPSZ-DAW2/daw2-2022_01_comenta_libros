@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /** @var app\models\EditorialSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Editorials');
+$this->title = Yii::t('app', 'Editoriales');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="editorial-index">
@@ -35,6 +35,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'url:ntext',
             'descripcion:ntext',
             'revisado',
+			
+			[
+				'attribute'=>'estado',
+				'content'=>function($model, $key, $index, $column){
+					return $model->descripcionEstado;
+				},
+				'filter'=> \app\models\Editorial::listaEstados(),
+			],
+			
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Editorial $model, $key, $index, $column) {
