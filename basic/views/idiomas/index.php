@@ -34,6 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'codigo',
             'revisado',
+			
+			[
+				'attribute'=>'estado',
+				'content'=>function($model, $key, $index, $column){
+					return $model->descripcionEstado;
+				},
+				'filter'=> \app\models\Idioma::listaEstados(),
+			],
+			
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Idioma $model, $key, $index, $column) {
