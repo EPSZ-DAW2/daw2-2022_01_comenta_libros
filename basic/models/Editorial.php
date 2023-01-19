@@ -57,4 +57,35 @@ class Editorial extends \yii\db\ActiveRecord
     {
         return new EditorialesQuery(get_called_class());
     }
+	
+	/* --------------------------------------------------------------------------------------------------------
+	*	Lista de los estados de las editoriales, aceptados o no por moderadores/administradores SI=1 y NO=0
+	*/
+	public static function listaEstados()
+	{
+		$estado=array(
+			0=>'NO ACEPTADA',
+			1=>'SI ACEPTADA',
+		);
+		return $estado;
+	} // listaEstados
+	
+	
+	/* --------------------------------------------------------------------------------------------------------
+	*	Obtener el nombre de un posible estado según su identificador clave
+	*/
+	public static function nombreEstado($id)
+	{
+		$lista= self::listaEstados();
+		$estado= (isset($lista[$id]) ? $lista[$id] : '<Estado_Editorial_'.$id.'>');
+		return $estado;
+	} // nombreEstado
+	
+	/* --------------------------------------------------------------------------------------------------------
+	*	Atributo virtual "Descripcion Estado"
+	*/
+	public function getDescripcionEstado()
+	{
+		return static::nombreEstado($this->revisado);
+	}// getDescripcionEstado
 }

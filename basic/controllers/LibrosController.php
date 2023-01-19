@@ -132,7 +132,7 @@ class LibrosController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
     
-    public function denunciarLibro($id)
+    public function actionDenunciar($id)
     {
         $tipoUsuario=1; //Cambiar cuando haya usuarios
         $libro=$this->findModel($id);
@@ -145,9 +145,11 @@ class LibrosController extends Controller
         if ($libro->num_denuncias === 50) {
             $libro->bloqueado = 1;
         }
+        
+        return $this->redirect(['index']);
     }
 
-    public function desbloquearLibro($id)
+    public function actionDesbloquear($id)
     {
         $tipoUsuario=1; //Cambiar cuando haya usuarios
         $libro=$this->findModel($id);
@@ -159,5 +161,7 @@ class LibrosController extends Controller
                 "message"=>$error
             ));
         }
+        
+        return $this->redirect(['index']);
     }
 }

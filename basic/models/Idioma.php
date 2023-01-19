@@ -56,4 +56,35 @@ class Idioma extends \yii\db\ActiveRecord
     {
         return new IdiomasQuery(get_called_class());
     }
+	
+	/* --------------------------------------------------------------------------------------------------------
+	*	Lista de los estados de los idiomas, aceptados o no por moderadores/administradores SI=1 y NO=0
+	*/
+	public static function listaEstados()
+	{
+		$estado=array(
+			0=>'NO ACEPTADO',
+			1=>'SI ACEPTADO',
+		);
+		return $estado;
+	} // listaEstados
+	
+	
+	/* --------------------------------------------------------------------------------------------------------
+	*	Obtener el nombre de un posible estado según su identificador clave
+	*/
+	public static function nombreEstado($id)
+	{
+		$lista= self::listaEstados();
+		$estado= (isset($lista[$id]) ? $lista[$id] : '<Estado_Idioma_'.$id.'>');
+		return $estado;
+	} // nombreEstado
+	
+	/* --------------------------------------------------------------------------------------------------------
+	*	Atributo virtual "Descripcion Estado"
+	*/
+	public function getDescripcionEstado()
+	{
+		return static::nombreEstado($this->revisado);
+	}// getDescripcionEstado
 }

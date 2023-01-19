@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Libros;
+use yii\bootstrap5\Button;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -65,7 +66,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'urlCreator' => function ($action, Libros $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
-            ],
+            ], 
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{bloquearLibro}, {desbloquearLibro}',  
+                'buttons' => [
+                    'bloquearLibro' => function($url, $model, $key) {    
+                        return Html::a(Yii::t('app', 'Bloquear'), ['denunciar', 'id'=>$model->id], ['class' => 'btn btn-danger']);
+                    },
+                    'desbloquearLibro' => function($url, $model, $key) {    
+                        return Html::a(Yii::t('app', 'Desbloquear'), ['desbloquear', 'id'=>$model->id], ['class' => 'btn btn-success mt-1']);
+                    }
+                ]
+            ]
         ],
     ]); ?>
 
