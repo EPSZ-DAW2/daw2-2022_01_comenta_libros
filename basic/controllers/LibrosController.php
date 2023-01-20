@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Autores;
 use app\models\Libros;
 use app\models\LibrosSearch;
 use yii\web\Controller;
@@ -165,5 +166,15 @@ class LibrosController extends Controller
         $libro->save();
         
         return $this->redirect(['index']);
+    }
+
+    public function actionDetalle($id)
+    {
+        $libro=Libros::findOne(['id' => $id]);
+        $autor = Autores::findOne(['id' => $libro->autor_id]);
+        return $this->render('detalle',array(
+            "libro"=>$libro,
+            "autor"=>$autor
+        ));
     }
 }
