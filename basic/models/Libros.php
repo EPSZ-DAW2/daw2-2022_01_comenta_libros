@@ -106,5 +106,11 @@ class Libros extends \yii\db\ActiveRecord
 
         return $this->hasOne(Ilustradores::class, ['id' => 'ilustrador_id']);
         
-    }
+    }// getIlustradores
+	
+	public function getEditoriales(){
+
+        return $this->hasOne(Editorial::class, ['id' => 'editorial_id']);
+        
+    }// getEditoriales
 }
