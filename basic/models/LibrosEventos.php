@@ -76,4 +76,16 @@ class LibrosEventos extends \yii\db\ActiveRecord
     {
         return new LibrosEventosQuery(get_called_class());
     }
+	
+	public function getLibros(){
+
+        return $this->hasOne(Libros::class, ['id' => 'libro_id']);
+        
+    }// getEditoriales
+	
+	public function getUsuarios(){
+
+        return $this->hasOne(Usuarios::class, ['id' => 'crea_usuario_id']);
+        
+    }// getEditoriales
 }
