@@ -47,7 +47,7 @@ class Libros extends \yii\db\ActiveRecord
     const LISTA_BLOQUEO = [
         
         0 => 'No bloqueado',
-        1 => 'Bloqueado por denuncias'.
+        1 => 'Bloqueado por denuncias',
         2 => 'Bloqueado por administrador',
         3 => 'otros motivos',
     ];
@@ -138,10 +138,12 @@ class Libros extends \yii\db\ActiveRecord
         return $this->hasOne(Editorial::class, ['id' => 'editorial_id']);
         
     }// getEditoriales
+
+    public function getTraductores(){
+
+        return $this->hasOne(Traductores::class, ['id' => 'traductor_id']);
+        
+    }// getIlustradores
+    
 }
 
-public function getTraductores(){
-
-    return $this->hasOne(Traductores::class, ['id' => 'traductor_id']);
-    
-}// getIlustradores

@@ -1,9 +1,30 @@
 <?php
+use app\models\Libros;
+use app\models\LibrosSearch;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
 /** @var yii\web\View $this */
-?>
-<h1>librostraductores/index</h1>
+/** @var app\models\LibrosSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $dataProvider */
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+$this->title = Yii::t('app', 'Libros Ilustradores');
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<h1><?= Html::encode($this->title) ?></h1>
+
+<?= GridView::widget([
+    'dataProvider' => $dataProvider,
+    'columns' => [
+        ['class' => 'yii\grid\SerialColumn'],
+        'titulo',
+        'resumen',
+        'coleccion',
+        'paginas',
+        'traductores.nombre',
+        'traductores.url',
+        'traductores.descripcion',
+    ],
+]); ?>

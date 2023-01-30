@@ -8,7 +8,7 @@ use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
 use Yii;
 
-class LibrosilustradoresController extends \yii\web\Controller
+class LibrostraductoresController extends \yii\web\Controller
 {
     public function actionIndex()
     {
