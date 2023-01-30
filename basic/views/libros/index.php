@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{bloquearLibro}, {desbloquearLibro}',  
                 'buttons' => [
                     'bloquearLibro' => function($url, $model, $key) {    
-                        return Html::a(Yii::t('app', 'Bloquear'), ['denunciar', 'id'=>$model->id], ['class' => 'btn btn-danger']);
+                        return Html::a(Yii::t('app', 'Bloquear'), ['denunciar', 'id'=>$model->id, 'ruta'=>'index'], ['class' => 'btn btn-danger']);
                     },
                     'desbloquearLibro' => function($url, $model, $key) {    
                         return Html::a(Yii::t('app', 'Desbloquear'), ['desbloquear', 'id'=>$model->id], ['class' => 'btn btn-success mt-1']);

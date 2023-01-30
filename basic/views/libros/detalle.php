@@ -15,6 +15,6 @@ use yii\helpers\Html;
     </div>
     <div class="col-8" style="margin-top:15vh; text-align: justify;">
         <p><?= Html::encode($libro->resumen) ?></p>
-        <?php Html::a(Yii::t('app', 'Denunciar'), ['denunciar', 'id'=>$libro->id], ['class' => 'btn btn-danger']);?>
+        <?= Html::a(Yii::t('app', 'Denunciar'), ['denunciar', 'id'=>$libro->id, 'ruta'=>'detalle'], ['class' => 'btn btn-danger']);?>
     </div>
 </div>

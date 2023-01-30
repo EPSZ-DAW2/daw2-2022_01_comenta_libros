@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Autores;
 use app\models\Libros;
+use app\models\LibrosImagenes;
 use app\models\LibrosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -133,7 +134,7 @@ class LibrosController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
     
-    public function actionDenunciar($id)
+    public function actionDenunciar($id, $ruta)
     {
         $tipoUsuario=1; //Cambiar cuando haya usuarios
         $libro=Libros::findOne(['id' => $id]);
@@ -148,7 +149,7 @@ class LibrosController extends Controller
         }
         $libro->save();
         
-        return $this->redirect(['index']);
+        return $this->redirect([$ruta, 'id'=>$libro->id]);
     }
 
     public function actionDesbloquear($id)
@@ -172,6 +173,7 @@ class LibrosController extends Controller
     {
         $libro=Libros::findOne(['id' => $id]);
         $autor = Autores::findOne(['id' => $libro->autor_id]);
+        $imagenes = LibrosImagenes::findAll(['libro_id'=>$id]);
         return $this->render('detalle',array(
             "libro"=>$libro,
             "autor"=>$autor,
