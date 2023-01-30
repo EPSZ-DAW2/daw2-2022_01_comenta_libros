@@ -174,7 +174,7 @@ class LibrosController extends Controller
         $autor = Autores::findOne(['id' => $libro->autor_id]);
         return $this->render('detalle',array(
             "libro"=>$libro,
-            "autor"=>$autor
+            "autor"=>$autor,
         ));
     }
 }

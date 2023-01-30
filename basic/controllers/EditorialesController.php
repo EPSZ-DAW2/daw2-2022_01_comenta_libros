@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Libros;
 use app\models\Editorial;
 use app\models\EditorialSearch;
 use yii\web\Controller;
@@ -131,4 +132,20 @@ class EditorialesController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+	
+	/*
+	*
+	*	Acción detalle para mostrar la ficha resumida de los libros de cada editorial
+	*
+	*/
+	public function actionDetalle($id)
+    {
+        $editorial=Editorial::findOne(['id' => $id]);
+        $libro = Libros::findAll(['id' => $editorial->id]);
+        return $this->render('detalle',array(
+            "editorial"=>$editorial,
+            "libro"=>$libro,
+            //"titulo"=>$libro->titulo
+        ));
+    }// actionDetalle
 }

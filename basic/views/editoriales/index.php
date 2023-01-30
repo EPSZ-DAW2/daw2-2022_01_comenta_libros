@@ -50,6 +50,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
+			
+			[
+			    'class' => 'yii\grid\ActionColumn',
+                'template' => '{verDetalle}',  
+                'buttons' => [
+                    'verDetalle' => function($url, $model, $key) {    
+                        return Html::a(Yii::t('app', 'Ver detalle'), ['detalle', 'id'=>$model->id], ['class' => 'btn btn-success']);
+                    }
+                ]
+            ]
         ],
     ]); ?>
 
