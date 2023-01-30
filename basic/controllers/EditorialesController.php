@@ -141,7 +141,7 @@ class EditorialesController extends Controller
 	public function actionDetalle($id)
     {
         $editorial=Editorial::findOne(['id' => $id]);
-        $libro = Libros::findAll(['id' => $editorial->id]);
+        $libro = Libros::findAll(['editorial_id' => $editorial->id]);
         return $this->render('detalle',array(
             "editorial"=>$editorial,
             "libro"=>$libro,
