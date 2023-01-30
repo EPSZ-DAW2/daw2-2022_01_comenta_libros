@@ -114,3 +114,9 @@ class Libros extends \yii\db\ActiveRecord
         
     }// getEditoriales
 }
+
+public function getTraductores(){
+
+    return $this->hasOne(Traductores::class, ['id' => 'traductor_id']);
+    
+}// getIlustradores
