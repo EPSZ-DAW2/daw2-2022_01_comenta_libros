@@ -15,11 +15,11 @@ use yii\helpers\Html;
 		<div class="row">
 			<?php
 			foreach($libro as $libro)
-			{
-				echo $libro->titulo;
-				echo '<br/>';
-				echo $libro->resumen;
-				echo'<hr>';
+			{ ?>
+				<h5><?= Html::encode($libro->titulo) ?></h5>
+				<p><?= Html::encode($libro->resumen) ?></p>
+				<hr>
+			<?php	
 			}
 			?>
 			
