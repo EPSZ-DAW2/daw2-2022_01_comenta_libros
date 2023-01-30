@@ -149,7 +149,6 @@ class Libros extends \yii\db\ActiveRecord
 
         return $this->hasOne(Autores::class, ['id' => 'autor_id']);
         
-    }// getIlustradores
-    
+    }// getAutores    
 }
 

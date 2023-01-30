@@ -20,6 +20,7 @@ use yii\helpers\Html;
 				//echo $libro->id;?>
 				<h5><?= Html::encode($libro->titulo) ?></h5> <!-- Titulo del libro -->
 				<p><?= Html::encode($libro->resumen) ?></p>	<!-- Resumen del libro -->
+				<p><?= Html::encode($libro->autor->nombre) ?></p>	<!-- Nombre del autor del libro -->
 				<hr>
 			<?php	
 			}
