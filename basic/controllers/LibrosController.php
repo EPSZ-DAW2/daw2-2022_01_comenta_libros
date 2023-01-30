@@ -139,15 +139,23 @@ class LibrosController extends Controller
         $tipoUsuario=1; //Cambiar cuando haya usuarios
         $libro=Libros::findOne(['id' => $id]);
         if ($tipoUsuario === 1) {
+            if ($libro->num_denuncias === 0) {
+                $fecha=new \DateTime('now', new \DateTimeZone('UTC'));
+                $libro->fecha_denuncia1=$fecha->format('Y-m-d H:i:s'); 
+            }
             $libro->num_denuncias++;
         } else if ($tipoUsuario === 0) {
             $libro->bloqueado = 2;
+            $fecha=new \DateTime('now', new \DateTimeZone('UTC'));
+            $libro->fecha_bloqueo=$fecha->format('Y-m-d H:i:s');
         }
 
         if ($libro->num_denuncias === 50) {
             $libro->bloqueado = 1;
+            $fecha=new \DateTime('now', new \DateTimeZone('UTC'));
+            $libro->fecha_bloqueo=$fecha->format('Y-m-d H:i:s');
         }
-        $libro->save();
+        $libro->save(false);
         
         return $this->redirect([$ruta, 'id'=>$libro->id]);
     }
@@ -158,13 +166,14 @@ class LibrosController extends Controller
         $libro=Libros::findOne(['id' => $id]);
         if ($tipoUsuario === 0) {
             $libro->bloqueado = 0;
+            $libro->fecha_denuncia1 = null;
+            $libro->save();
         } else {
             $error = "No está autorizado para entrar en esta página";           
             $this->render('error',array(
                 "message"=>$error
             ));
         }
-        $libro->save();
         
         return $this->redirect(['index']);
     }
