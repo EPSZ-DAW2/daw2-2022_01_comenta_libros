@@ -14,6 +14,8 @@ use yii\helpers\Html;
         <img src="" style="width=:'10px', height: 10px">
     </div>
     <div class="col-8" style="margin-top:15vh; text-align: justify;">
+        <p>Estado: <?= Html::encode($estado) ?>. <?= Html::encode($terminacion) ?>.</p>
+        <p>Puntuación: <?= Html::encode($libro->sumaValores) ?> con <?= Html::encode($libro->totalVotos) ?> votos.</p>
         <p><?= Html::encode($libro->resumen) ?></p>
         <?= Html::a(Yii::t('app', 'Denunciar'), ['denunciar', 'id'=>$libro->id, 'ruta'=>'detalle'], ['class' => 'btn btn-danger']);?>
     </div>

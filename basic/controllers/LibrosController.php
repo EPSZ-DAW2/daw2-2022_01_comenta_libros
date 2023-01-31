@@ -136,25 +136,26 @@ class LibrosController extends Controller
     
     public function actionDenunciar($id, $ruta)
     {
-        $tipoUsuario=1; //Cambiar cuando haya usuarios
+        $tipoUsuario=0; //Cambiar cuando haya usuarios
         $libro=Libros::findOne(['id' => $id]);
         if ($tipoUsuario === 1) {
             if ($libro->num_denuncias === 0) {
-                $fecha=new \DateTime('now', new \DateTimeZone('UTC'));
+                $fecha=new \DateTime('now', new \DateTimeZone('Europe/Amsterdam'));
                 $libro->fecha_denuncia1=$fecha->format('Y-m-d H:i:s'); 
             }
             $libro->num_denuncias++;
         } else if ($tipoUsuario === 0) {
             $libro->bloqueado = 2;
-            $fecha=new \DateTime('now', new \DateTimeZone('UTC'));
+            $fecha=new \DateTime('now', new \DateTimeZone('Europe/Amsterdam'));
             $libro->fecha_bloqueo=$fecha->format('Y-m-d H:i:s');
         }
 
         if ($libro->num_denuncias === 50) {
             $libro->bloqueado = 1;
-            $fecha=new \DateTime('now', new \DateTimeZone('UTC'));
+            $fecha=new \DateTime('now', new \DateTimeZone('Europe/Amsterdam'));
             $libro->fecha_bloqueo=$fecha->format('Y-m-d H:i:s');
         }
+        
         $libro->save(false);
         
         return $this->redirect([$ruta, 'id'=>$libro->id]);
@@ -162,12 +163,13 @@ class LibrosController extends Controller
 
     public function actionDesbloquear($id)
     {
-        $tipoUsuario=1; //Cambiar cuando haya usuarios
+        $tipoUsuario=0; //Cambiar cuando haya usuarios
         $libro=Libros::findOne(['id' => $id]);
         if ($tipoUsuario === 0) {
+            $libro->num_denuncias = 0;
             $libro->bloqueado = 0;
             $libro->fecha_denuncia1 = null;
-            $libro->save();
+            $libro->save(false);
         } else {
             $error = "No está autorizado para entrar en esta página";           
             $this->render('error',array(
@@ -180,12 +182,17 @@ class LibrosController extends Controller
 
     public function actionDetalle($id)
     {
-        $libro=Libros::findOne(['id' => $id]);
+        $libro = Libros::findOne(['id' => $id]);
         $autor = Autores::findOne(['id' => $libro->autor_id]);
         $imagenes = LibrosImagenes::findAll(['libro_id'=>$id]);
+        $estado = Libros::LISTA_BLOQUEO[$libro->bloqueado];
+        $terminacion = Libros::LISTA_TERMINADO[$libro->terminado];
         return $this->render('detalle',array(
             "libro"=>$libro,
             "autor"=>$autor,
+            "imagenes"=>$imagenes,
+            "estado"=>$estado,
+            "terminacion"=>$terminacion
         ));
     }
 }

@@ -61,8 +61,8 @@ class Libros extends \yii\db\ActiveRecord
         4 => 'Terminado',
     ];
 
-    public $bloqueado; //los valores permitidos para esta variable, son lo que estan definidaos en la constantes lista_bloqueo
-    public $terminado;
+    // public $bloqueado; //los valores permitidos para esta variable, son lo que estan definidaos en la constantes lista_bloqueo
+    // public $terminado;
      
     public static function tableName()
     {
