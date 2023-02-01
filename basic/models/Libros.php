@@ -61,8 +61,8 @@ class Libros extends \yii\db\ActiveRecord
         4 => 'Terminado',
     ];
 
-    // public $bloqueado; //los valores permitidos para esta variable, son lo que estan definidaos en la constantes lista_bloqueo
-    // public $terminado;
+    public $bloqueo; //los valores permitidos para esta variable, son lo que estan definidaos en la constantes lista_bloqueo
+    public $term;
      
     public static function tableName()
     {
@@ -81,10 +81,10 @@ class Libros extends \yii\db\ActiveRecord
             [['fecha_terminacion', 'fecha_denuncia1', 'fecha_bloqueo', 'crea_fecha', 'modi_fecha'], 'safe'],
             [['clase_formato_id'], 'string', 'max' => 1],
             [['imagen_id'], 'string', 'max' => 25],
-            [['bloqueado'], 'required'],
-            ['bloqueado', 'in', 'range' => array_keys(self::LISTA_BLOQUEO)], //aseguramos que el valor de tipoBloqueo sea uno de los permitidos en la constante
-            [['terminado'], 'required'],
-            ['terminado', 'in', 'range' => array_keys(self::LISTA_TERMINADO)], //aseguramos que el valor de tipoterminado sea uno de los permitidos en la constante
+            //[['bloqueado'], 'required'],
+            //['bloqueo', 'in', 'range' => array_keys(self::LISTA_BLOQUEO)], //aseguramos que el valor de tipoBloqueo sea uno de los permitidos en la constante
+           // [['terminado'], 'required'],
+           // ['term', 'in', 'range' => array_keys(self::LISTA_TERMINADO)], //aseguramos que el valor de tipoterminado sea uno de los permitidos en la constante
         ];
     }
 

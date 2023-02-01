@@ -37,19 +37,29 @@ $this->params['breadcrumbs'][] = $this->title;
             'autor_id',
             'ilustrador_id',
             'traductor_id',
-            'editorial_id',
+           // 'editorial_id',
             'genero_id',
-            'coleccion:ntext',
+            //'coleccion:ntext',
             'idioma_id',
-            'clase_formato_id',
-            'paginas',
+            //'clase_formato_id',
+            //'paginas',
             'imagen_id',
             'visible',
-            //'terminado',
+            [
+                'attribute' => 'terminado',
+                'value' => function ($model) use ($controller) {
+                    return $controller->estadoTerminado($model->terminado);
+                },
+            ],
             //'fecha_terminacion',
             //'num_denuncias',
             //'fecha_denuncia1',
-          //  'bloqueado',
+            [
+                'attribute' => 'bloqueado',
+                'value' => function ($model) use ($controller) {
+                    return $controller->estadoBloqueo($model->bloqueado);
+                },
+            ],
            // 'fecha_bloqueo',
            // 'notas_bloqueo:ntext',
             //'cerrado_comentar',
