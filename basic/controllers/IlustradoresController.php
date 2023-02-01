@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Libros;
 use app\models\Ilustradores;
 use app\models\IlustradoresSearch;
 use yii\web\Controller;
@@ -131,4 +132,25 @@ class IlustradoresController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+	
+	
+	/*
+	*
+	*	Acción detalle para mostrar los libros ilustrados por el ilustrador elegido
+	*
+	*/
+	public function actionDetalle($id)
+    {
+        $ilustrador=Ilustradores::findOne(['id' => $id]);
+        $libro = Libros::findAll(['ilustrador_id' => $ilustrador->id]);
+		
+        return $this->render('detalle',array(
+            "ilustrador"=>$ilustrador,
+            "libro"=>$libro,
+        ));
+    }// actionDetalle
+	
+	
+	
+	
 }
