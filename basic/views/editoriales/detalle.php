@@ -15,15 +15,21 @@ use yii\helpers\Html;
 		<br/>
 		<div class="row">
 			<?php
-			foreach($libro as $libro)
-			{ 
+			if($libro==null){
+					$mensaje="No hay ningún libro asociado a esta Editorial";?>
+					<p><?= Html::encode($mensaje) ?></p>	<!-- Mensaje de editorial sin libro -->
+				<?php
+			}else{
+				foreach($libro as $libro){ 
+				
 				//echo $libro->id;?>
 				<h5><?= Html::encode($libro->titulo) ?></h5> <!-- Titulo del libro -->
 				<p><?= Html::encode($libro->resumen) ?></p>	<!-- Resumen del libro -->
 				<p><?= Html::encode($libro->autor->nombre) ?></p>	<!-- Nombre del autor del libro -->
 				<hr>
 			<?php	
-			}
+				}// foreach Libro
+			}// if
 			?>
 			
     </div>
