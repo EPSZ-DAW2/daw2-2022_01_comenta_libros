@@ -42,11 +42,31 @@ class LibrosController extends Controller
     {
         $searchModel = new LibrosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+       
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'controller' => $this,
         ]);
+    }
+    public function estadoBloqueo($bloqueado){//funcion para controlar los estdos de bloqueo
+
+        if(array_key_exists($bloqueado, Libros::LISTA_BLOQUEO)){
+
+             return Libros::LISTA_BLOQUEO[$bloqueado];
+        }else{
+            return 'No se reconoce el valor';
+        }
+    }
+    public function estadoTerminado($terminado){//funcion para controlar los estados de terminación
+
+        if(array_key_exists($terminado, Libros:: LISTA_TERMINADO)){
+
+             return Libros:: LISTA_TERMINADO[$terminado];
+        }else{
+            return 'No se reconoce el valor';
+        }
     }
 
     /**
