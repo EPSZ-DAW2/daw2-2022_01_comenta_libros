@@ -9,6 +9,7 @@ use app\models\LibrosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 
 /**
  * LibrosController implements the CRUD actions for Libros model.
@@ -42,6 +43,7 @@ class LibrosController extends Controller
     {
         $searchModel = new LibrosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->pagination->pageSize = 1;
        
 
         return $this->render('index', [

@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\widgets\LinkPager;
 /** @var yii\web\View $this */
 /** @var app\models\LibrosSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -100,6 +101,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ],
     ]); ?>
+ 
+    <?php 
+         LinkPager::widget([
+        'pagination' =>$dataProvider->pagination,
+         ]);
+     ?>
 
     <?php Pjax::end(); ?>
 
