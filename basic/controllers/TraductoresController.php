@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Libros;
 use app\models\Traductores;
 use app\models\TraductoresSearch;
 use yii\web\Controller;
@@ -131,4 +132,22 @@ class TraductoresController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+	
+	/*
+	*
+	*	Acción detalle para mostrar los libros que ha traducido una persona
+	*
+	*/
+	public function actionDetalle($id)
+    {
+        $traductor=Traductores::findOne(['id' => $id]);
+        $libro = Libros::findAll(['traductor_id' => $traductor->id]);
+		
+        return $this->render('detalle',array(
+            "traductor"=>$traductor,
+            "libro"=>$libro,
+        ));
+    }// actionDetalle
+	
+	
 }

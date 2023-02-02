@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Libros;
 use app\models\Autores;
 use app\models\AutoresSearch;
 use yii\web\Controller;
@@ -131,4 +132,24 @@ class AutoresController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+	
+	
+	/*
+	*
+	*	Acción detalle para mostrar los libros escritos por un autor
+	*
+	*/
+	public function actionDetalle($id)
+    {
+        $autor=Autores::findOne(['id' => $id]);
+        $libro = Libros::findAll(['autor_id' => $autor->id]);
+		
+        return $this->render('detalle',array(
+            "autor"=>$autor,
+            "libro"=>$libro,
+        ));
+    }// actionDetalle
+	
+	
+	
 }
