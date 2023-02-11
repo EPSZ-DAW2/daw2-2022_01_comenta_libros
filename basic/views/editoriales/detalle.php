@@ -6,31 +6,27 @@
 /** @var Exception$exception */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 ?>
 <div class="grid container row">
     <div class="col-4">
-        <h3><?= Html::encode($editorial->nombre) ?></h3>
-        <h4><?= Html::encode($editorial->descripcion) ?></h4>
-        <hr>
 		<br/>
-		<div class="row">
+        <h3><?= Html::encode($editorial->nombre) ?></h3>
+        <p><?= Html::encode($editorial->descripcion) ?></p>
+        <p>Url: <a href="<?= Html::encode($editorial->url) ?>"><?= Html::encode($editorial->url) ?></a></p>
 			<?php
-			if($libro==null){
-					$mensaje="No hay ningún libro asociado a esta Editorial";?>
-					<p><?= Html::encode($mensaje) ?></p>	<!-- Mensaje de editorial sin libro -->
-				<?php
-			}else{
-				foreach($libro as $libro){ 
-				
-				//echo $libro->id;?>
-				<h5><?= Html::encode($libro->titulo) ?></h5> <!-- Titulo del libro -->
-				<p><?= Html::encode($libro->resumen) ?></p>	<!-- Resumen del libro -->
-				<p><?= Html::encode($libro->autor->nombre) ?></p>	<!-- Nombre del autor del libro -->
-				<hr>
-			<?php	
-				}// foreach Libro
-			}// if
+			// Botón para ver la ficha resumida de la editorial seleccionada
 			?>
-			
-    </div>
+			<a href="<?= Url::toRoute(['/editoriales/detalle', 'id' => $editorial->id]); ?>" style=" font: bold 11px Arial;text-decoration: none;background-color: #EEEEEE;color: #333333;padding: 2px 6px 2px 6px;border-top: 1px solid #CCCCCC;border-right: 1px solid #333333;border-bottom: 1px solid #333333;border-left: 1px solid #CCCCCC;">
+				Ver Detalles
+			</a>
+			<?php
+			// Botón para Ver todos los libros asociados a la editorial seleccionada
+			// Esto redirige al catálogo de libros, pero filtrando en el id de la editorial, por la seleccionada.
+			?>
+			 <a href="<?= Url::toRoute(['/libros/detalle', 'editorial_id' => $editorial->id]); ?>" style=" font: bold 11px Arial;text-decoration: none;background-color: #EEEEEE;color: #333333;padding: 2px 6px 2px 6px;border-top: 1px solid #CCCCCC;border-right: 1px solid #333333;border-bottom: 1px solid #333333;border-left: 1px solid #CCCCCC;">
+				Ver Libros
+			</a>
+        <hr>
+	</div>
 </div>
