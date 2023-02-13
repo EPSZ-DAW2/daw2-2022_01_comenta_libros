@@ -18,5 +18,20 @@ use yii\helpers\Html;
         <p>Puntuación: <?= Html::encode($libro->sumaValores) ?> con <?= Html::encode($libro->totalVotos) ?> votos.</p>
         <p><?= Html::encode($libro->resumen) ?></p>
         <?= Html::a(Yii::t('app', 'Denunciar'), ['denunciar', 'id'=>$libro->id, 'ruta'=>'detalle'], ['class' => 'btn btn-danger']);?>
-    </div>
+	
+	<?php
+	foreach($comentarios as $comentario) //mostramos cada libro del autor
+	{ 
+		//echo $libro->id;?>
+		<h5><?= Html::encode($comentario->usuario->nick) ?></h5> <!-- Nombre del usuario-->
+		<p><?= Html::encode($comentario->valoracion) ?></p>	<!-- Valoración del usuario-->
+		<p><?= Html::encode($comentario->texto) ?></p>	<!-- Resumen del comentario -->
+		<hr>
+	<?php	
+	} //foreach
+	?>
+
+
+
+   </div>
 </div>

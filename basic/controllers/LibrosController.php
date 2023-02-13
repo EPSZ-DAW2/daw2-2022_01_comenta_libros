@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Autores;
 use app\models\Libros;
 use app\models\LibrosImagenes;
+use app\models\LibrosComentarios;
 use app\models\LibrosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -205,6 +206,9 @@ class LibrosController extends Controller
     public function actionDetalle($id)
     {
         $libro = Libros::findOne(['id' => $id]);
+
+        $comentarios = LibrosComentarios::findAll(['libro_id' => $libro->id]);
+		
         $autor = Autores::findOne(['id' => $libro->autor_id]);
         $imagenes = LibrosImagenes::findAll(['libro_id'=>$id]);
         $estado = Libros::LISTA_BLOQUEO[$libro->bloqueado];
@@ -214,7 +218,8 @@ class LibrosController extends Controller
             "autor"=>$autor,
             "imagenes"=>$imagenes,
             "estado"=>$estado,
-            "terminacion"=>$terminacion
+            "terminacion"=>$terminacion,
+			"comentarios"=>$comentarios
         ));
     }
 }
