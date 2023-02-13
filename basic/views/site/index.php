@@ -1,11 +1,13 @@
 <?php
 
 /** @var yii\web\View $this */
+use \app\models\LibrosEventos;
+use yii\helpers\Html;
 
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index">
 
+<div class="site-index">
     <div class="jumbotron text-center bg-transparent">
         <h1 class="display-4">Congratulations!</h1>
 
@@ -48,6 +50,12 @@ $this->title = 'My Yii Application';
                 <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
             </div>
         </div>
-
     </div>
 </div>
+
+
+	<div class="col-lg-4" style="float:right;">
+		<!-- Visor Eventos -->
+		<?php echo $this->render('visorEventos', ['evento'=>$evento]); ?>
+	</div>	
+

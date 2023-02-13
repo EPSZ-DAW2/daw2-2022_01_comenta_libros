@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use \app\models\LibrosEventos;
 
 class SiteController extends Controller
 {
@@ -61,7 +62,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+		// PONER ESTO EN PAGINA PRINCIPAL CUANDO ESTE HECHA *****
+		// Y MOVER LAS VISTAS
+		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
+		
+        return $this->render('index', [
+			'evento'=>$evento->all(),
+		]);
     }
 
     /**

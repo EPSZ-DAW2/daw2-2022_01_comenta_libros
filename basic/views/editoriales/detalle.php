@@ -17,14 +17,14 @@ use yii\helpers\Url;
 			<?php
 			// Botón para ver la ficha resumida de la editorial seleccionada
 			?>
-			<a href="<?= Url::toRoute(['/editoriales/detalle', 'id' => $editorial->id]); ?>" style=" font: bold 11px Arial;text-decoration: none;background-color: #EEEEEE;color: #333333;padding: 2px 6px 2px 6px;border-top: 1px solid #CCCCCC;border-right: 1px solid #333333;border-bottom: 1px solid #333333;border-left: 1px solid #CCCCCC;">
+			<a href="<?= Url::toRoute(['/editoriales/detalle', 'id' => $editorial->id, 'class' => 'btn btn-primary']); ?>" style=" background-color: #4CAF50;  border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">
 				Ver Detalles
 			</a>
 			<?php
 			// Botón para Ver todos los libros asociados a la editorial seleccionada
 			// Esto redirige al catálogo de libros, pero filtrando en el id de la editorial, por la seleccionada.
 			?>
-			 <a href="<?= Url::toRoute(['/libros/detalle', 'editorial_id' => $editorial->id]); ?>" style=" font: bold 11px Arial;text-decoration: none;background-color: #EEEEEE;color: #333333;padding: 2px 6px 2px 6px;border-top: 1px solid #CCCCCC;border-right: 1px solid #333333;border-bottom: 1px solid #333333;border-left: 1px solid #CCCCCC;">
+			 <a href="<?= Url::toRoute(['/libros/detalle', 'editorial_id' => $editorial->id]); ?>" style=" background-color: #4CAF50;  border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">
 				Ver Libros
 			</a>
         <hr>
