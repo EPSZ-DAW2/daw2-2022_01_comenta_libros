@@ -8,6 +8,15 @@ $this->title = 'My Yii Application';
 ?>
 
 <div class="site-index">
+	<!-- Búsqueda simple -->
+	<br/>
+	<?php echo $this->render('_searchSimple', ['model' => $searchModel]); ?>
+	<!-- Búsqueda avanzada -->
+	<br/>
+	<details>
+		<summary>Búsqueda avanzada</summary>
+		<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+	</details>
     <div class="jumbotron text-center bg-transparent">
         <h1 class="display-4">Congratulations!</h1>
 

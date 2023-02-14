@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use \app\models\LibrosEventos;
+use app\models\LibrosSearch;
 
 class SiteController extends Controller
 {
@@ -62,11 +63,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+		 $searchModel = new LibrosSearch();
 		// PONER ESTO EN PAGINA PRINCIPAL CUANDO ESTE HECHA *****
 		// Y MOVER LAS VISTAS
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
 		
         return $this->render('index', [
+			'searchModel' => $searchModel,
 			'evento'=>$evento->all(),
 		]);
     }

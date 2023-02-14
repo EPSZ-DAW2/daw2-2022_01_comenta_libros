@@ -25,10 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
 		} ?>
 	</div>
 </div>
-<div style="margin-top: 2%">
-	<?= LinkPager::widget(['pagination' => $pagination]) ?>
-</div>
+<?= LinkPager::widget(['pagination' => $pagination]) ?>
+<?php
+	echo "<h4>Filtro A-Z</h4>";
+	foreach ($letra as $letra){
+				//var_dump( $letra);
+				echo $letra['letra']." - ";
+				
+			}
+ ?>
 
-<div style="margin-top: 2%">
-	<?php echo "Filtro a-z"; ?>
-</div>

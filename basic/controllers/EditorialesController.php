@@ -48,11 +48,16 @@ class EditorialesController extends Controller
 		]);
 		
 		$editoriales=$dataProvider->query->offset($pagination->offset)->limit($pagination->limit)->all();
-
+		// La consulta SQL es: "SELECT DISTINCT SUBSTRING(nombre, 1, 1) AS letra;"
+		
+        $dataLetras = $searchModel->search([]);
+		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
+		//\Yii::trace( print_r("Letra ".$letra,true));
         return $this->render('index', [
             'searchModel' => $searchModel,
             'pagination' => $pagination,
             'editoriales' => $editoriales,
+            'letra' => $letra,
         ]);
     }
 	
