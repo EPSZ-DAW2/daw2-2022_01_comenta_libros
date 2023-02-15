@@ -213,13 +213,36 @@ class LibrosController extends Controller
         $imagenes = LibrosImagenes::findAll(['libro_id'=>$id]);
         $estado = Libros::LISTA_BLOQUEO[$libro->bloqueado];
         $terminacion = Libros::LISTA_TERMINADO[$libro->terminado];
+		$nuevoComentario = new LibrosComentarios;
         return $this->render('detalle',array(
             "libro"=>$libro,
             "autor"=>$autor,
             "imagenes"=>$imagenes,
             "estado"=>$estado,
             "terminacion"=>$terminacion,
-			"comentarios"=>$comentarios
+			"comentarios"=>$comentarios,
+			"nuevoComentario"=>$nuevoComentario
         ));
     }
+	
+	
+	public function actionCrearComentario()
+	{
+		/*$nuevoComentario = new LibrosComentarios(); // Cambia "Usuario" por el nombre de tu modelo
+		$nuevoComentario->id=3;
+		$nuevoComentario->save(false); 
+		if ($nuevoComentario->load(Yii::$app->request->post()) && $nuevoComentario->save(false))
+		{
+			Yii::$app->session->setFlash('success', 'Los datos se han guardado correctamente.');
+			return $this->redirect(['detalle']); // Cambia "index" por la acción a la que quieres redirigir después de guardar los datos
+		}*/
+		$prueba = LibrosComentarios::findOne(['id' => 1]);
+		$prueba->texto="Hola";
+		$prueba->save(false);
+		return $this->redirect(['index']);
+		
+	}
+	
+	
+	
 }

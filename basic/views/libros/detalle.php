@@ -6,6 +6,8 @@
 /** @var Exception$exception */
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 ?>
 <div class="grid container row">
     <div class="col-4">
@@ -19,7 +21,27 @@ use yii\helpers\Html;
         <p><?= Html::encode($libro->resumen) ?></p>
         <?= Html::a(Yii::t('app', 'Denunciar'), ['denunciar', 'id'=>$libro->id, 'ruta'=>'detalle'], ['class' => 'btn btn-danger']);?>
 	
+	
+		<?php $form = ActiveForm::begin(); ?>
+		
+		<?= $form->field($nuevoComentario, 'libro_id')->hiddenInput(['value'=> $libro->id])->label(false) ?>
+
+		
+		<?= $form->field($nuevoComentario, 'texto')->textarea(['rows' => 3]) ?>
+		<?= $form->field($nuevoComentario, 
+			  'valoracion')->dropDownList([0,1,2,3,4,5,6,7,8,9,10], 
+			  ['prompt' => 'Indique una valoración']);?>
+		<?= Html::submitButton('Submit', ['class' => 'btn btn-primary',
+										  'data' => [
+											'method' => 'post',
+											'params' => ['action' => 'crearComentario']
+											]]) ?>
+		<?php ActiveForm::end(); ?>
+
+	
+	
 	<?php
+	
 	foreach($comentarios as $comentario) //mostramos cada libro del autor
 	{ 
 		//echo $libro->id;?>
