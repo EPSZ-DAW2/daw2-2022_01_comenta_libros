@@ -40,6 +40,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Libros', 'url' => ['/libros']],
+            ['label' => 'Autores', 'url' => ['/autores']],
+            ['label' => 'Editoriales', 'url' => ['/editoriales']],
+            ['label' => 'Ilustradores', 'url' => ['/ilustradores']],
+            ['label' => 'Patrocinadores', 'url' => ['/patrocinadores']],
+            ['label' => 'Traductores', 'url' => ['/traductores']],
+            ['label' => 'Configuraciones', 'url' => ['/configuraciones']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest
