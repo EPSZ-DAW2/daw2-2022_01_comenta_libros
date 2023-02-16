@@ -66,16 +66,41 @@ class EditorialesController extends Controller
 	*	Acción detalle para mostrar la ficha resumida de los libros de cada editorial
 	*
 	*/
-	public function actionDetalle($id)
+	public function actionLibros_editorial($id)
     {
         $editorial=Editorial::findOne(['id' => $id]);
-        //$libro = Libros::findAll(['editorial_id' => $editorial->id]);
+        $libro = Libros::findAll(['editorial_id' => $editorial->id]);
 		
-        return $this->render('ficha_resumen',array(
+        return $this->render('libros_editorial',array(
             "editorial"=>$editorial,
-            //"libro"=>$libro,
-            //"titulo"=>$libro->titulo
-
+            "libro"=>$libro,
         ));
     }// actionDetalle
+	
+	/*
+	*
+	*	Acción letra para filtar el nombre de una editorial por una letra seleccionada
+	*
+	*/
+	public function actionLetrafilter($filtroLetra)
+    {
+		$searchModel = new EditorialSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+		$pagination = new Pagination([
+			'defaultPageSize' => 3,
+			'totalCount' => $dataProvider->query->count(),
+		]);
+		
+        $editoriales=$dataProvider->query->where(['like','nombre',$filtroLetra.'%',false])->offset($pagination->offset)->limit($pagination->limit)->all();
+  
+		$dataLetras = $searchModel->search([]);
+		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
+		
+		return $this->render('index', [
+            'searchModel' => $searchModel,
+            'pagination' => $pagination,
+            'editoriales' => $editoriales,
+            'letra' => $letra,
+        ]);
+    }// actionLetra
 }

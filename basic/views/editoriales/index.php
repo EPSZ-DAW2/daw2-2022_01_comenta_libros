@@ -2,6 +2,8 @@
 
 /** @var yii\web\View $this */
 use yii\bootstrap5\LinkPager;
+use yii\helpers\Url;
+use yii\helpers\Html;
 
 $this->title = 'Editoriales';
 $this->params['breadcrumbs'][] = $this->title;
@@ -30,8 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
 	echo "<h4>Filtro A-Z</h4>";
 	foreach ($letra as $letra){
 				//var_dump( $letra);
-				echo $letra['letra']." - ";
+				//echo $letra['letra']." - ";
 				
+				echo Html::a(Yii::t('app', $letra['letra']), ['letrafilter', 'filtroLetra'=>$letra['letra']], ['class' => 'btn btn-success']);
 			}
+	
  ?>
+  
+  <?= Html::a('Inicio', '?r=editoriales', ['class' => 'btn btn-outline-secondary']) ?>
+ </form>
+ <?php
+ /*if(isset($_POST['btnLetra'])){
+					echo "Pulsado letra ".$_POST['btnLetra'];
+				}
+ ?>*/
 
