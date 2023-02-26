@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Usuarios;
 use app\models\UsuarioLibros;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -12,6 +13,7 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('app', 'Usuario Libros');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="usuario-libros-index">
 
@@ -22,8 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    
+    <?php //var_dump($nombre); ?>
+   
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -32,6 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'usuario_id',
+            //meter nombre de usuario
+        
             'local_id',
             'fecha_seguimiento',
             [
@@ -40,6 +45,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{verDetalle}',  
+                'buttons' => [
+                    'verDetalle' => function($url, $model, $key) {    
+                        return Html::a(Yii::t('app', 'Ver detalle libro'), ['detalle', 'id'=>$model->id], ['class' => 'btn btn-success']);
+                    }
+                ]
+            ]
         ],
     ]); ?>
 

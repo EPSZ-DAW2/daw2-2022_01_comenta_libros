@@ -2,6 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Libros;
+use app\models\LibrosComentarios;
+use app\models\Autores;
+use app\models\LibrosImagenes;
+use app\models\Usuarios;
 use app\models\UsuarioLibros;
 use app\models\UsuarioLibrosSearch;
 use yii\web\Controller;
@@ -41,9 +46,11 @@ class UsuariolibrosController extends Controller
         $searchModel = new UsuarioLibrosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+
         ]);
     }
 
@@ -55,8 +62,11 @@ class UsuariolibrosController extends Controller
      */
     public function actionView($id)
     {
+       
+       
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'prueba' => $consulta,
         ]);
     }
 
@@ -131,4 +141,28 @@ class UsuariolibrosController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    public function actionDetalle($id)
+    {
+        $libro = Libros::findOne(['id' => $id]);
+
+        $comentarios = LibrosComentarios::findAll(['libro_id' => $libro->id]);
+		
+        $autor = Autores::findOne(['id' => $libro->autor_id]);
+        $imagenes = LibrosImagenes::findAll(['libro_id'=>$id]);
+        $estado = Libros::LISTA_BLOQUEO[$libro->bloqueado];
+        $terminacion = Libros::LISTA_TERMINADO[$libro->terminado];
+		$nuevoComentario = new LibrosComentarios;
+        return $this->render('detalle',array(
+            "libro"=>$libro,
+            "autor"=>$autor,
+            "imagenes"=>$imagenes,
+            "estado"=>$estado,
+            "terminacion"=>$terminacion,
+			"comentarios"=>$comentarios,
+			"nuevoComentario"=>$nuevoComentario
+        ));
+    }
+
+   
 }
