@@ -43,7 +43,7 @@ use yii\widgets\Breadcrumbs;
 								['label' => 'Autores', 'url' => ['/autores']],
 								['label' => 'Editoriales', 'url' => ['/editoriales']],
 								['label' => 'Ilustradores', 'url' => ['/ilustradores']],
-								['label' => 'Patrocinadores', 'url' => ['/patrocinadores']],
+								['label' => 'Patrocinadores', 'url' => ['/patrocinador']],
 								['label' => 'Traductores', 'url' => ['/traductores']],
 								['label' => 'Configuraciones', 'url' => ['/configuraciones']],
 								['label' => 'Generos', 'url' => ['/generos']],
