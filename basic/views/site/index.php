@@ -4,7 +4,7 @@
 use \app\models\LibrosEventos;
 use yii\helpers\Html;
 
-$this->title = 'My Yii Application';
+$this->title = 'Principal';
 ?>
 
 <div class="site-index">
@@ -20,7 +20,14 @@ $this->title = 'My Yii Application';
     
 
     <div class="body-content">
-
+		<?php
+		if(empty($fichasresumen)){
+			echo '<h2>No se ha encontrado ninguna ficha resumen</h2>';
+		}else{
+			foreach ($fichasresumen as $ficharesumen){
+				echo $this->render('ficha_libro_resumen', ['ficharesumen'=>$ficharesumen]);
+			}
+		} ?>
         <div class="row">
             <div class="col-lg-4">
                 

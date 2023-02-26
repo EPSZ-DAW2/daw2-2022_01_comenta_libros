@@ -12,6 +12,15 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+		// Cambiar tema
+		'view' => [
+			'theme' => [
+				'pathMap' => ['@app/views' => '@app/themes/sc2terran2col'],
+				'baseUrl' => '@web/../themes/sc2terran2col',
+			],
+		],
+		// Fin cambio tema
+		
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'EPSZ_DAW2_2022-23',

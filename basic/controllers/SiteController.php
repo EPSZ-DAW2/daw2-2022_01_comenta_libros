@@ -11,6 +11,8 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use \app\models\LibrosEventos;
 use app\models\LibrosSearch;
+use app\models\LibrosResumen;
+use app\models\LibrosResumenSearch;
 
 class SiteController extends Controller
 {
@@ -63,13 +65,19 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-		 $searchModel = new LibrosSearch();
+		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
+		
+		$searModel = new LibrosResumenSearch();
+		$dataProvider = $searModel->search($this->request->queryParams);
+		$fichasresumen = $dataProvider->query->limit(6)->all();
+		
 		// PONER ESTO EN PAGINA PRINCIPAL CUANDO ESTE HECHA *****
 		// Y MOVER LAS VISTAS
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
 		
         return $this->render('index', [
 			'searchModel' => $searchModel,
+			'fichasresumen' => $fichasresumen,
 			'evento'=>$evento->all(),
 		]);
     }
