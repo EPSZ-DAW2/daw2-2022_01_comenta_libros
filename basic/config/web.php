@@ -15,8 +15,8 @@ $config = [
 		// Cambiar tema
 		'view' => [
 			'theme' => [
-				'pathMap' => ['@app/views' => '@app/themes/sc2terran2col'],
-				'baseUrl' => '@web/../themes/sc2terran2col',
+				'pathMap' => ['@app/views' => '@app/themes/tema1'],
+				'baseUrl' => '@web/../themes/tema1',
 			],
 		],
 		// Fin cambio tema
