@@ -103,4 +103,6 @@ class EditorialesController extends Controller
             'letra' => $letra,
         ]);
     }// actionLetra
+
+    
 }
