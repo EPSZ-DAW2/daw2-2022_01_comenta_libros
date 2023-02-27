@@ -81,7 +81,8 @@ use app\models\Usuarios;
 	<section id="main-inner-container" class="container">
 		<article class="post page card-panel z-depth-1 article-container">
 			<header>
-				<h1><?php echo Html::encode(\Yii::$app->name); ?></h1>
+				<?php echo Html::img('@web/images/libros.jpg', ['alt' => 'Logo', 'class' => 'img-responsive']); ?>
+				<h1>Comentalibros</h1>
 			</header>
 			
 			<section class="post-content">
