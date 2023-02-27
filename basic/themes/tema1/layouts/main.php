@@ -26,8 +26,6 @@ use app\models\Usuarios;
 		<meta name="description" content="" />
 		<meta name="HandheldFriendly" content="True" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		
-
 		<link rel="stylesheet" type="text/css" href="<?php echo $this->theme->baseUrl ?>/assets/font/font-awesome/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="<?php echo $this->theme->baseUrl ?>/assets/css/materialize.css" />
 		<link rel="stylesheet" type="text/css" href="<?php echo $this->theme->baseUrl ?>/assets/css/prism.css" />
@@ -63,13 +61,28 @@ use app\models\Usuarios;
 		</div>
 	</nav>
 <main class="content" role="main">
-		<section id="blog-intro" class="cyan section z-depth-1 article-intro" style="background-image:url('<?php echo $this->theme->baseUrl ?>/assets/images/post.jpg?v=b2f76a195e');"></section>
+	<section id="blog-intro" class="cyan section z-depth-1 article-intro" style="background-image:url('<?php echo $this->theme->baseUrl ?>/assets/images/post.jpg?v=b2f76a195e');"></section>
+	
+	<div class="menu_lateral">
+		<div id="sidebar">
+			<div class="sidebar-header"><h3>Clasificación:</h3></div>
+				<ul>
+					<p class="lista"><a href="">Más vistos</a></p>
+					<p class="lista"><a href="">Menos vistos</a></p>
+					<p class="lista"><a href="">Terminados</a></p>
+					<p class="lista"><a href="">Suspendidos</a></p>
+					<p class="lista"><a href="">Nuevos</a></p>
+				</ul>
+			<div class="sidebar-header"><h3>Enlaces:</h3></div>
+		</div>
+	</div>
+	
+	
 	<section id="main-inner-container" class="container">
 		<article class="post page card-panel z-depth-1 article-container">
 			<header>
 				<h1><?php echo Html::encode(\Yii::$app->name); ?></h1>
 			</header>
-			
 			
 			<section class="post-content">
 				<?php echo $content; ?>
@@ -78,34 +91,17 @@ use app\models\Usuarios;
 	</section>
 </main>
 
-<div class="menu_lateral">
-    <div id="sidebar">
-      <div class="sidebar-header">
-        <h3>Clasificación:</h3>
-      </div>
-      <ul>
-        <p class="lista"><a href="">Más vistos</a></p>
-		<p class="lista"><a href="">Menos vistos</a></p>
-        <p class="lista"><a href="">Terminados</a></p>
-        <p class="lista"><a href="">Suspendidos</a></p>
-        <p class="lista"><a href="">Nuevos</a></p>
-      </ul>
-	  <div class="sidebar-header">
-        <h3>Enlaces:</h3>
-      </div>
-    </div>
-	</div>
-		<footer class="site-footer clearfix">
-			 <section class="copyright grey-text darken-2"><?php echo Html::encode($this->title); ?></a> &copy; <?= date('Y') ?></section>
-			 <section class="poweredby grey-text darken-2">Proudly published with <a href="http://yiiframework.com" class="grey-text darken-5">Yii2</a></section>
-		</footer>
 
-		<script src="<?php echo $this->theme->baseUrl ?>/assets/js/jquery.min.js"></script>
+<footer class="site-footer clearfix">
+	<section class="copyright grey-text darken-2"><?php echo Html::encode($this->title); ?></a> &copy; <?= date('Y') ?></section>
+	<section class="poweredby grey-text darken-2">Proudly published with <a href="http://yiiframework.com" class="grey-text darken-5">Yii2</a></section>
+</footer>
 
+<script src="<?php echo $this->theme->baseUrl ?>/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->theme->baseUrl ?>/assets/js/materialize.js"></script>
+<script type="text/javascript" src="<?php echo $this->theme->baseUrl ?>/assets/js/prism.js"></script>
 
-		<script type="text/javascript" src="<?php echo $this->theme->baseUrl ?>/assets/js/materialize.js"></script>
-		<script type="text/javascript" src="<?php echo $this->theme->baseUrl ?>/assets/js/prism.js"></script>
-  <?php $this->endBody() ?>
+<?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage(); ?>

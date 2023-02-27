@@ -37,9 +37,8 @@ h3{
   width: 100%;
   align-items: stretch;
 }#sidebar {
-    min-width: 13%;
-    max-width: 13%;
-    margin-top: 2em;
+    min-width: 100%;
+    max-width: 100%;
     background: #6a76f8;
     color: #fff;
     transition: all 0.3s;
@@ -58,14 +57,8 @@ h3{
 	font-size: 1.1em;
 }
 
-.box {
-  float: left;
-  margin-right: 15px;
-  width: 150px;
-  height: 100px;
-  border-radius: 5px;
-  background-color: rgb(207,232,220);
-  padding: 1em;
+.menu_lateral {
+	float:left;
 }
 
 #sidebar p.lista a{
