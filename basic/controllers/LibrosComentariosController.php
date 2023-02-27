@@ -132,7 +132,7 @@ class LibroscomentariosController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-    public function actionDenunciar($id)
+    public function actionDenunciarcomentario($id)
     {
         $tipoUsuario=1; //Cambiar cuando haya usuarios
         $comentario=LibrosComentarios::findOne(['id' => $id]);
@@ -146,8 +146,7 @@ class LibroscomentariosController extends Controller
             $comentario->bloqueado = 1;
         }
         $comentario->save();
-
-        return $this->redirect(['index']);
+		return $this->redirect(["detalle", 'id'=>comentario->libro_id]);
     }
 
     public function actionDesbloquear($id)

@@ -85,4 +85,18 @@ class Usuarios extends \yii\db\ActiveRecord
     {
         return new UsuariosQuery(get_called_class());
     }
+	
+	
+	public function getComentarios(){
+		
+		return $this->hasMany(LibrosComentarios::class,['crea_usuario_id'=>'id'])->inverseOf('usuario');
+		
+	}
+
+    public static function getNombre($id){
+
+        $usuario = self::findOne($id);
+        return $usuario ? $usuario->nombre : null;
+
+    }
 }

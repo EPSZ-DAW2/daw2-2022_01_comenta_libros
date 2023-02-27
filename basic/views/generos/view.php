@@ -3,15 +3,15 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/** @var yii\web\View $this */
-/** @var app\models\Editorial $model */
+/* @var $this yii\web\View */
+/* @var $model app\models\Generos */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Editorials'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Generos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="editorial-view">
+<div class="generos-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,8 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'nombre',
-            'url:ntext',
             'descripcion:ntext',
+            'icono',
+            'genero_id',
             'revisado',
         ],
     ]) ?>

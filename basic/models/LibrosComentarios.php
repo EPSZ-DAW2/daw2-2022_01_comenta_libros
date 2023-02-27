@@ -69,4 +69,11 @@ class LibrosComentarios extends \yii\db\ActiveRecord
             'modi_fecha' => 'Modi Fecha',
         ];
     }
+	
+	
+	public function getUsuario(){
+		
+		return $this->hasOne(Usuarios::class,['id'=>'crea_usuario_id'])->inverseOf('comentarios');
+		
+	}
 }

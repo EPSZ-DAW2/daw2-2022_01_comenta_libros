@@ -8,6 +8,7 @@ use app\models\EditorialSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 
 /**
  * EditorialesController implements the CRUD actions for Editorial model.
@@ -41,96 +42,23 @@ class EditorialesController extends Controller
     {
         $searchModel = new EditorialSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+		$pagination = new Pagination([
+			'defaultPageSize' => 3,
+			'totalCount' => $dataProvider->query->count(),
+		]);
+		
+		$editoriales=$dataProvider->query->offset($pagination->offset)->limit($pagination->limit)->all();
+		// La consulta SQL es: "SELECT DISTINCT SUBSTRING(nombre, 1, 1) AS letra;"
+		
+        $dataLetras = $searchModel->search([]);
+		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
+		//\Yii::trace( print_r("Letra ".$letra,true));
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'pagination' => $pagination,
+            'editoriales' => $editoriales,
+            'letra' => $letra,
         ]);
-    }
-
-    /**
-     * Displays a single Editorial model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Editorial model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Editorial();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Editorial model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Editorial model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Editorial model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Editorial the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Editorial::findOne(['id' => $id])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 	
 	/*
@@ -138,16 +66,43 @@ class EditorialesController extends Controller
 	*	Acción detalle para mostrar la ficha resumida de los libros de cada editorial
 	*
 	*/
-	public function actionDetalle($id)
+	public function actionLibros_editorial($id)
     {
         $editorial=Editorial::findOne(['id' => $id]);
         $libro = Libros::findAll(['editorial_id' => $editorial->id]);
 		
-        return $this->render('detalle',array(
+        return $this->render('libros_editorial',array(
             "editorial"=>$editorial,
             "libro"=>$libro,
-            //"titulo"=>$libro->titulo
-
         ));
     }// actionDetalle
+	
+	/*
+	*
+	*	Acción letra para filtar el nombre de una editorial por una letra seleccionada
+	*
+	*/
+	public function actionLetrafilter($filtroLetra)
+    {
+		$searchModel = new EditorialSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+		$pagination = new Pagination([
+			'defaultPageSize' => 3,
+			'totalCount' => $dataProvider->query->count(),
+		]);
+		
+        $editoriales=$dataProvider->query->where(['like','nombre',$filtroLetra.'%',false])->offset($pagination->offset)->limit($pagination->limit)->all();
+  
+		$dataLetras = $searchModel->search([]);
+		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
+		
+		return $this->render('index', [
+            'searchModel' => $searchModel,
+            'pagination' => $pagination,
+            'editoriales' => $editoriales,
+            'letra' => $letra,
+        ]);
+    }// actionLetra
+
+    
 }

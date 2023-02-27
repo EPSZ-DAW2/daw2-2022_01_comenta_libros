@@ -5,7 +5,9 @@ namespace app\controllers;
 use app\models\Autores;
 use app\models\Libros;
 use app\models\LibrosImagenes;
+use app\models\LibrosComentarios;
 use app\models\LibrosSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -205,16 +207,39 @@ class LibrosController extends Controller
     public function actionDetalle($id)
     {
         $libro = Libros::findOne(['id' => $id]);
+
+        $comentarios = LibrosComentarios::findAll(['libro_id' => $libro->id]);
+		
         $autor = Autores::findOne(['id' => $libro->autor_id]);
         $imagenes = LibrosImagenes::findAll(['libro_id'=>$id]);
         $estado = Libros::LISTA_BLOQUEO[$libro->bloqueado];
         $terminacion = Libros::LISTA_TERMINADO[$libro->terminado];
+		$nuevoComentario = new LibrosComentarios;
         return $this->render('detalle',array(
             "libro"=>$libro,
             "autor"=>$autor,
             "imagenes"=>$imagenes,
             "estado"=>$estado,
-            "terminacion"=>$terminacion
+            "terminacion"=>$terminacion,
+			"comentarios"=>$comentarios,
+			"nuevoComentario"=>$nuevoComentario
         ));
     }
+	
+	
+	public function actionComentario()
+	{
+		$nuevoComentario = new LibrosComentarios(); // Cambia "Usuario" por el nombre de tu modelo
+		if ($nuevoComentario->load(Yii::$app->request->post()))
+		{
+			$nuevoComentario->crea_usuario_id=1;
+			
+			$nuevoComentario->save(false);
+		}
+		return $this->redirect(["detalle", 'id'=>$nuevoComentario->libro_id]);
+		
+	}
+	
+	
+	
 }

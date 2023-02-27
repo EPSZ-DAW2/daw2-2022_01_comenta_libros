@@ -9,6 +9,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use app\models\Usuarios;
 
 AppAsset::register($this);
 
@@ -38,10 +39,28 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
+
         'items' => [
+            [
+                'label' => 'Admin',
+                'items' => [
+                    ['label' => 'Géneros', 'url' => ['/site/AdminGeneros']],
+                    ['label' => 'Etiquetas', 'url' => ['/site/AdminEtiquetas']],
+                ]//,
+                //'visible' => Yii::$app->user->isAdmin,
+            ],
+            ['label' => 'Nube', 'url' => ['/tag-cloud']],
             ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Libros', 'url' => ['/libros']],
+            ['label' => 'Autores', 'url' => ['/autores']],
+            ['label' => 'Editoriales', 'url' => ['/editoriales']],
+            ['label' => 'Ilustradores', 'url' => ['/ilustradores']],
+            ['label' => 'Patrocinadores', 'url' => ['/patrocinadores']],
+            ['label' => 'Traductores', 'url' => ['/traductores']],
+            ['label' => 'Configuraciones', 'url' => ['/configuraciones']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Ajustes', 'url' => ['/site/ajustes']],
             Yii::$app->user->isGuest
                 ? ['label' => 'Login', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
@@ -71,7 +90,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <footer id="footer" class="mt-auto py-3 bg-light">
     <div class="container">
         <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
+            <div class="col-md-6 text-center text-md-start">&copy; Comenta Libros <?= date('Y') ?></div>
             <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
         </div>
     </div>

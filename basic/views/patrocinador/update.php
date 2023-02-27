@@ -2,17 +2,17 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var app\models\Editorial $model */
+/* @var $this yii\web\View */
+/* @var $model app\models\Patrocinador */
 
-$this->title = Yii::t('app', 'Update Editorial: {name}', [
+$this->title = Yii::t('app', 'Update Patrocinador: {name}', [
     'name' => $model->id,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Editorials'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Patrocinadors'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="editorial-update">
+<div class="patrocinador-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

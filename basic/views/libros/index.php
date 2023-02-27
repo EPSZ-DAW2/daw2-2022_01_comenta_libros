@@ -36,6 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'titulo:ntext',
             'resumen:ntext',
             'autor_id',
+            [
+                'attribute' => 'Nombre autor',
+                'value' => function ($model) use ($controller) {
+                    return $controller->estadoTerminado($model->terminado);
+                },
+            ],
             'ilustrador_id',
             'traductor_id',
            // 'editorial_id',

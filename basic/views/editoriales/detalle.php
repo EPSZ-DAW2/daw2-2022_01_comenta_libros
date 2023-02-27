@@ -6,31 +6,22 @@
 /** @var Exception$exception */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 ?>
 <div class="grid container row">
     <div class="col-4">
-        <h3><?= Html::encode($editorial->nombre) ?></h3>
-        <h4><?= Html::encode($editorial->descripcion) ?></h4>
-        <hr>
 		<br/>
-		<div class="row">
+        <?php
+		echo Html::a(Yii::t('app', $editorial->nombre), ['libros_editorial', 'id'=>$editorial->id], ['class' => 'btn btn-outline-secondary']);
+		?>
+        <p><?= Html::encode($editorial->descripcion) ?></p>
+        <p>Url: <a href="<?= Html::encode($editorial->url) ?>"><?= Html::encode($editorial->url) ?></a></p>
 			<?php
-			if($libro==null){
-					$mensaje="No hay ningún libro asociado a esta Editorial";?>
-					<p><?= Html::encode($mensaje) ?></p>	<!-- Mensaje de editorial sin libro -->
-				<?php
-			}else{
-				foreach($libro as $libro){ 
-				
-				//echo $libro->id;?>
-				<h5><?= Html::encode($libro->titulo) ?></h5> <!-- Titulo del libro -->
-				<p><?= Html::encode($libro->resumen) ?></p>	<!-- Resumen del libro -->
-				<p><?= Html::encode($libro->autor->nombre) ?></p>	<!-- Nombre del autor del libro -->
-				<hr>
-			<?php	
-				}// foreach Libro
-			}// if
+			// Botón para ver la ficha resumida de la editorial seleccionada
 			?>
-			
-    </div>
+			<a href="<?= Url::toRoute(['/editoriales/detalle', 'id' => $editorial->id, 'class' => 'btn btn-primary']); ?>" style=" background-color: #4CAF50;  border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">
+				Ver Detalles
+			</a>
+        <hr>
+	</div>
 </div>
