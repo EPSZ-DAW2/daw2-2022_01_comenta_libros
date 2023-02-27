@@ -66,7 +66,7 @@ class UsuariolibrosController extends Controller
        
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'prueba' => $consulta,
+            
         ]);
     }
 
@@ -164,5 +164,17 @@ class UsuariolibrosController extends Controller
         ));
     }
 
+    public function actionUsuario($id){
+        $usuario = Usuarios::findOne(['id' => $this->findModel($id)->usuario_id]);
+
+        $model = UsuarioLibros::find()->where(['usuario_id' => $usuario->id])->one();
+        $fecha= $model->getFechaFormateada();
+
+        return $this->render('usuario',array(
+            "usuario" => $usuario,
+            "fecha" => $fecha,
+        ));
+
+    }
    
 }
