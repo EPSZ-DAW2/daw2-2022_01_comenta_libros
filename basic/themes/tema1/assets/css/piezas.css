@@ -25,3 +25,8 @@ a.acceso{
 	padding: 0.1em 0.4em 0.1em 0.4em;
 	font-weight: bold;
 }
+
+.img-responsive {
+	text-align: center;
+	width: 25%;
+}
