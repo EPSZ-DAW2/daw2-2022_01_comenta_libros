@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); ?>
     
-    <?php  ?>
+ 
    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

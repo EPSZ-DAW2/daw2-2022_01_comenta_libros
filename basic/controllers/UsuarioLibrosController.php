@@ -168,11 +168,11 @@ class UsuariolibrosController extends Controller
         $usuario = Usuarios::findOne(['id' => $this->findModel($id)->usuario_id]);
 
         $model = UsuarioLibros::find()->where(['usuario_id' => $usuario->id])->one();
-        $fecha= $model->getFechaFormateada();
+        // $fecha= $model->getFechaFormateada();
 
         return $this->render('usuario',array(
             "usuario" => $usuario,
-            "fecha" => $fecha,
+            // "fecha" => $fecha,
         ));
 
     }

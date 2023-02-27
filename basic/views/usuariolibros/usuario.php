@@ -19,7 +19,7 @@ use app\controllers\LibrosComentarios;
         <h3><?= Html::encode("Nombre: ".$usuario->nombre. " ". $usuario->apellidos) ?></h3>
         <h3><?= Html::encode("Nick: ".$usuario->nick) ?></h3>
         <p><?= Html::encode("Email: ".$usuario->email) ?></p>
-        <p><?= Html::encode("Fecha Nacimiento: ".$fecha) ?></p>
+        <p><?= Html::encode("Fecha Nacimiento: ".$usuario->fecha_nacimiento) ?></p>
         <p><?= Html::encode("Direccion: ".$usuario->direccion) ?></p>
 
         <img src="" style="width=:'10px', height: 10px">
