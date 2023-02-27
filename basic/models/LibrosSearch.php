@@ -57,7 +57,7 @@ class LibrosSearch extends Libros
             return $dataProvider;
         }
 
-        // grid filtering conditions
+        // grid filtering  conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'autor_id' => $this->autor_id,
