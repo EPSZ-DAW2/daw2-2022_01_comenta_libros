@@ -65,7 +65,7 @@ use app\models\Usuarios;
 	
 	<div class="menu_lateral">
 		<div id="sidebar">
-			<div class="sidebar-header"><h3>Clasificación:</h3></div>
+			<div class="sidebar-header"><h3>Ver libros:</h3></div>
 				<ul>
 					<p class="lista"><a href="">Más vistos</a></p>
 					<p class="lista"><a href="">Menos vistos</a></p>
