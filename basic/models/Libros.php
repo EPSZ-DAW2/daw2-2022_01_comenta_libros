@@ -124,6 +124,9 @@ class Libros extends \yii\db\ActiveRecord
             'modi_usuario_id' => 'Modi Usuario ID',
             'modi_fecha' => 'Modi Fecha',
             'notas_admin' => 'Notas Admin',
+            'nombreAutor' => 'Autor',
+            'nombreEditorial' => 'Editorial',
+            'nombreGenero' => 'Genero',
         ];
     }
 
@@ -133,11 +136,11 @@ class Libros extends \yii\db\ActiveRecord
         
     }// getIlustradores
 	
-	public function getEditoriales(){
+	public function getEditorial(){
 
         return $this->hasOne(Editorial::class, ['id' => 'editorial_id']);
         
-    }// getEditoriales
+    }// getEditorial
 
     public function getTraductores(){
 
@@ -149,6 +152,28 @@ class Libros extends \yii\db\ActiveRecord
 
         return $this->hasOne(Autores::class, ['id' => 'autor_id']);
         
-    }// getAutores    
+    }// getAutores  
+
+    public function getNombreAutor(){
+        $autor = $this->autor;
+        return (($autor !== null) ? $autor->nombre : null);
+        
+    }// getNombreAutor
+
+    public function getNombreEditorial(){
+        $editorial = $this->editorial;
+        return (($editorial !== null) ? $editorial->nombre : null);
+        
+    }// getNombreEditorial
+
+    public function getGenero(){
+        return $this->hasOne(Generos::class,['id'=>'genero_id']);
+    }// getGenero
+
+    public function getNombreGenero(){
+        $genero = $this->genero;
+        return (($genero !== null) ? $genero->nombre : null);
+        
+    }// getNombreGenero
 }
 
