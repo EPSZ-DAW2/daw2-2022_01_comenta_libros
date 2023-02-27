@@ -4,7 +4,7 @@
 use \app\models\LibrosEventos;
 use yii\helpers\Html;
 
-$this->title = 'Principal';
+$this->title = "Principal";
 ?>
 
 <div class="site-index">

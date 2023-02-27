@@ -1,8 +1,11 @@
 <?php
 
-use yii\helpers\Html;
+use yii\bootstrap5\Html;
+use app\widgets\Alert;
 use yii\widgets\Menu;
 use yii\widgets\Breadcrumbs;
+use app\models\Usuarios;
+
 
 /**
  * @var $this \yii\base\View
@@ -75,8 +78,8 @@ use yii\widgets\Breadcrumbs;
 	</section>
 </main>
 		<footer class="site-footer clearfix">
-			 <section class="copyright grey-text darken-2"><a href="/" class="grey-text darken-5"><?php echo Html::encode($this->title); ?></a> &copy; 2023</section>
-			 <section class="poweredby grey-text darken-2">proudly published with <a href="http://yiiframework.com" class="grey-text darken-5">Yii2</a></section>
+			 <section class="copyright grey-text darken-2"><?php echo Html::encode($this->title); ?></a> &copy; <?= date('Y') ?></section>
+			 <section class="poweredby grey-text darken-2">Proudly published with <a href="http://yiiframework.com" class="grey-text darken-5">Yii2</a></section>
 		</footer>
 
 		<script src="<?php echo $this->theme->baseUrl ?>/assets/js/jquery.min.js"></script>

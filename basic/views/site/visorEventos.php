@@ -8,7 +8,6 @@ use \app\models\LibrosEventos;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Eventos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
