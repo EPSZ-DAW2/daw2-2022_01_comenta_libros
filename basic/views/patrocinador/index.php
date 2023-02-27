@@ -6,7 +6,7 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\PatrocinadorSearch */
+/* @var $searchModel app\models\UsuarioSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Patrocinadores');
@@ -15,7 +15,24 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="patrocinador-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <div class="container">
+	<!-- Búsqueda simple -->
+	<br/>
+	<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+	
+	<!-- Lista de anuncios -->
+	<br/>
+	<div class="row">
+		<?php
+		if(empty($anuncio)){
+			echo '<h2>No se ha encontrado ningun anuncio</h2>';
+		} else {
+			foreach ($anuncio as $anuncio){
+				echo $this->render('panuncio', ['anuncio'=>$anuncio]);
+			}
+		} ?>
+	</div>
+</div>
     <p>
         <?= Html::a(Yii::t('app', 'Create Patrocinador'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
