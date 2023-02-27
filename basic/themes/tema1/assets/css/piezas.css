@@ -1,0 +1,25 @@
+/**
+-- Este css está hecho para contener las piezas de elementos individuales
+*/
+
+
+div.pieza1{
+	border-radius: 1em;
+	background-color: #FFCC99;
+	padding: 0.5em 0.5em 0.5em 1em;
+}
+
+div.pieza2{
+	border-radius: 1em;
+	background-color: #FF6633;
+}
+
+a.acceso{
+	background-color: #99CCFF;
+	border-radius: 0.3em;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	padding: 0.1em 0.4em 0.1em 0.4em;
+	font-weight: bold;
+}
