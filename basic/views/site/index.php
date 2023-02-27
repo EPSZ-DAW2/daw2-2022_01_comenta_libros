@@ -28,10 +28,12 @@ $this->title = "Principal";
 				echo $this->render('ficha_libro_resumen', ['ficharesumen'=>$ficharesumen]);
 			}
 		} ?>
-        <div class="col-lg-4" style="float:right;">
+        
+    </div>
+	
+	<div class="col-lg-4">
 		<!-- Visor Eventos -->
 		<?php echo $this->render('visorEventos', ['evento'=>$evento]); ?>
-		</div>
-    </div>
+	</div>
+		
 </div>	
-

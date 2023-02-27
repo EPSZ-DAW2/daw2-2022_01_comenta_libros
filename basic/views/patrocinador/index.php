@@ -24,11 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
 	<br/>
 	<div class="row">
 		<?php
-		if(empty($anuncio)){
-			echo '<h2>No se ha encontrado ningun anuncio</h2>';
+		if(empty($searchModel)){
+			echo '<h2>No se ha encontrado ningun patrocinador</h2>';
 		} else {
-			foreach ($anuncio as $anuncio){
-				echo $this->render('panuncio', ['anuncio'=>$anuncio]);
+			foreach ($searchModel as $patrocinador){
+				echo $this->render('detalle_patrocinador', ['patrocinador'=>$patrocinador]);
 			}
 		} ?>
 	</div>

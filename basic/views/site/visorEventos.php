@@ -11,15 +11,12 @@ use yii\helpers\Url;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="right">
+<div class="pieza2">
 	<h1>Visor de Eventos</h1>
-	<div class="right">
-		<div class="row">
+	<hr>
 			<?php
 			foreach($evento as $evento){
 				echo $this->render('fichaEventos', ['evento'=>$evento]);
-				echo'<hr>';
 			}
 			?>
-		
 </div>
