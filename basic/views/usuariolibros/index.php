@@ -25,19 +25,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); ?>
     
-    <?php //var_dump($nombre); ?>
+    <?php  ?>
    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'usuario_id',
+            
             //meter nombre de usuario
-        
-            'local_id',
+           
+            // 'local_id',
+            [
+                'attribute' => 'local_id',
+                'label' => 'Libro ID',
+
+            ],
             'fecha_seguimiento',
             [
                 'class' => ActionColumn::className(),
