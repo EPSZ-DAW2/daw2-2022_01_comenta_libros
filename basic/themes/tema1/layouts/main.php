@@ -37,6 +37,7 @@ use yii\widgets\Breadcrumbs;
 						    'options' => ['id' => "nav-mobile", 'class' => 'left side-nav'],
 						    'items' => [
 						        ['label' => 'Home', 'url' => ['site/index']],
+								['label' => 'Nube', 'url' => ['/tag-cloud']],
 						        ['label' => 'About', 'url' => ['site/about']],
 						        ['label' => 'Contact', 'url' => ['site/contact']],
 								['label' => 'Libros', 'url' => ['/libros']],
