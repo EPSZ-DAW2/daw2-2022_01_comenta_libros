@@ -9,7 +9,6 @@ use app\models\Usuarios;
 use app\models\CambiarcontraForm;
 use app\models\EditarperfilForm;
 use app\models\UsuarioGeneros;
-use app\models\Generos;
 
 class MiperfilController extends Controller
 {
@@ -131,20 +130,13 @@ class MiperfilController extends Controller
     	return $this->render('cambiar_contra', ['usuario' => $usuario, 'model'=>$model, 'msg'=>$msg]);
     }
 
-	public function actionUsuariogeneros()
+	public function actionUsuarioGeneros()
     {
-		$usuario= Usuarios::getSessionUser();
-		$id_curr=$usuario->getId();
         $model = new UsuarioGeneros();
-		
-        $data = $model->find()->distinct()->where(['usuario_id'=> $id_curr])->all();
-
-		/*$genero=[];
-		foreach($data as $gender){
-       	 array_push($genero,Generos::find()->distinct()->where(['ID' => $gender])->all());
-		}*/
+        $data = $model->find()->all();
+        
         if(Yii::$app->request->post()) {
-            $idsToDelete = Yii::$app->request->post('idsToDelete', []);//Cuando esten marcados se borraran
+            $idsToDelete = Yii::$app->request->post('idsToDelete', []);
             
             if(!empty($idsToDelete)) {
                 foreach($idsToDelete as $id) {
@@ -155,7 +147,7 @@ class MiperfilController extends Controller
             return $this->redirect(['usuario_generos']);
         }
         
-        return $this->render('usuario_generos', ['data' => $data,]);
+        return $this->render('usuario_generos', ['data' => $data]);
     }
 
 }
