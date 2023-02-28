@@ -59,22 +59,12 @@ class PatrocinadorSearch extends Patrocinador
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'usuario_id' => $this->usuario_id,
-            'fecha_alta' => $this->fecha_alta,
-        ]);
-
         $query->andFilterWhere(['like', 'nif_cif', $this->nif_cif])
             ->andFilterWhere(['like', 'razon_social', $this->razon_social])
             ->andFilterWhere(['like', 'telefono_comercial', $this->telefono_comercial])
             ->andFilterWhere(['like', 'telefono_contacto', $this->telefono_contacto])
             ->andFilterWhere(['like', 'url', $this->url])
 			->andFilterWhere(['like', 'nick', $this->nick]);
-		/* Arreglar
-		$query->andFilterWhere(['like','usuarios.nick', $this->nick]);
-		$query->joinWith('usuarios');*/
 
         return $dataProvider;
     }
