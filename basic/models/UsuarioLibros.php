@@ -42,7 +42,7 @@ class UsuarioLibros extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'usuario_id' => Yii::t('app', 'Usuario ID'),
-            'local_id' => Yii::t('app', 'Local ID'),
+            'local_id' => Yii::t('app', 'Libro ID'),
             'fecha_seguimiento' => Yii::t('app', 'Fecha Seguimiento'),
         ];
     }
@@ -55,4 +55,9 @@ class UsuarioLibros extends \yii\db\ActiveRecord
     {
         return new UsuarioLibrosQuery(get_called_class());
     }
+
+    public function getFechaFormateada()
+{
+    return Yii::$app->formatter->asDate($this->fecha_seguimiento, 'dd/MM/yyyy');
+}
 }

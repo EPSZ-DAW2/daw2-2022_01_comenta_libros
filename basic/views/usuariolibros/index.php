@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); ?>
     
-    <?php  ?>
+ 
    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -58,6 +58,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'verDetalle' => function($url, $model, $key) {    
                         return Html::a(Yii::t('app', 'Ver detalle libro'), ['detalle', 'id'=>$model->id], ['class' => 'btn btn-success']);
+                    }
+                ]
+            ],
+
+        
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{verDetalle}',  
+                'buttons' => [
+                    'verDetalle' => function($url, $model, $key) {    
+                        return Html::a(Yii::t('app', 'Ver detalle usuario'), ['usuario', 'id'=>$model->id], ['class' => 'btn btn-success']);
                     }
                 ]
             ]

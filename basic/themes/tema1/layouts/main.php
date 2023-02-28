@@ -1,11 +1,21 @@
 <?php
 
+use app\assets\AppAsset;
 use yii\bootstrap5\Html;
 use app\widgets\Alert;
 use yii\widgets\Menu;
 use yii\widgets\Breadcrumbs;
 use app\models\Usuarios;
+use app\controllers\AdsController;
 
+AppAsset::register($this);
+
+$this->registerCsrfMetaTags();
+$this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
+$this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
+$this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
+$this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 
 /**
  * @var $this \yii\base\View
@@ -16,10 +26,10 @@ use app\models\Usuarios;
 <?php $this->beginPage(); ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
-		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title><?php echo Html::encode($this->title); ?></title>
     <?php $this->head(); ?>
     
@@ -38,24 +48,33 @@ use app\models\Usuarios;
 	<nav>
 		<div class="nav-wrapper cyan darken-3">
 	  		<?php
-						echo Menu::widget([
-						    'options' => ['id' => "nav-mobile", 'class' => 'left side-nav'],
-						    'items' => [
-						        ['label' => 'Home', 'url' => ['site/index']],
-								['label' => 'Nube', 'url' => ['/tag-cloud']],
-						        ['label' => 'About', 'url' => ['site/about']],
-						        ['label' => 'Contact', 'url' => ['site/contact']],
-								['label' => 'Libros', 'url' => ['/libros']],
-								['label' => 'Autores', 'url' => ['/autores']],
-								['label' => 'Editoriales', 'url' => ['/editoriales']],
-								['label' => 'Ilustradores', 'url' => ['/ilustradores']],
-								['label' => 'Patrocinadores', 'url' => ['/patrocinador']],
-								['label' => 'Traductores', 'url' => ['/traductores']],
-								['label' => 'Configuraciones', 'url' => ['/configuraciones']],
-								['label' => 'Generos', 'url' => ['/generos']],
-						        ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-						    ],
-						]);
+			if(Yii::$app->user->isGuest){
+				require_once('nav_invitado.php');
+			}else{
+				$rol=Usuarios::getSessionRol();
+				switch($rol){
+					case "ROL_0":
+						require_once('nav_normal.php');
+					break;
+
+					case "ROL_1":
+						require_once('nav_moderador.php');
+					break;
+
+					case "ROL_2":
+						require_once('nav_patrocinador.php');
+					break;
+
+					case "ROL_3":
+						require_once('nav_admin.php');
+					break;
+
+					case "ROL_4":
+						require_once('nav_sysadmin.php');
+					break;
+				}
+			}
+
 					?>
 			<a class="button-collapse" href="#" data-activates="nav-mobile"><i class="mdi-navigation-menu"></i></a>
 		</div>
@@ -67,21 +86,22 @@ use app\models\Usuarios;
 		<div id="sidebar">
 			<div class="sidebar-header"><h3>Ver libros:</h3></div>
 				<ul>
-					<p class="lista"><a href="">Más vistos</a></p>
-					<p class="lista"><a href="">Menos vistos</a></p>
-					<p class="lista"><a href="">Terminados</a></p>
-					<p class="lista"><a href="">Suspendidos</a></p>
-					<p class="lista"><a href="">Nuevos</a></p>
+					<p class="lista"><?= Html::a('Más votados', ['site/masvotados']) ?></p>
+					<p class="lista"><?= Html::a('Menos votados', ['site/menosvotados']) ?></p>
+					<p class="lista"><?= Html::a('Terminados', ['site/terminados']) ?></p>
+					<p class="lista"><?= Html::a('Suspendidos', ['site/suspendidos']) ?></p>
+					<p class="lista"><?= Html::a('Nuevos', ['site/nuevos']) ?></p>
 				</ul>
 			<div class="sidebar-header"><h3>Enlaces:</h3></div>
 		</div>
 	</div>
-	
+
 	
 	<section id="main-inner-container" class="container">
 		<article class="post page card-panel z-depth-1 article-container">
 			<header>
-				<h1><?php echo Html::encode(\Yii::$app->name); ?></h1>
+				<?php echo Html::img('@web/images/libros.jpg', ['alt' => 'Logo', 'class' => 'img-responsive']); ?>
+				<h1>Comentalibros</h1>
 			</header>
 			
 			<section class="post-content">
@@ -89,7 +109,16 @@ use app\models\Usuarios;
 			</section>
 		</article>
 	</section>
+
 </main>
+	<?php
+		$adsController = Yii::$app->createControllerByID('ads');
+		$randomAd = $adsController->actionRandomAd();	
+	?>
+	<div class="" style="position: absolute;top: 60%;right: 0;background: burlywood;border-radius: 15px;margin: 20px;padding: 20px;"><!--ESte codigo donde quiera un anuncio-->
+	<p>Anuncio en proceso</p>
+    <?php echo $this->render('@app/views/ads/_ad', ['ad' => $randomAd]); ?>
+	</div>
 
 
 <footer class="site-footer clearfix">

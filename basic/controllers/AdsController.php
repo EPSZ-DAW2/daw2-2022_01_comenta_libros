@@ -7,6 +7,8 @@ use yii\web\Controller;
 use app\models\Ad;
 
 class AdsController extends Controller
+
+    
 {
     public function actionIndex()
     {
@@ -22,5 +24,10 @@ class AdsController extends Controller
         return $this->render('index', [
             'ads' => $ads,
         ]);
+    }
+
+    public function actionRandomAd()
+    {
+        return Ad::find()->orderBy('RAND()')->one();
     }
 }

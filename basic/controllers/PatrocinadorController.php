@@ -9,7 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use app\models\Anuncio;
-use app\models\usuarios;
+use app\models\Usuarios;
 
 /**
  * PatrocinadorController implements the CRUD actions for Patrocinador model.
@@ -41,13 +41,13 @@ class PatrocinadorController extends Controller
      */
     public function actionIndex()
     {
-        //PRUEBA PARA SEARCH DE USUARIO
         $searchModel = new PatrocinadorSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+		$patrocinadores = $dataProvider->query->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+			'patrocinadores' => $patrocinadores,
         ]);
     }
 
@@ -138,6 +138,7 @@ class PatrocinadorController extends Controller
 
 
     // BUSCADOR DE ANUNCIOS POR NOMBRE DE PATROCINADOR
+	/*
     public function actionAnuncioPatrocinador($id)
     {
         $usuario=Usuario::findOne(['id' => $id]);
@@ -149,5 +150,5 @@ class PatrocinadorController extends Controller
             "patrocinador"=>$patrocinador,
             "anuncio"=>$anuncio,
         ));
-    }
+    }*/
 }

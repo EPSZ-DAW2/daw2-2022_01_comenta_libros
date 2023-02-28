@@ -14,7 +14,7 @@ use app\controllers\LibrosComentarios;
     <div class="col-4">
         <h3><?= Html::encode($libro->titulo) ?></h3>
         <h5><?= Html::encode($autor->nombre) ?></h5>
-        <img src="" style="width=:'10px', height: 10px">
+		<img height="700px" width="250px" src='<?=Yii::$app->request->getBaseUrl(true)?>/images/<?=$imagenes[0]->nombre?>' />
     </div>
     <div class="col-8" style="margin-top:15vh; text-align: justify;">
         <p>Estado: <?= Html::encode($estado) ?>. <?= Html::encode($terminacion) ?>.</p>
@@ -54,7 +54,13 @@ use app\controllers\LibrosComentarios;
 	} //foreach
 	?>
 
-
-
+	<?php
+		foreach($imagenes as $imagen) 
+		{
+			if($imagen->orden!=1 || $imagen->orden>5){
+				?><img height="200px" width="150px" style="object-fit: cover; margin-right: 10px;" src='<?=Yii::$app->request->getBaseUrl(true)?>/images/<?=$imagen->nombre?>' /><?php
+			}
+		}
+	?>
    </div>
 </div>

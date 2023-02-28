@@ -34,39 +34,42 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'titulo:ntext',
-            'resumen:ntext',
-            'autor_id',
-            [
-                'attribute' => 'Nombre autor',
-                'value' => function ($model) use ($controller) {
-                    return $controller->estadoTerminado($model->terminado);
-                },
-            ],
-            'ilustrador_id',
-            'traductor_id',
+            // 'resumen:ntext',
+            'nombreAutor',
+            'nombreEditorial',
+            'nombreGenero',
+            // 'autor_id',
+            // [
+            //     'attribute' => 'Nombre autor',
+            //     'value' => function ($model) use ($controller) {
+            //         return $controller->estadoTerminado($model->terminado);
+            //     },
+            // ],
+            // 'ilustrador_id',
+            // 'traductor_id',
            // 'editorial_id',
-            'genero_id',
+            // 'genero_id',
             //'coleccion:ntext',
-            'idioma_id',
+            // 'idioma_id',
             //'clase_formato_id',
             //'paginas',
-            'imagen_id',
-            'visible',
-            [
-                'attribute' => 'terminado',
-                'value' => function ($model) use ($controller) {
-                    return $controller->estadoTerminado($model->terminado);
-                },
-            ],
+            // 'imagen_id',
+            // 'visible',
+            // [
+            //     'attribute' => 'terminado',
+            //     'value' => function ($model) use ($controller) {
+            //         return $controller->estadoTerminado($model->terminado);
+            //     },
+            // ],
             //'fecha_terminacion',
             //'num_denuncias',
             //'fecha_denuncia1',
-            [
-                'attribute' => 'bloqueado',
-                'value' => function ($model) use ($controller) {
-                    return $controller->estadoBloqueo($model->bloqueado);
-                },
-            ],
+            // [
+            //     'attribute' => 'bloqueado',
+            //     'value' => function ($model) use ($controller) {
+            //         return $controller->estadoBloqueo($model->bloqueado);
+            //     },
+            // ],
            // 'fecha_bloqueo',
            // 'notas_bloqueo:ntext',
             //'cerrado_comentar',

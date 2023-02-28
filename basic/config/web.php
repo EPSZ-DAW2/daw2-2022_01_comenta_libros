@@ -29,9 +29,13 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'class'=>'yii\web\User',
+            'identityClass' => 'app\models\Usuarios',
             'enableAutoLogin' => true,
-        ],
+            'authTimeout' => 60*30,
+            'loginUrl' => ['site/login'],
+            'identityCookie' => ['name' => '_panelSchool',]   
+         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

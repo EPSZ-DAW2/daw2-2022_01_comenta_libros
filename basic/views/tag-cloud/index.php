@@ -14,7 +14,7 @@ function getRandomColor() {
 
 function getRandomLetterSize() {
   
-  const randomIndex = Math.floor(Math.random() * 20)+40;
+  const randomIndex = Math.floor(Math.random() * 20)+30;
   return randomIndex + "px";
 }
 
