@@ -3,11 +3,13 @@
 namespace app\controllers;
 
 use app\models\Libros;
+use app\models\LibrosSearch;
 use app\models\Autores;
 use app\models\AutoresSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii;
 
 /**
  * AutoresController implements the CRUD actions for Autores model.
@@ -143,13 +145,30 @@ class AutoresController extends Controller
     {
         $autor=Autores::findOne(['id' => $id]);
         $libro = Libros::findAll(['autor_id' => $autor->id]);
+        $searchModel = new LibrosSearch();
+        $dataProvider = $searchModel->buscador(Yii::$app->request->queryParams);
 		
         return $this->render('detalle',array(
             "autor"=>$autor,
             "libro"=>$libro,
+            "searchModel" => $searchModel,
+            "dataProvider" => $dataProvider,
         ));
     }// actionDetalle
 	
-	
+	public function actionBuscar($id)
+    {
+    $autor=Autores::findOne(['id' => $id]);
+    $searchModel = new LibrosSearch();
+    $libro = Libros::findAll(['autor_id' => $autor->id]);
+    $dataProvider = $searchModel->buscador(Yii::$app->request->queryParams);
+
+    return $this->render('resuntado1',array(
+        "autor" => $autor,
+        "searchModel" => $searchModel,
+        "libro"=>$libro,
+        "dataProvider" => $dataProvider,
+    ));
+}
 	
 }

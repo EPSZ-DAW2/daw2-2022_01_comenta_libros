@@ -1,3 +1,4 @@
+
 <?php
 
 /** @var yii\web\View $this */
@@ -6,6 +7,12 @@
 /** @var Exception$exception */
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\data\ActiveDataProvider;
+use app\models\LibrosSearch;
+
+$this->title = 'Libros de ' . Html::encode($autor->nombre);
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="grid container row">
     <div class="col-4">
@@ -13,26 +20,25 @@ use yii\helpers\Html;
 		<h4><?= Html::encode($autor->descripcion) ?></h4>
 		<hr>
 		<br/>
-		<div class="row">
-			<?php
-			
-			if($libro==null){
-					$mensaje="Este autor no tiene libros";?>
-					<p><?= Html::encode($mensaje) ?></p>	<!-- Mensaje de editorial sin libro -->
-				<?php
-			}else{
-			
-				foreach($libro as $libro) //mostramos cada libro del autor
-				{ 
-					//echo $libro->id;?>
-					<h5><?= Html::encode($libro->titulo) ?></h5> <!-- Titulo del libro -->
-					<p><?= Html::encode($libro->resumen) ?></p>	<!-- Resumen del libro -->
-					<p>El autor terminó de escribir este libro en: <?= Html::encode($libro->fecha_terminacion) ?></p>	<!-- Nombre del autor del libro -->
-					<hr>
-				<?php	
-				} //foreach
-			}// else
-			?>
-			
+		<?php $form = ActiveForm::begin([
+		    'action' => ['buscar', 'id' => $autor->id],
+		    'method' => 'get',
+		]); ?>
+		    <?= $form->field($searchModel, 'titulo')->textInput(['placeholder' => 'Buscar por título'])->label(false) ?>
+		    <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
+		<?php ActiveForm::end(); ?>
+		<hr>
+		<br/>
+		<h5>Lista de libros de <?= Html::encode($autor->nombre) ?></h5>
+		<?php if($libro==null): ?>
+		    <p>Este autor no tiene libros</p>
+		<?php else: ?>
+		    <?php foreach($libro as $libro): ?>
+		        <h5><?= Html::encode($libro->titulo) ?></h5>
+		        <p><?= Html::encode($libro->resumen) ?></p>
+		        <p>El autor terminó de escribir este libro en: <?= Html::encode($libro->fecha_terminacion) ?></p>
+		        <hr>
+		    <?php endforeach; ?>
+		<?php endif; ?>
     </div>
 </div>

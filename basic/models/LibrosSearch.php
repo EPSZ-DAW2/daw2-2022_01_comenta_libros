@@ -94,5 +94,23 @@ class LibrosSearch extends Libros
 
         return $dataProvider;
     }
-    
+    public function buscador($params){
+    $query = Libros::find()->joinWith('autor');
+
+    $dataProvider = new ActiveDataProvider([
+        'query' => $query,
+    ]);
+
+    $this->load($params);
+
+    if (!$this->validate()) {
+        return $dataProvider;
+    }
+
+    $query->andFilterWhere(['like', 'titulo', $this->titulo]);
+          //->andFilterWhere(['like', 'autor.nombre', $this->autor_nombre]);
+
+    return $dataProvider;
+}
+
 }
