@@ -48,7 +48,7 @@ $this->title = "Principal";
     </div>
 	
 	<?php // Paginacion si la usa
-		if($pagination != NULL){
+		if(isset($pagination)){
 			echo LinkPager::widget(['pagination' => $pagination]);
 		}
 	?>
