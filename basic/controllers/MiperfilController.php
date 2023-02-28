@@ -10,6 +10,8 @@ use app\models\CambiarcontraForm;
 use app\models\EditarperfilForm;
 use app\models\UsuarioGeneros;
 use app\models\Generos;
+use app\models\UsuarioEtiquetas;
+use app\models\Etiquetas;
 
 class MiperfilController extends Controller
 {
@@ -142,20 +144,68 @@ class MiperfilController extends Controller
 		/*$genero=[];
 		foreach($data as $gender){
        	 array_push($genero,Generos::find()->distinct()->where(['ID' => $gender])->all());
-		}*/
+		}
+		*/
+
+		$genero=Generos::find()->all();
+		
+
         if(Yii::$app->request->post()) {
             $idsToDelete = Yii::$app->request->post('idsToDelete', []);//Cuando esten marcados se borraran
-            
+            print_r($idsToDelete);
             if(!empty($idsToDelete)) {
                 foreach($idsToDelete as $id) {
-                    $model->findOne($id)->delete();
+						$model->findOne(['genero_id'=>$id,'usuario_id'=>$id_curr])->delete();
+						echo($id);
+					
+					
                 }
             }
-            
-            return $this->redirect(['usuario_generos']);
+           
+            return $this->redirect(['index']);
         }
         
-        return $this->render('usuario_generos', ['data' => $data,]);
+
+
+        return $this->render('usuario_generos', ['data' => $data,'genero'=>$genero]);
+    }
+
+	public function actionUsuarioetiquetas()
+    {
+		$usuario= Usuarios::getSessionUser();
+		$id_curr=$usuario->getId();
+        $model = new UsuarioEtiquetas();
+		
+        $data = $model->find()->distinct()->where(['usuario_id'=> $id_curr])->all();
+
+		/*$genero=[];
+		foreach($data as $gender){
+       	 array_push($genero,Generos::find()->distinct()->where(['ID' => $gender])->all());
+		}
+		*/
+
+		$etiqueta=Etiquetas::find()->all();
+		
+
+        if(Yii::$app->request->post()) {
+            $idsToDelete = Yii::$app->request->post('idsToDelete', []);//Cuando esten marcados se borraran
+            print_r($idsToDelete);
+            if(!empty($idsToDelete)) {
+                foreach($idsToDelete as $id) {
+						$model->findOne(['etiqueta_id'=>$id,'usuario_id'=>$id_curr])->delete();
+						echo($id);
+					
+					
+                }
+            }
+           
+            return $this->redirect(['index']);
+        }
+        
+
+
+        return $this->render('usuario_etiquetas', ['data' => $data,'etiqueta'=>$etiqueta]);
     }
 
 }
+

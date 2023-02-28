@@ -61,6 +61,11 @@ h3{
 	float:left;
 }
 
+.menu_lateral_anuncio{
+  position: absolute;top: 60%;right: 0;background: burlywood;border-radius: 15px;margin: 20px;padding: 20px;
+
+}
+
 #sidebar p.lista a{
 	padding: 10px 10px 10px 20px;
 	font-size: 1.1em;

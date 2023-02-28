@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Géneros que sigues';
+$this->title = 'Etiquetas que sigues';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -10,18 +10,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <?php
-    if(!$data){?><h2>Todavía no sigues ningún género</h2><?php
+    if(!$data){?><h2>Todavía no sigues ninguna etiqueta</h2><?php
     }else{
 ?>
-<h2>Marca los géneros que quieras dejar de seguir</h2>
+<h2>Marca las etiquetas que quieras dejar de seguir</h2>
 <?php $form = ActiveForm::begin(['method' => 'post']) ?>
     <?php foreach($data as $item): ?>
         <div>
-            <?= Html::checkbox('idsToDelete[]', false, ['value'=>$item->genero_id,'style' => 'font-size: 16px;font-weight: bold;']) ?>
+            <?= Html::checkbox('idsToDelete[]', false, ['value'=>$item->etiqueta_id,'style' => 'font-size: 16px;font-weight: bold;']) ?>
             <?php
-                foreach($genero as $g){?>
+                foreach($etiqueta as $t){?>
                 <?php
-                    if($g->id == $item->genero_id) print($g->nombre);?><?php
+                    if($t->id == $item->etiqueta_id) print($t->nombre);?><?php
                 }
             ?>
         </div>
