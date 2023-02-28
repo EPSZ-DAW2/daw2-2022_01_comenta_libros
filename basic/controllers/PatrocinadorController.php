@@ -68,33 +68,7 @@ class PatrocinadorController extends Controller
         ]);
 	}
 	
-	public function actionBuscar_patrocinador($nick)
-	{
-		$searchModel = new PatrocinadorSearch();
-		$usuario = Usuarios::findOne(['nick' => $nick]);
-		
-		
-		if(empty($usuario))
-		{
-			return $this->render('index', [
-            'searchModel' => $searchModel,
-			]);
-		}
-		
-		$searchModel->search($this->request->queryParams);
-		$dataProvider = $searchModel->search($this->request->queryParams);
-		//
-		$patrocinadores = $dataProvider->query->where(["usuario_id" => $usuario->id])->all();
-		//
-		//['usuario_id' => $usuario->id];
-		
-		
-		
-		return $this->render('index', [
-            'searchModel' => $searchModel,
-			'patrocinadores' => $patrocinadores,
-        ]);
-	}
+	
 
     /**
      * Displays a single Patrocinador model.

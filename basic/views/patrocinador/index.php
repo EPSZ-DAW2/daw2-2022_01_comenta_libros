@@ -19,13 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="container">
 	<!-- Búsqueda simple -->
-		<?php $form = ActiveForm::begin([
-		    'action' => ['buscar_patrocinador'],
-		    'method' => 'get',
-		]); ?>
-		    <?= $form->field($searchModel, 'nick')->textInput(['placeholder' => 'Buscar por nombre'])->label(false) ?>
-		    <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
-		<?php ActiveForm::end(); ?>
+	<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+	
 	<br/>
 	
 	<!-- Lista de patrocinadores -->
@@ -41,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		}
 		?>
 	</div>
-	</div>
+</div>
 
 
 </div>

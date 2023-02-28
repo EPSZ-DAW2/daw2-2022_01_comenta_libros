@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="patrocinador-search">
-
+	
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
@@ -17,26 +17,11 @@ use yii\widgets\ActiveForm;
             'data-pjax' => 1
         ],
     ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'usuario_id') ?>
-
-    <?= $form->field($model, 'nif_cif') ?>
-
-    <?= $form->field($model, 'razon_social') ?>
-
-    <?= $form->field($model, 'telefono_comercial') ?>
-
-    <?php // echo $form->field($model, 'telefono_contacto') ?>
-
-    <?php // echo $form->field($model, 'url') ?>
-
-    <?php // echo $form->field($model, 'fecha_alta') ?>
+	<p>Buscar por nombre</p>
+    <?= $form->field($model, 'nick')->label(false) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Buscar'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
