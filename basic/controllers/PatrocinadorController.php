@@ -45,11 +45,9 @@ class PatrocinadorController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 		$patrocinadores = $dataProvider->query->all();
 		
-		$anunciosSearchModel = new PatrocinadorSearch();
 		
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
 			'patrocinadores' => $patrocinadores,
         ]);
     }
@@ -67,6 +65,34 @@ class PatrocinadorController extends Controller
         return $this->render('patrocinador_anuncios', [
 			'patrocinador' => $patrocinador,
 			'anuncios' => $anuncios
+        ]);
+	}
+	
+	public function actionBuscar_patrocinador($nick)
+	{
+		$searchModel = new PatrocinadorSearch();
+		$usuario = Usuarios::findOne(['nick' => $nick]);
+		
+		
+		if(empty($usuario))
+		{
+			return $this->render('index', [
+            'searchModel' => $searchModel,
+			]);
+		}
+		
+		$searchModel->search($this->request->queryParams);
+		$dataProvider = $searchModel->search($this->request->queryParams);
+		//
+		$patrocinadores = $dataProvider->query->where(["usuario_id" => $usuario->id])->all();
+		//
+		//['usuario_id' => $usuario->id];
+		
+		
+		
+		return $this->render('index', [
+            'searchModel' => $searchModel,
+			'patrocinadores' => $patrocinadores,
         ]);
 	}
 
@@ -154,20 +180,4 @@ class PatrocinadorController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
-
-
-    // BUSCADOR DE ANUNCIOS POR NOMBRE DE PATROCINADOR
-	/*
-    public function actionAnuncioPatrocinador($id)
-    {
-        $usuario=Usuario::findOne(['id' => $id]);
-        $patrocinador=Patrocinador::findOne(['usuario_id' => $usuario->id]);
-        $anuncio = Anuncio::findAll(['patrocinador_id' => $patrocinador->id]);
-		
-        return $this->render('patrocinador_anuncios',array(
-            "usuario"=>$usuario,
-            "patrocinador"=>$patrocinador,
-            "anuncio"=>$anuncio,
-        ));
-    }*/
 }
