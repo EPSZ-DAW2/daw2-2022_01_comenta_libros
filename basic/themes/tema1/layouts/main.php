@@ -67,11 +67,11 @@ use app\models\Usuarios;
 		<div id="sidebar">
 			<div class="sidebar-header"><h3>Ver libros:</h3></div>
 				<ul>
-					<p class="lista"><a href="">Más vistos</a></p>
-					<p class="lista"><a href="">Menos vistos</a></p>
-					<p class="lista"><a href="">Terminados</a></p>
-					<p class="lista"><a href="">Suspendidos</a></p>
-					<p class="lista"><a href="">Nuevos</a></p>
+					<p class="lista"><?= Html::a('Más vistos', ['site/masvistos']) ?></p>
+					<p class="lista"><?= Html::a('Menos vistos', ['site/menosvistos']) ?></p>
+					<p class="lista"><?= Html::a('Terminados', ['site/terminados']) ?></p>
+					<p class="lista"><?= Html::a('Suspendidos', ['site/suspendidos']) ?></p>
+					<p class="lista"><?= Html::a('Nuevos', ['site/nuevos']) ?></p>
 				</ul>
 			<div class="sidebar-header"><h3>Enlaces:</h3></div>
 		</div>

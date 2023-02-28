@@ -69,7 +69,7 @@ class SiteController extends Controller
 		
 		$searModel = new LibrosResumenSearch();
 		$dataProvider = $searModel->search($this->request->queryParams);
-		$fichasresumen = $dataProvider->query->limit(6)->all();
+		$fichasresumen = $dataProvider->query->limit(12)->where(["visible" => 1])->all();
 		
 		// PONER ESTO EN PAGINA PRINCIPAL CUANDO ESTE HECHA *****
 		// Y MOVER LAS VISTAS
@@ -81,6 +81,28 @@ class SiteController extends Controller
 			'evento'=>$evento->all(),
 		]);
     }
+	
+	/**
+	* Muestra los libros que son visibles y están terminados
+	*
+	**/
+	public function actionTerminados()
+	{
+		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
+		
+		$searModel = new LibrosResumenSearch();
+		$dataProvider = $searModel->search($this->request->queryParams);
+		$fichasresumen = $dataProvider->query->where(["visible" => 1, "terminado" => 1])->all();
+		
+		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
+		
+        return $this->render('index', [
+			'searchModel' => $searchModel,
+			'fichasresumen' => $fichasresumen,
+			'evento'=>$evento->all(),
+		]);
+	}
+	
 
     /**
      * Login action.
