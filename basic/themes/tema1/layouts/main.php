@@ -6,6 +6,7 @@ use app\widgets\Alert;
 use yii\widgets\Menu;
 use yii\widgets\Breadcrumbs;
 use app\models\Usuarios;
+use app\controllers\AdsController;
 
 AppAsset::register($this);
 
@@ -94,7 +95,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 			<div class="sidebar-header"><h3>Enlaces:</h3></div>
 		</div>
 	</div>
-	
+
 	
 	<section id="main-inner-container" class="container">
 		<article class="post page card-panel z-depth-1 article-container">
@@ -108,7 +109,16 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 			</section>
 		</article>
 	</section>
+
 </main>
+	<?php
+		$adsController = Yii::$app->createControllerByID('ads');
+		$randomAd = $adsController->actionRandomAd();	
+	?>
+	<div class="" style="position: absolute;top: 60%;right: 0;background: burlywood;border-radius: 15px;margin: 20px;padding: 20px;"><!--ESte codigo donde quiera un anuncio-->
+	<p>Anuncio en proceso</p>
+    <?php echo $this->render('@app/views/ads/_ad', ['ad' => $randomAd]); ?>
+	</div>
 
 
 <footer class="site-footer clearfix">

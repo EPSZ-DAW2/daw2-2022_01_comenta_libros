@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use app\models\Usuarios;
 use app\models\CambiarcontraForm;
 use app\models\EditarperfilForm;
+use app\models\UsuarioGeneros;
 
 class MiperfilController extends Controller
 {
@@ -127,6 +128,26 @@ class MiperfilController extends Controller
 
 
     	return $this->render('cambiar_contra', ['usuario' => $usuario, 'model'=>$model, 'msg'=>$msg]);
+    }
+
+	public function actionUsuarioGeneros()
+    {
+        $model = new UsuarioGeneros();
+        $data = $model->find()->all();
+        
+        if(Yii::$app->request->post()) {
+            $idsToDelete = Yii::$app->request->post('idsToDelete', []);
+            
+            if(!empty($idsToDelete)) {
+                foreach($idsToDelete as $id) {
+                    $model->findOne($id)->delete();
+                }
+            }
+            
+            return $this->redirect(['usuario_generos']);
+        }
+        
+        return $this->render('usuario_generos', ['data' => $data]);
     }
 
 }

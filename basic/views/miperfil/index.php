@@ -39,3 +39,6 @@ Fecha registro:
 <?= Html::a(Yii::t('app', 'Eliminar perfil'), ['borrarperfil'], ['class' => 'btn btn-outline-danger']); ?>
 <?php ?>
 <br>
+<?= Html::a(Yii::t('app', 'Editar Generos'), ['usuariogeneros'], ['class' => 'btn btn-outline-danger']); ?>
+<?php ?>
+<br>
