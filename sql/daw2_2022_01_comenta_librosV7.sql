@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-02-2023 a las 19:29:16
+-- Tiempo de generación: 28-02-2023 a las 19:39:19
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.11
 
@@ -448,7 +448,7 @@ CREATE TABLE `patrocinadores` (
 
 INSERT INTO `patrocinadores` (`id`, `usuario_id`, `nif_cif`, `razon_social`, `telefono_comercial`, `telefono_contacto`, `url`, `fecha_alta`) VALUES
 (1, 1, '11111111A', NULL, '111111111', '111111111', 'https://www.marvel.com/', '2023-01-12 16:00:00'),
-(2, 2, '11111', 'NULL', '666666', '666665', 'victor.es', '2023-02-27 12:05:37');
+(2, 3, '11111', 'NULL', '666666', '666665', 'victor.es', '2023-02-27 12:05:37');
 
 -- --------------------------------------------------------
 
