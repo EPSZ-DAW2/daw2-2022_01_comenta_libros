@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-02-2023 a las 11:07:26
+-- Tiempo de generación: 28-02-2023 a las 13:45:10
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -96,7 +96,9 @@ CREATE TABLE `configuraciones` (
 --
 
 INSERT INTO `configuraciones` (`variable`, `valor`) VALUES
-('configuracion1', 'valorconf1');
+('configuracion1', 'valorconf1'),
+('max_intentos_log', '5'),
+('tmp_bloqueo_log', '30');
 
 -- --------------------------------------------------------
 
@@ -517,15 +519,23 @@ CREATE TABLE `usuarios` (
   `num_accesos` int(9) NOT NULL DEFAULT 0 COMMENT 'Contador de accesos fallidos del usuario o CERO si no ha tenido o se ha reiniciado por un acceso valido o por un administrador.',
   `bloqueado` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Indicador de usuario bloqueado: 0=No, 1=Si(bloqueada por accesos), 2=Si(bloqueada por administrador), ...',
   `fecha_bloqueo` datetime DEFAULT NULL COMMENT 'Fecha y Hora del bloqueo del usuario. Debería estar a NULL si no está bloqueado o si se desbloquea.',
-  `notas_bloqueo` text DEFAULT NULL COMMENT 'Notas visibles sobre el motivo del bloqueo del usuario o NULL si no hay -se muestra por defecto según indique "bloqueado"-.'
+  `notas_bloqueo` text DEFAULT NULL COMMENT 'Notas visibles sobre el motivo del bloqueo del usuario o NULL si no hay -se muestra por defecto según indique "bloqueado"-.',
+  `rol` varchar(20) NOT NULL,
+  `auth_key` varchar(200) NOT NULL,
+  `reg_token` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `email`, `password`, `nick`, `nombre`, `apellidos`, `fecha_nacimiento`, `direccion`, `fecha_registro`, `confirmado`, `fecha_acceso`, `num_accesos`, `bloqueado`, `fecha_bloqueo`, `notas_bloqueo`) VALUES
-(1, 'usuario1@gmail.com', 'abc123.', 'usuario1', 'usuario1', 'apellido1usuario1', '2002-11-07', 'Direccion usuario 1', '2023-01-01 16:00:00', 0, '2023-01-13 16:33:14', 0, 0, NULL, NULL);
+INSERT INTO `usuarios` (`id`, `email`, `password`, `nick`, `nombre`, `apellidos`, `fecha_nacimiento`, `direccion`, `fecha_registro`, `confirmado`, `fecha_acceso`, `num_accesos`, `bloqueado`, `fecha_bloqueo`, `notas_bloqueo`, `rol`, `auth_key`, `reg_token`) VALUES
+(1, 'usuario1@gmail.com', 'abc123.', 'usuario1', 'usuario1', 'apellido1usuario1', '2002-11-07', 'Direccion usuario 1', '2023-01-01 16:00:00', 0, '2023-01-13 16:33:14', 0, 0, NULL, NULL, '', '', ''),
+(3, 'normal@gmail.com', '9f7b2cd2a4b80d23da18551c8430d1e705f91d10', 'normal', 'Normal', 'Usuario Normal', '2002-02-14', 'Casa Normal', '2023-02-28 06:42:38', 1, '2023-02-28 06:42:38', 0, 0, NULL, NULL, 'ROL_0', 'uERNDIsuLaoRV8WcFDpvJMc4VsnaoXH09belkA7xI6hgtq0ZdW8We71HDY3wKQqb750y8o25VdnlxMJTuJ2tmdmA4wTawLZj32CR53DFYmJrESyMc8SlGHLaqS2ZVYLcFOi3dTWkZ2suSQd0yk6IRZ86FafK9fNW9oYK6xUa5Ds1ayQsU7biensajinYmClvPPseDHVp', 'ZyM9C5zbIYiokZhqR39J6D5M2rBnZpomfvMwl6wc6Zp68TIdZDaOF1ekmqOXveVaEw4xGrMC63N05t6wnjBbnb9ppMIHkqei5i9QlheK9tUw82A18z9ehSvjWy57GMgjIIP6urmlghIiU4EChW9GBcWrdlgierAfkI4Q3UW47ro1T3sOYuHh0mYbx7clXudDknnJVYr5'),
+(4, 'moderador@gmail.com', '678bf2e2414409b27ca8952d77ae673ec800d322', 'moderador', 'Moderador', 'Usuario Moderador', NULL, 'Casa Moderador', '2023-02-28 06:45:06', 1, '2023-02-28 06:45:06', 0, 0, NULL, NULL, 'ROL_1', 'bX2yYAOf7cnx3poguktfvdTrsei4wbkGL6mvQ28fhBKJe57sQQmr3D0qxXmggj4aBaMCme4z0uoWtmTUYuEHLNvCZkd7sPVJnUiBq1houF8cOfymXtiJPXFsCHqS33cGaUex62WyTwq3GiHYq7hbPQWv2FRF7zR3xNPzDWYQTRsxHwZ8Ju9rE87vVhdGfm6YBcH26tk3', 'mmkviT45e2XtDb596xmumCHYnIw8quPFjtezLPazScfwcz8DDMxFwrcf2O8c83D5WyhFtcpWhxmyX9LISnokWVjUHj4r5zOEIWzLaGbJjN8QeaShVY52mv46ay7ZGw02KrxageoqiII29tpXiQEPH3ntlFrFeLreO6bSd34SYJnFcsBAsgwl9S6Huezjd4KnTismuyAA'),
+(5, 'patrocinador@gmail.com', '33c0bb7f21df0c4226ff9d3dc06cb200de048054', 'patrocinador', 'Patrocinador', 'Usuario Patrocinador', NULL, 'Casa Patrocinador', '2023-02-28 07:07:15', 1, '2023-02-28 07:07:15', 0, 0, NULL, NULL, 'ROL_2', 'o7Vp4JTtXYBnKPKC3oD6g6YRQOaI6hgmu25yKtaicT1kPJDL2zvl5ju9hkFY7UR3O5d1qKvtjeUr6GuUTDeTOsTOf4KSZQBTWpOI73o2dwH0dptsepQRvxKElk5MYt7Jx80xgFORiFfG14WwECeQkigYMaqDeqZtq3IeKWUYoI8Y5J8gEqFXgvPsAw3oKlouMYmVaTa0', 'OaKYTKgjtEOiBC6vYhXsvZLwxgA7EmfHwiqCXKtJXpLUdCP9CtreLdjed5aZN7CVoMc2JV7X9QUqJHEhCSfM76qZouL2VVNoMPLLZFrcIoJ5IPftCJMjkiJhgFZMA1cR0UbBZMiplWm0HqrRciqE57AdjC4RoOHg1tdlfnnBkRNO6SJiI2G9dTG5cMGCWsYo4S6EPeuG'),
+(6, 'admin@gmail.com', 'd4e8e6deaa7b1f8381e09e3e6b83e36f0b681c5c', 'admin', 'Admin', 'Usuario Admin', NULL, 'Casa Admin', '2023-02-28 07:08:48', 1, '2023-02-28 07:08:48', 0, 0, NULL, NULL, 'ROL_3', 'lFcVdiVioi6fvziz6PxxNaHeIlQVs1cd1wE3drySjUQgMh0qUq7147x2YBMnNDoU9WE6SKHFvUPBDkQP18UmmABSwkckb0mATFVeBQRXhMAYfsxlcab7aHXLMow2ppFndyTP7pvIa3BLGRfkZ9CCncyFdBtGytwjTFiyGyIdMS2Rygz3gMSqGvkIMfcQn1dLGbfRjlaj', 'oPIkY0XUGd9TSitOTacctaFllYVzqgn9yEc2SHfvp6yGvvEUwdASHdoprZ9PvdCDZjteMWOzWJHypGNVoUUgcKx0QNgh6s1NydhbROpWP5Cgh9PrfQQG01QfK0nJVFgVJ7sCnTdZ6tLMAEz83dbCMhcNeHsvebNV2Lnb7UqfEu0wSRsO8IQ7oy14yzo3dTd85IRKKlGN'),
+(7, 'sysadmin@gmail.com', 'e048d7853f986ffac3d1b15ae07c36bf1ae5eee2', 'sysadmin', 'Sysadmin', 'Usuario Sysadmin', NULL, 'Casa Sysadmin', '2023-02-28 07:10:56', 1, '2023-02-28 07:10:56', 0, 0, NULL, NULL, 'ROL_4', 'IIwPp6a2rHnlr22KVQUNHaVNUVzQqx4aZ08SQQgvfiJmEW4voJMOKqXFKGY80WLnkpgxzIDmQ1FO8duzYN32TH2j20EVjMXLXcFpUewsakkTXhxS9wout8DJVxKauGjupCz8QZYFSCaL8z63F3ZVUCynS3vu2LJ2CqHSwoX0VKVf36Na1M34oEUqhPlxhaasXwe329sK', 'xc6EeohbOAi47vdp7odzdNavDY73ei8eJ0HWXhn2tmbdX6T9pnF4hG3qebeLlmmWZyDUOPlaYnEmWZQSj5tzzShkUasLGIOg5rrcHNdUd8VeXT3KE6d6gDj8hRpEyLgIQ9YWeSx4u9dIqhnLWJOMWOwrV9b7ixFt4UjeoVgcbU3ITv48i4hvUu37H770Og9CvzHXxBs3');
 
 -- --------------------------------------------------------
 
@@ -906,7 +916,7 @@ ALTER TABLE `traductores`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios_avisos`
