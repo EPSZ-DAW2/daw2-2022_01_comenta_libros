@@ -14,7 +14,7 @@ use yii\helpers\Url;
 			<p>Nick: <?= Html::encode($patrocinador->nick) ?></p>
 			<p>Teléfono comercial: <?= Html::encode($patrocinador->telefono_comercial) ?></p>
 			<p>Enlace: <?= Html::encode($patrocinador->url) ?></p>
-			<a class="acceso" href="<?= Url::toRoute(['/patrocinador/detalle', 'id' => $patrocinador->id, 'class' => 'btn btn-primary']); ?>">Acceder a los anuncios</a>
+			<a class="acceso" href="<?= Url::toRoute(['/patrocinador/anuncios_patrocinador', 'id' => $patrocinador->id, 'class' => 'btn btn-primary']); ?>">Acceder a los anuncios</a>
 		</div>
 	</div>
 </div>

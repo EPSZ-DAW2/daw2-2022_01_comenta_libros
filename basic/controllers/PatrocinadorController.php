@@ -44,12 +44,31 @@ class PatrocinadorController extends Controller
         $searchModel = new PatrocinadorSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 		$patrocinadores = $dataProvider->query->all();
+		
+		$anunciosSearchModel = new PatrocinadorSearch();
+		
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
 			'patrocinadores' => $patrocinadores,
         ]);
     }
+	
+	/**
+	 *
+	 * Lista de anuncios de un patrocinador
+	 *
+	 */
+	public function actionAnuncios_patrocinador($id)
+	{
+		$patrocinador = Patrocinador::findOne(['id' => $id]);
+		$anuncios = Anuncio::findAll(['patrocinador_id' => $patrocinador->id]);
+		
+        return $this->render('patrocinador_anuncios', [
+			'patrocinador' => $patrocinador,
+			'anuncios' => $anuncios
+        ]);
+	}
 
     /**
      * Displays a single Patrocinador model.
