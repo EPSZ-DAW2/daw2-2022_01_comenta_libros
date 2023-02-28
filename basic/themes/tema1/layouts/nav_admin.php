@@ -4,10 +4,8 @@ use yii\widgets\Menu;
 echo Menu::widget([
     'options' => ['id' => "nav-mobile", 'class' => 'left side-nav'],
     'items' => [
-        ['label' => 'Home', 'url' => ['site/index']],
+        ['label' => 'Principal', 'url' => ['site/index']],
         ['label' => 'Nube', 'url' => ['/tag-cloud']],
-        ['label' => 'About', 'url' => ['site/about']],
-        ['label' => 'Contact', 'url' => ['site/contact']],
         ['label' => 'Libros', 'url' => ['/libros']],
         ['label' => 'Autores', 'url' => ['/autores']],
         ['label' => 'Editoriales', 'url' => ['/editoriales']],
