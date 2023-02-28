@@ -5,12 +5,14 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Patrocinador;
-
+use app\models\Usuarios;
 /**
  * PatrocinadorSearch represents the model behind the search form of `app\models\Patrocinador`.
  */
 class PatrocinadorSearch extends Patrocinador
 {
+	public $nick; // Nick del patrocinador en la tabla de usuarios
+	
     /**
      * {@inheritdoc}
      */
@@ -68,6 +70,9 @@ class PatrocinadorSearch extends Patrocinador
             ->andFilterWhere(['like', 'telefono_comercial', $this->telefono_comercial])
             ->andFilterWhere(['like', 'telefono_contacto', $this->telefono_contacto])
             ->andFilterWhere(['like', 'url', $this->url]);
+		/* Arreglar
+		$query->andFilterWhere(['like','usuarios.nick', $this->nick]);
+		$query->joinWith('usuarios');*/
 
         return $dataProvider;
     }

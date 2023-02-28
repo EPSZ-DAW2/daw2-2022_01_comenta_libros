@@ -85,8 +85,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 		<div id="sidebar">
 			<div class="sidebar-header"><h3>Ver libros:</h3></div>
 				<ul>
-					<p class="lista"><?= Html::a('Más vistos', ['site/masvistos']) ?></p>
-					<p class="lista"><?= Html::a('Menos vistos', ['site/menosvistos']) ?></p>
+					<p class="lista"><?= Html::a('Más votados', ['site/masvotados']) ?></p>
+					<p class="lista"><?= Html::a('Menos votados', ['site/menosvotados']) ?></p>
 					<p class="lista"><?= Html::a('Terminados', ['site/terminados']) ?></p>
 					<p class="lista"><?= Html::a('Suspendidos', ['site/suspendidos']) ?></p>
 					<p class="lista"><?= Html::a('Nuevos', ['site/nuevos']) ?></p>

@@ -1,6 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
+use yii\bootstrap5\LinkPager;
 use \app\models\LibrosEventos;
 use yii\helpers\Html;
 use app\controllers\AdsController;
@@ -44,8 +45,13 @@ $this->title = "Principal";
 				echo $this->render('ficha_libro_resumen', ['ficharesumen'=>$ficharesumen]);
 			}
 		} ?>
-        
     </div>
+	
+	<?php // Paginacion si la usa
+		if($pagination != NULL){
+			echo LinkPager::widget(['pagination' => $pagination]);
+		}
+	?>
 	
 	<div class="col-lg-4">
 		<!-- Visor Eventos -->

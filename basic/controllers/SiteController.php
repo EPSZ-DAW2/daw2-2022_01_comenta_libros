@@ -18,6 +18,7 @@ use app\models\LibrosSearch;
 use app\controllers\Html;
 use app\models\LibrosResumen;
 use app\models\LibrosResumenSearch;
+use yii\data\Pagination;
 
 class SiteController extends Controller
 {
@@ -88,7 +89,7 @@ class SiteController extends Controller
     }
 	
 	/**
-	* Muestra los libros que son visibles y están terminados
+	* Muestra ficha resumen de los libros que son visibles y están terminados
 	*
 	**/
 	public function actionTerminados()
@@ -97,12 +98,131 @@ class SiteController extends Controller
 		
 		$searModel = new LibrosResumenSearch();
 		$dataProvider = $searModel->search($this->request->queryParams);
-		$fichasresumen = $dataProvider->query->where(["visible" => 1, "terminado" => 1])->all();
+		
+		$pagination = new Pagination([
+			'defaultPageSize' => 4,
+			'totalCount' => $dataProvider->query->where(["visible" => 1, "terminado" => 1])->count(),
+		]);
+		
+		$fichasresumen = $dataProvider->query->where(["visible" => 1, "terminado" => 1])->offset($pagination->offset)->limit($pagination->limit)->all();
 		
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
 		
         return $this->render('index', [
 			'searchModel' => $searchModel,
+			'pagination' => $pagination,
+			'fichasresumen' => $fichasresumen,
+			'evento'=>$evento->all(),
+		]);
+	}
+	
+	/**
+	* Muestra ficha resumen de los libros que son visibles y son los más votados
+	*
+	**/
+	public function actionMasvotados()
+	{
+		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
+		
+		$searModel = new LibrosResumenSearch();
+		$dataProvider = $searModel->search($this->request->queryParams);
+		
+		$pagination = new Pagination([
+			'defaultPageSize' => 4,
+			'totalCount' => $dataProvider->query->where(["visible" => 1])->count(),
+		]);
+		
+		$fichasresumen = $dataProvider->query->where(["visible" => 1])->orderBy(["totalVotos" => SORT_DESC])->offset($pagination->offset)->limit($pagination->limit)->all();
+		
+		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
+		
+        return $this->render('index', [
+			'searchModel' => $searchModel,
+			'pagination' => $pagination,
+			'fichasresumen' => $fichasresumen,
+			'evento'=>$evento->all(),
+		]);
+	}
+	
+	/**
+	* Muestra ficha resumen de los libros que son visibles y son los menos votados
+	*
+	**/
+	public function actionMenosvotados()
+	{
+		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
+		
+		$searModel = new LibrosResumenSearch();
+		$dataProvider = $searModel->search($this->request->queryParams);
+		
+		$pagination = new Pagination([
+			'defaultPageSize' => 4,
+			'totalCount' => $dataProvider->query->where(["visible" => 1])->count(),
+		]);
+		
+		$fichasresumen = $dataProvider->query->where(["visible" => 1])->orderBy(["totalVotos" => SORT_ASC])->offset($pagination->offset)->limit($pagination->limit)->all();
+		
+		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
+		
+        return $this->render('index', [
+			'searchModel' => $searchModel,
+			'pagination' => $pagination,
+			'fichasresumen' => $fichasresumen,
+			'evento'=>$evento->all(),
+		]);
+	}
+	
+	/**
+	* Muestra ficha resumen de los libros que son visibles y están suspendidos
+	*
+	**/
+	public function actionSuspendidos()
+	{
+		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
+		
+		$searModel = new LibrosResumenSearch();
+		$dataProvider = $searModel->search($this->request->queryParams);
+		
+		$pagination = new Pagination([
+			'defaultPageSize' => 4,
+			'totalCount' => $dataProvider->query->where(["visible" => 1, "terminado" => 0])->count(),
+		]);
+		
+		$fichasresumen = $dataProvider->query->where(["visible" => 1, "terminado" => 0])->offset($pagination->offset)->limit($pagination->limit)->all();
+		
+		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
+		
+        return $this->render('index', [
+			'searchModel' => $searchModel,
+			'pagination' => $pagination,
+			'fichasresumen' => $fichasresumen,
+			'evento'=>$evento->all(),
+		]);
+	}
+	
+	/**
+	* Muestra ficha resumen de los libros que son visibles y están suspendidos
+	*
+	**/
+	public function actionNuevos()
+	{
+		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
+		
+		$searModel = new LibrosResumenSearch();
+		$dataProvider = $searModel->search($this->request->queryParams);
+		
+		$pagination = new Pagination([
+			'defaultPageSize' => 4,
+			'totalCount' => $dataProvider->query->where(["visible" => 1, "crea_fecha" => "not null"])->count(),
+		]);
+		
+		$fichasresumen = $dataProvider->query->where(["visible" => 1, "crea_fecha" => "not null"])->orderBy(["crea_fecha" => SORT_ASC])->offset($pagination->offset)->limit($pagination->limit)->all();
+		
+		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
+		
+        return $this->render('index', [
+			'searchModel' => $searchModel,
+			'pagination' => $pagination,
 			'fichasresumen' => $fichasresumen,
 			'evento'=>$evento->all(),
 		]);
