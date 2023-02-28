@@ -2,12 +2,15 @@
 
 namespace app\controllers;
 
-use app\models\Libros;
 use app\models\Ilustradores;
 use app\models\IlustradoresSearch;
+use app\models\Libros;
+use app\models\LibrosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii;
+
 
 /**
  * IlustradoresController implements the CRUD actions for Ilustradores model.
@@ -143,12 +146,31 @@ class IlustradoresController extends Controller
     {
         $ilustrador=Ilustradores::findOne(['id' => $id]);
         $libro = Libros::findAll(['ilustrador_id' => $ilustrador->id]);
+		$searchModel = new LibrosSearch();
+        $dataProvider = $searchModel->buscadorIlu(Yii::$app->request->queryParams);
 		
         return $this->render('detalle',array(
             "ilustrador"=>$ilustrador,
             "libro"=>$libro,
+			"searchModel" => $searchModel,
+            "dataProvider" => $dataProvider,
         ));
     }// actionDetalle
+	
+		public function actionBuscar($id)
+    {
+    $ilustrador=Ilustradores::findOne(['id' => $id]);
+    $searchModel = new LibrosSearch();
+    $libro = Libros::findAll(['ilustrador_id' => $ilustrador->id]);
+    $dataProvider = $searchModel->buscadorIlu(Yii::$app->request->queryParams);
+
+    return $this->render('resultadoBusqueda',array(
+        "ilustrador" => $ilustrador,
+        "searchModel" => $searchModel,
+        "libro"=>$libro,
+        "dataProvider" => $dataProvider,
+    ));
+	}
 	
 	
 	

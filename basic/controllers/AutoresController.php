@@ -146,7 +146,7 @@ class AutoresController extends Controller
         $autor=Autores::findOne(['id' => $id]);
         $libro = Libros::findAll(['autor_id' => $autor->id]);
         $searchModel = new LibrosSearch();
-        $dataProvider = $searchModel->buscador(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->buscadorAutor(Yii::$app->request->queryParams);
 		
         return $this->render('detalle',array(
             "autor"=>$autor,
@@ -161,14 +161,14 @@ class AutoresController extends Controller
     $autor=Autores::findOne(['id' => $id]);
     $searchModel = new LibrosSearch();
     $libro = Libros::findAll(['autor_id' => $autor->id]);
-    $dataProvider = $searchModel->buscador(Yii::$app->request->queryParams);
+    $dataProvider = $searchModel->buscadorAutor(Yii::$app->request->queryParams);
 
-    return $this->render('resuntado1',array(
+    return $this->render('resultadoBusqueda',array(
         "autor" => $autor,
         "searchModel" => $searchModel,
         "libro"=>$libro,
         "dataProvider" => $dataProvider,
     ));
-}
+	}
 	
 }

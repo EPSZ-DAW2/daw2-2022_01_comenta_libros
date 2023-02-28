@@ -7,8 +7,9 @@ use app\models\Traductores;
 use app\models\TraductoresSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-
+use yii\filters\VerbFilter;;
+use app\models\LibrosSearch;
+use yii;
 /**
  * TraductoresController implements the CRUD actions for Traductores model.
  */
@@ -143,11 +144,32 @@ class TraductoresController extends Controller
         $traductor=Traductores::findOne(['id' => $id]);
         $libro = Libros::findAll(['traductor_id' => $traductor->id]);
 		
+		$searchModel = new LibrosSearch();
+        $dataProvider = $searchModel->buscadorTrad(Yii::$app->request->queryParams);
+		
+		
         return $this->render('detalle',array(
             "traductor"=>$traductor,
             "libro"=>$libro,
+			"searchModel" => $searchModel,
+            "dataProvider" => $dataProvider,
         ));
     }// actionDetalle
+	
+		public function actionBuscar($id)
+    {
+    $traductor=Traductores::findOne(['id' => $id]);
+    $searchModel = new LibrosSearch();
+    $libro = Libros::findAll(['traductor_id' => $traductor->id]);
+    $dataProvider = $searchModel->buscadorTrad(Yii::$app->request->queryParams);
+
+    return $this->render('resultadoBusqueda',array(
+        "traductor" => $traductor,
+        "searchModel" => $searchModel,
+        "libro"=>$libro,
+        "dataProvider" => $dataProvider,
+    ));
+	}
 	
 	
 }
