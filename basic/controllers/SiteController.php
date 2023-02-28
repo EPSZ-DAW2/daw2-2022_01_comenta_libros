@@ -75,9 +75,8 @@ class SiteController extends Controller
 		
 		$searModel = new LibrosResumenSearch();
 		$dataProvider = $searModel->search($this->request->queryParams);
-		$fichasresumen = $dataProvider->query->limit(12)->where(["visible" => 1])->all();
+		$fichasresumen = $dataProvider->query->limit(6)->where(["visible" => 1])->all();
 		
-		// PONER ESTO EN PAGINA PRINCIPAL CUANDO ESTE HECHA *****
 		// Y MOVER LAS VISTAS
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
 		

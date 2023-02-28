@@ -5,7 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Patrocinador;
-use app\models\Usuarios;
+
 /**
  * PatrocinadorSearch represents the model behind the search form of `app\models\Patrocinador`.
  */
@@ -20,7 +20,7 @@ class PatrocinadorSearch extends Patrocinador
     {
         return [
             [['id', 'usuario_id'], 'integer'],
-            [['nif_cif', 'razon_social', 'telefono_comercial', 'telefono_contacto', 'url', 'fecha_alta'], 'safe'],
+            [['nif_cif', 'razon_social', 'telefono_comercial', 'telefono_contacto', 'url', 'fecha_alta', 'nick'], 'safe'],
         ];
     }
 
@@ -45,7 +45,8 @@ class PatrocinadorSearch extends Patrocinador
         $query = Patrocinador::find();
 
         // add conditions that should always apply here
-
+		$query->joinWith(['nickname']);
+		
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -69,7 +70,8 @@ class PatrocinadorSearch extends Patrocinador
             ->andFilterWhere(['like', 'razon_social', $this->razon_social])
             ->andFilterWhere(['like', 'telefono_comercial', $this->telefono_comercial])
             ->andFilterWhere(['like', 'telefono_contacto', $this->telefono_contacto])
-            ->andFilterWhere(['like', 'url', $this->url]);
+            ->andFilterWhere(['like', 'url', $this->url])
+			->andFilterWhere(['like', 'nick', $this->nick]);
 		/* Arreglar
 		$query->andFilterWhere(['like','usuarios.nick', $this->nick]);
 		$query->joinWith('usuarios');*/

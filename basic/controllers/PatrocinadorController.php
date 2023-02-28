@@ -41,13 +41,13 @@ class PatrocinadorController extends Controller
      */
     public function actionIndex()
     {
-        //PRUEBA PARA SEARCH DE USUARIO
         $searchModel = new PatrocinadorSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+		$patrocinadores = $dataProvider->query->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+			'patrocinadores' => $patrocinadores,
         ]);
     }
 

@@ -68,4 +68,12 @@ class Patrocinador extends \yii\db\ActiveRecord
     {
         return new PatrocinadoresQuery(get_called_class());
     }
+	
+	public function getNickname(){
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id']);
+    }
+	
+	public function getNick(){
+		return $this->nickname->nick;
+	}
 }

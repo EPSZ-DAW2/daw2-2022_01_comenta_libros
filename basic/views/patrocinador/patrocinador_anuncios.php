@@ -8,32 +8,27 @@ use app\models\usuario;
 use app\models\patrocinador;
 use app\models\anuncio;
 use yii\helpers\Html;
+
+$this->title = Yii::t('app', 'Patrocinadores');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="grid container row">
-    <div class="col-4">
-        <h3><?php echo "Anuncios del patrocinador: <br/>".Html::encode($usuario->nick) ?></h3>
-        <h4><?php echo "Pagina web del patrocinador: <br/>".Html::encode($patrocinador->url) ?></h4>
-        <h4><?php echo "Telefeno de contacto: <br/>".Html::encode($patrocinador->telefono_comercial) ?></h4>
-        <hr>
+<div class="patrocinador-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="container">
+		<h2>Anuncios del patrocinador <?= Html::encode($patrocinador->nick) ?></h2><hr>
+		<!-- Lista de anuncios -->
 		<br/>
 		<div class="row">
 			<?php
-			if ($anuncio==null) {
-					$mensaje="Este patrocinador no tiene anuncios";?>
-					<p><?= Html::encode($mensaje) ?></p>	
-				<?php
+			if(empty($anuncios)){
+				echo '<h2>Este patrocinador no tiene anuncios</h2>';
 			} else {
-				foreach($anuncio as $anuncio){ 
-				
-				//echo $libro->id;?>
-				<h5><?= Html::encode($anuncio->titulo) ?></h5> <!-- Titulo del libro -->
-				<p><?= Html::encode($anuncio->descripcion) ?></p>	<!-- Resumen del libro -->
-				
-				<hr>
-			<?php	
+				foreach ($anuncios as $anuncio){
+					echo $this->render('ficha_anuncio', ['anuncio'=>$anuncio]);
 				}
 			}
 			?>
-			
-    </div>
+		</div>
+	</div>
 </div>
