@@ -53,6 +53,7 @@ use app\models\Usuarios;
 								['label' => 'Traductores', 'url' => ['/traductores']],
 								['label' => 'Configuraciones', 'url' => ['/configuraciones']],
 								['label' => 'Generos', 'url' => ['/generos']],
+								['label' => 'Cuenta', 'url' => ['/cuenta'], 'visible' => !Yii::$app->user->isGuest],
 						        ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
 						    ],
 						]);

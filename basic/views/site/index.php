@@ -3,6 +3,7 @@
 /** @var yii\web\View $this */
 use \app\models\LibrosEventos;
 use yii\helpers\Html;
+use app\controllers\AdsController;
 
 $this->title = "Principal";
 ?>
@@ -49,6 +50,15 @@ $this->title = "Principal";
 	<div class="col-lg-4">
 		<!-- Visor Eventos -->
 		<?php echo $this->render('visorEventos', ['evento'=>$evento]); ?>
+	</div>
+
+	<?php
+		$adsController = Yii::$app->createControllerByID('ads');
+		$randomAd = $adsController->actionRandomAd();	
+	?>
+	<div class="col-lg-2"><!--ESte codigo donde quiera un anuncio-->
+	<p>Anuncio en proceso</p>
+    <?php echo $this->render('@app/views/ads/_ad', ['ad' => $randomAd]); ?>
 	</div>
 		
 </div>	
