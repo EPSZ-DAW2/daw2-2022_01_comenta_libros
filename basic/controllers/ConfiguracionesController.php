@@ -8,6 +8,12 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+
 /**
  * ConfiguracionesController implements the CRUD actions for Configuraciones model.
  */
@@ -130,5 +136,56 @@ class ConfiguracionesController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionCopiaseguridad() {
+
+        // Directorio que se desea copiar
+        $dir = Yii::getAlias('@app');
+
+        // Directorio donde se guardará la copia de seguridad
+        $backupDir = $dir .'\copia';
+
+        // Excluir la carpeta 'exclude' de la copia de seguridad
+        $excludeDir = $dir.'\vendor';
+        $excludeDir2 = $dir.'\copia';
+
+        // Nombre del archivo de copia de seguridad
+        $backupName = 'backup_' . date('Ymd_His') . '.zip';
+
+        // Crear la ruta completa al archivo de copia de seguridad
+        $backupPath = $backupDir . '/' . $backupName;
+
+        // Crear un objeto ZipArchive para crear el archivo ZIP
+        $zip = new \ZipArchive();
+        $zip->open($backupPath, \ZipArchive::CREATE);
+
+        // Iterar sobre los archivos y carpetas del directorio
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir), \RecursiveIteratorIterator::SELF_FIRST);
+
+        foreach ($iterator as $file) {
+            // Comprobar que el archivo o carpeta no es la carpeta a excluir
+            if ( ($file->getPathname() != $excludeDir) && ($file->getPathname() != $excludeDir2)) {
+                // Comprobar si el archivo es un archivo regular
+                if ($file->isFile()) {
+                    // Añadir el archivo al archivo ZIP
+                    $zip->addFile($file->getPathname(), $file->getSubPathname());
+                } elseif ($file->isDir()) {
+                    // Añadir la carpeta al archivo ZIP
+                    $zip->addEmptyDir($file->getSubPathname());
+                }
+            }
+        }
+
+        // Cerrar el archivo ZIP
+        $zip->close();
+            
+            $searchModel = new ConfiguracionesSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
+    
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
     }
 }
