@@ -8,6 +8,7 @@ use app\models\usuario;
 use app\models\patrocinador;
 use app\models\anuncio;
 use yii\helpers\Html;
+use yii\bootstrap5\LinkPager;
 
 $this->title = Yii::t('app', 'Patrocinadores');
 $this->params['breadcrumbs'][] = $this->title;
@@ -30,5 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			}
 			?>
 		</div>
+		
+		<?php echo LinkPager::widget(['pagination' => $pagination]); ?>
 	</div>
 </div>

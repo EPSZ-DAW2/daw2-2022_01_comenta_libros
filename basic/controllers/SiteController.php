@@ -75,7 +75,8 @@ class SiteController extends Controller
 		
 		$searModel = new LibrosResumenSearch();
 		$dataProvider = $searModel->search($this->request->queryParams);
-		$fichasresumen = $dataProvider->query->limit(6)->where(["visible" => 1])->all();
+		$total = Configuraciones::getConfiguracion("numero_libros_portada");
+		$fichasresumen = $dataProvider->query->limit($total)->where(["visible" => 1])->all();
 		
 		// Y MOVER LAS VISTAS
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
@@ -99,7 +100,7 @@ class SiteController extends Controller
 		$dataProvider = $searModel->search($this->request->queryParams);
 		
 		$pagination = new Pagination([
-			'defaultPageSize' => 4,
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
 			'totalCount' => $dataProvider->query->where(["visible" => 1, "terminado" => 1])->count(),
 		]);
 		
@@ -127,7 +128,7 @@ class SiteController extends Controller
 		$dataProvider = $searModel->search($this->request->queryParams);
 		
 		$pagination = new Pagination([
-			'defaultPageSize' => 4,
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
 			'totalCount' => $dataProvider->query->where(["visible" => 1])->count(),
 		]);
 		
@@ -155,7 +156,7 @@ class SiteController extends Controller
 		$dataProvider = $searModel->search($this->request->queryParams);
 		
 		$pagination = new Pagination([
-			'defaultPageSize' => 4,
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
 			'totalCount' => $dataProvider->query->where(["visible" => 1])->count(),
 		]);
 		
@@ -183,7 +184,7 @@ class SiteController extends Controller
 		$dataProvider = $searModel->search($this->request->queryParams);
 		
 		$pagination = new Pagination([
-			'defaultPageSize' => 4,
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
 			'totalCount' => $dataProvider->query->where(["visible" => 1, "terminado" => 0])->count(),
 		]);
 		
@@ -211,7 +212,7 @@ class SiteController extends Controller
 		$dataProvider = $searModel->search($this->request->queryParams);
 		
 		$pagination = new Pagination([
-			'defaultPageSize' => 4,
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
 			'totalCount' => $dataProvider->query->where(["visible" => 1, "crea_fecha" => "not null"])->count(),
 		]);
 		
