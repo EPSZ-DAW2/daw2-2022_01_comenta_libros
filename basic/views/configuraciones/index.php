@@ -15,11 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="configuraciones-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Crear Configuración'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= Html::a('Ejecutar acción', ['configuraciones/copiaseguridad'], ['class' => 'btn btn-primary']) ?>
+	<p><?= Html::a('Crear copia seguridad', ['configuraciones/copiaseguridad'], ['class' => 'btn btn-primary']) ?></p>
+	<br/>
+    <p><?= Html::a(Yii::t('app', 'Crear Configuración'), ['create'], ['class' => 'btn btn-success']) ?></p>
+    
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
