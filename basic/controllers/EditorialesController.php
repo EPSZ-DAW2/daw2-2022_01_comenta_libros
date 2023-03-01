@@ -43,7 +43,7 @@ class EditorialesController extends Controller
         $searchModel = new EditorialSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 		$pagination = new Pagination([
-			'defaultPageSize' => 3,
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
 			'totalCount' => $dataProvider->query->count(),
 		]);
 		
@@ -87,7 +87,7 @@ class EditorialesController extends Controller
 		$searchModel = new EditorialSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 		$pagination = new Pagination([
-			'defaultPageSize' => 3,
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
 			'totalCount' => $dataProvider->query->count(),
 		]);
 		

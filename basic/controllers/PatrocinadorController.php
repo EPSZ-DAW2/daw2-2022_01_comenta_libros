@@ -7,7 +7,8 @@ use app\models\PatrocinadorSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\models\Configuraciones;
+use yii\data\Pagination;
 use app\models\Anuncio;
 use app\models\Usuarios;
 
@@ -45,9 +46,14 @@ class PatrocinadorController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 		$patrocinadores = $dataProvider->query->all();
 		
+		$pagination = new Pagination([
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
+			'totalCount' =>  $dataProvider->query->count(),
+		]);
 		
         return $this->render('index', [
             'searchModel' => $searchModel,
+			'pagination' => $pagination,
 			'patrocinadores' => $patrocinadores,
         ]);
     }
@@ -62,8 +68,14 @@ class PatrocinadorController extends Controller
 		$patrocinador = Patrocinador::findOne(['id' => $id]);
 		$anuncios = Anuncio::findAll(['patrocinador_id' => $patrocinador->id]);
 		
+		$pagination = new Pagination([
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
+			'totalCount' => count($anuncios),
+		]);
+		
         return $this->render('patrocinador_anuncios', [
 			'patrocinador' => $patrocinador,
+			'pagination' => $pagination,
 			'anuncios' => $anuncios
         ]);
 	}

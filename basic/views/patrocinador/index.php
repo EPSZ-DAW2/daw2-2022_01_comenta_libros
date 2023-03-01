@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\bootstrap5\LinkPager;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuarioSearch */
@@ -36,6 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		}
 		?>
 	</div>
+	
+	<?php echo LinkPager::widget(['pagination' => $pagination]); ?>
 </div>
 
 
