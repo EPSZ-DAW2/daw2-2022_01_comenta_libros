@@ -8,7 +8,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\controllers\LibrosComentarios;
+
 ?>
 <div class="grid container row">
     <div class="col-4">

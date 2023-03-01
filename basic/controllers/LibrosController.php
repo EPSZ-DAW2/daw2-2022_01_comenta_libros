@@ -11,6 +11,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Usuarios;
 use yii\data\Pagination;
 
 /**
@@ -229,10 +230,16 @@ class LibrosController extends Controller
 	
 	public function actionComentario()
 	{
+		
+		$usuario= Usuarios::getSessionUser();
+    	if(!isset($usuario)){
+    		return $this->redirect(['site/index']);
+    	}
+		
 		$nuevoComentario = new LibrosComentarios(); // Cambia "Usuario" por el nombre de tu modelo
 		if ($nuevoComentario->load(Yii::$app->request->post()))
 		{
-			$nuevoComentario->crea_usuario_id=1;
+			$nuevoComentario->crea_usuario_id=$usuario->id;
 			
 			$nuevoComentario->save(false);
 		}
@@ -240,6 +247,22 @@ class LibrosController extends Controller
 		
 	}
 	
+	    public function actionDenunciarcomentario($id)
+    {
+		$usuario= Usuarios::getSessionUser();
+    	if(!isset($usuario)){
+    		return $this->redirect(['site/index']);
+    	}
+		
+		$comentario=LibrosComentarios::findOne(['id' => $id]);
+        $comentario->num_denuncias++;
+
+        if ($comentario->num_denuncias === 50) {
+            $comentario->bloqueado = 1;
+        }
+        $comentario->save();
+		return $this->redirect(["detalle", 'id'=>$comentario->libro_id]);
+    }
 	
 	
 }

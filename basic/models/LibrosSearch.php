@@ -107,8 +107,9 @@ class LibrosSearch extends Libros
         return $dataProvider;
     }
 
-    $query->andFilterWhere(['like', 'titulo', $this->titulo]);
-          //->andFilterWhere(['like', 'autor.nombre', $this->autor_nombre]);
+    $query->andFilterWhere(['like', 'titulo', $this->titulo])
+        //->andFilterWhere(['like', 'autor.nombre', $this->autor_nombre]);
+		->andFilterWhere(['like','autor_id',$this->autor_id]);
 
     return $dataProvider;
 }
