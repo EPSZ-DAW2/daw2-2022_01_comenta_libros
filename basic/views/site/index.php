@@ -19,12 +19,15 @@ $this->title = "Principal";
 
  <p>  Los usuarios registrados pueden mantener su perfil, crear recomendación (proponer libros nuevos), mantener sus preferencias de libros por géneros y/o etiquetas, crear comentarios, revisar los comentarios creados, mantener el seguimiento de libros, recibir avisos y notificaciones de los libros seguidos, enviar incidencias a los moderadores/administradores del portal, organizar eventos literarios (charlas, presentaciones, reuniones, ...), apuntarse a ellas, etc.
 </p>
-<br>
+<br/>
 <hr>
-<br>
+<br/>
 
 
 <div class="site-index">
+	<br/>
+	<!-- Libros expuestos -->
+	<h1><?php echo $mensaje; ?><hr></h1>
 	<!-- Búsqueda simple -->
 	<br/>
 	<?php echo $this->render('_searchSimple', ['model' => $searchModel]); ?>

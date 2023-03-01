@@ -76,13 +76,15 @@ class SiteController extends Controller
 		$searModel = new LibrosResumenSearch();
 		$dataProvider = $searModel->search($this->request->queryParams);
 		$total = Configuraciones::getConfiguracion("numero_libros_portada");
-		$fichasresumen = $dataProvider->query->limit($total)->where(["visible" => 1])->all();
+		$fichasresumen = $dataProvider->query->limit($total)->where(["visible" => 1])->orderBy(["sumaValores" => SORT_DESC])->all();
 		
-		// Y MOVER LAS VISTAS
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
+		
+		$mensaje = "Libros más valorados:";
 		
         return $this->render('index', [
 			'searchModel' => $searchModel,
+			'mensaje' => $mensaje,
 			'fichasresumen' => $fichasresumen,
 			'evento'=>$evento->all(),
 		]);
@@ -108,8 +110,11 @@ class SiteController extends Controller
 		
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
 		
+		$mensaje = "Libros terminados:";
+		
         return $this->render('index', [
 			'searchModel' => $searchModel,
+			'mensaje' => $mensaje,
 			'pagination' => $pagination,
 			'fichasresumen' => $fichasresumen,
 			'evento'=>$evento->all(),
@@ -136,8 +141,11 @@ class SiteController extends Controller
 		
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
 		
+		$mensaje = "Libros con mayor número de votos:";
+		
         return $this->render('index', [
 			'searchModel' => $searchModel,
+			'mensaje' => $mensaje,
 			'pagination' => $pagination,
 			'fichasresumen' => $fichasresumen,
 			'evento'=>$evento->all(),
@@ -164,8 +172,11 @@ class SiteController extends Controller
 		
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
 		
+		$mensaje = "Libros con menor número de votos:";
+		
         return $this->render('index', [
 			'searchModel' => $searchModel,
+			'mensaje' => $mensaje,
 			'pagination' => $pagination,
 			'fichasresumen' => $fichasresumen,
 			'evento'=>$evento->all(),
@@ -192,8 +203,11 @@ class SiteController extends Controller
 		
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
 		
+		$mensaje = "Libros con suspendidos:";
+		
         return $this->render('index', [
 			'searchModel' => $searchModel,
+			'mensaje' => $mensaje,
 			'pagination' => $pagination,
 			'fichasresumen' => $fichasresumen,
 			'evento'=>$evento->all(),
@@ -220,8 +234,11 @@ class SiteController extends Controller
 		
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
 		
+		$mensaje = "Libros más nuevos:";
+		
         return $this->render('index', [
 			'searchModel' => $searchModel,
+			'mensaje' => $mensaje,
 			'pagination' => $pagination,
 			'fichasresumen' => $fichasresumen,
 			'evento'=>$evento->all(),
