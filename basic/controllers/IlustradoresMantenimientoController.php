@@ -2,22 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Configuraciones;
 use app\models\Ilustradores;
-use app\models\IlustradoresSearch;
-use app\models\Libros;
-use app\models\LibrosSearch;
-use yii\data\Pagination;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii;
-
 
 /**
- * IlustradoresController implements the CRUD actions for Ilustradores model.
+ * IlustradoresMantenimientoController implements the CRUD actions for Ilustradores model.
  */
-class IlustradoresController extends Controller
+class IlustradoresMantenimientoController extends Controller
 {
     /**
      * @inheritDoc
@@ -44,23 +38,22 @@ class IlustradoresController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new IlustradoresSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Ilustradores::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
 
-        $pagination = new Pagination([
-			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
-			'totalCount' => $dataProvider->query->count(),
-		]);        
-		$ilustradores=$dataProvider->query->offset($pagination->offset)->limit($pagination->limit)->all();
-
-        $dataLetras = $searchModel->search([]);
-		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'ilustradores' => $ilustradores,
-            'pagination' => $pagination,
-            'letra'=>$letra
         ]);
     }
 
@@ -146,46 +139,6 @@ class IlustradoresController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
-	
-	
-	/*
-	*
-	*	Acción detalle para mostrar los libros ilustrados por el ilustrador elegido
-	*
-	*/
-	public function actionDetalle($id)
-    {
-        $ilustrador=Ilustradores::findOne(['id' => $id]);
-        $libro = Libros::findAll(['ilustrador_id' => $ilustrador->id]);
-		$searchModel = new LibrosSearch();
-        $dataProvider = $searchModel->buscadorIlu(Yii::$app->request->queryParams);
-		
-        return $this->render('detalle',array(
-            "ilustrador"=>$ilustrador,
-            "libro"=>$libro,
-			"searchModel" => $searchModel,
-            "dataProvider" => $dataProvider,
-        ));
-    }// actionDetalle
-	
-		public function actionBuscar($id)
-    {
-    $ilustrador=Ilustradores::findOne(['id' => $id]);
-    $searchModel = new LibrosSearch();
-    $libro = Libros::findAll(['ilustrador_id' => $ilustrador->id]);
-    $dataProvider = $searchModel->buscadorIlu(Yii::$app->request->queryParams);
-
-    return $this->render('resultadoBusqueda',array(
-        "ilustrador" => $ilustrador,
-        "searchModel" => $searchModel,
-        "libro"=>$libro,
-        "dataProvider" => $dataProvider,
-    ));
-	}
-	
-	
-	
-	
 }

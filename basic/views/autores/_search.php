@@ -20,10 +20,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre') ?>
 
-<br>
+    <br>
     <div class="form-group">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Borrar Filtros', '?r=autores', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::a('Borrar Filtros', '?r=autores', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
 	echo "<h4>Filtro A-Z</h4>";
 	foreach ($letra as $letra){				
-        echo Html::a(Yii::t('app', $letra['letra']), ['letrafilter', 'filtroLetra'=>$letra['letra']], ['class' => 'btn btn-success']);
+        echo Html::a(Yii::t('app', $letra['letra']), ['letrafilter', 'filtroLetra'=>$letra['letra']], ['class' => 'btn btn-primary']);
     }	
     ?>
 
