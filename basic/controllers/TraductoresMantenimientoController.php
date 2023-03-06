@@ -2,20 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Configuraciones;
-use app\models\Libros;
 use app\models\Traductores;
-use app\models\TraductoresSearch;
-use yii\data\Pagination;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;;
-use app\models\LibrosSearch;
-use yii;
+use yii\filters\VerbFilter;
+
 /**
- * TraductoresController implements the CRUD actions for Traductores model.
+ * TraductoresMantenimientoController implements the CRUD actions for Traductores model.
  */
-class TraductoresController extends Controller
+class TraductoresMantenimientoController extends Controller
 {
     /**
      * @inheritDoc
@@ -42,23 +38,22 @@ class TraductoresController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new TraductoresSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Traductores::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
 
-        $pagination = new Pagination([
-			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
-			'totalCount' => $dataProvider->query->count(),
-		]);        
-		$traductores=$dataProvider->query->offset($pagination->offset)->limit($pagination->limit)->all();
-
-        $dataLetras = $searchModel->search([]);
-		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'traductores' => $traductores,
-            'pagination' => $pagination,
-            'letra'=>$letra
         ]);
     }
 
@@ -144,45 +139,6 @@ class TraductoresController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
-	
-	/*
-	*
-	*	Acción detalle para mostrar los libros que ha traducido una persona
-	*
-	*/
-	public function actionDetalle($id)
-    {
-        $traductor=Traductores::findOne(['id' => $id]);
-        $libro = Libros::findAll(['traductor_id' => $traductor->id]);
-		
-		$searchModel = new LibrosSearch();
-        $dataProvider = $searchModel->buscadorTrad(Yii::$app->request->queryParams);
-		
-		
-        return $this->render('detalle',array(
-            "traductor"=>$traductor,
-            "libro"=>$libro,
-			"searchModel" => $searchModel,
-            "dataProvider" => $dataProvider,
-        ));
-    }// actionDetalle
-	
-		public function actionBuscar($id)
-    {
-    $traductor=Traductores::findOne(['id' => $id]);
-    $searchModel = new LibrosSearch();
-    $libro = Libros::findAll(['traductor_id' => $traductor->id]);
-    $dataProvider = $searchModel->buscadorTrad(Yii::$app->request->queryParams);
-
-    return $this->render('resultadoBusqueda',array(
-        "traductor" => $traductor,
-        "searchModel" => $searchModel,
-        "libro"=>$libro,
-        "dataProvider" => $dataProvider,
-    ));
-	}
-	
-	
 }
