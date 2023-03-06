@@ -236,14 +236,23 @@ class LibrosController extends Controller
     		return $this->redirect(['site/index']);
     	}
 		
-		$nuevoComentario = new LibrosComentarios(); // Cambia "Usuario" por el nombre de tu modelo
+		$nuevoComentario = new LibrosComentarios(); 
 		if ($nuevoComentario->load(Yii::$app->request->post()))
 		{
 			$nuevoComentario->crea_usuario_id=$usuario->id;
 			
 			$nuevoComentario->save(false);
+			
+			if($nuevoComentario->comentario_id===0){
+			$libro = Libros::findOne(['id' => $nuevoComentario->libro_id]);
+			$libro->totalVotos++;
+			$libro->sumaValores=$libro->sumaValores + $nuevoComentario->valoracion;
+			$libro->save(false);
+			
+			}
 		}
 		return $this->redirect(["detalle", 'id'=>$nuevoComentario->libro_id]);
+		
 		
 	}
 	
