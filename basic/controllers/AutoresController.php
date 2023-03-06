@@ -51,11 +51,14 @@ class AutoresController extends Controller
 		]);        
 		$autores=$dataProvider->query->offset($pagination->offset)->limit($pagination->limit)->all();
 
+        $dataLetras = $searchModel->search([]);
+		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'autores' => $autores,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'letra'=>$letra
         ]);
     }
 

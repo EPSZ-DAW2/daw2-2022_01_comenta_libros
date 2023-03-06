@@ -16,29 +16,39 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="autores-index">
 
+	<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+	<br/>
+
     <div class="row">
 		<?php
 		if(empty($autores)){
 			echo '<h2>No se ha encontrado ningun autor</h2>';
 		}else{
 			foreach ($autores as $autor){?>
-				<div class="grid container row">
-                    <div class="col-4">
-                        <br/>
-                        <?php
-                        echo Html::a(Yii::t('app', $autor->nombre), ['detalle', 'id'=>$autor->id], ['class' => 'btn btn-outline-secondary']);
-                        ?>
-                        <br/>
-                        <p><?= Html::encode($autor->descripcion) ?></p>
-                        <p>Url: <a href="<?= Html::encode($autor->url) ?>"><?= Html::encode($autor->url) ?></a></p>
-                        <hr>
-                    </div>
-                </div><?php
+                <div class="col-4">
+                    <br/>
+                    <?= Html::a(Yii::t('app', $autor->nombre), ['detalle', 'id'=>$autor->id])?>
+                    <br/>
+                    <p><?= Html::encode($autor->descripcion) ?></p>
+                    <p>Url: <a href="<?= Html::encode($autor->url) ?>"><?= Html::encode($autor->url) ?></a></p>
+                    <hr>
+                </div>
+            <?php 
 			}
 		} ?>
 	</div>
     <?= LinkPager::widget(['pagination' => $pagination]) ?>
 
+    <?php
+	echo "<h4>Filtro A-Z</h4>";
+	foreach ($letra as $letra){				
+        echo Html::a(Yii::t('app', $letra['letra']), ['letrafilter', 'filtroLetra'=>$letra['letra']], ['class' => 'btn btn-success']);
+    }	
+    ?>
+
+    <!-- ESTO ANTES ERA EL MANTENIMIENTO
+         SE HA COMENTADO POR SI HAY QUE VOLVER
+         A LO ANTERIOR-->
     <!-- <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
