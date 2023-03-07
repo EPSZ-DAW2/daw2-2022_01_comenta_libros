@@ -15,7 +15,7 @@ $this->title = 'Libros de ' . Html::encode($autor->nombre);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="grid container row">
-    <div class="col-4">
+    <div>
 		<h3><?= Html::encode($autor->nombre) ?></h3>
 		<h4><?= Html::encode($autor->descripcion) ?></h4>
 		<hr>

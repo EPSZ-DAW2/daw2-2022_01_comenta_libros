@@ -42,15 +42,43 @@ use yii\helpers\ArrayHelper;
 	
 	<?php
 	
-	foreach($comentarios as $comentario) //mostramos cada libro del autor
+	foreach($comentarios as $comentario) //mostramos cada comentario del autor
 	{ 
-		//echo $libro->id;?>
-		<h5><?= Html::encode($comentario->usuario->nick) ?></h5> <!-- Nombre del usuario-->
-		<p><?= Html::encode($comentario->valoracion) ?></p>	<!-- Valoración del usuario-->
-		<p><?= Html::encode($comentario->texto) ?></p>	<!-- Resumen del comentario -->
-		   <?= Html::a(Yii::t('app', 'Denunciar Comentario'), ['denunciarcomentario', 'id'=>$comentario->id], ['class' => 'btn btn-danger']);?>
-		<hr>
-	<?php	
+		if($comentario->comentario_id ===0){
+			//echo $libro->id;?>
+			<hr>
+			<h5><?= Html::encode($comentario->usuario->nick) ?></h5> <!-- Nombre del usuario-->
+			<p><?= Html::encode($comentario->valoracion) ?></p>	<!-- Valoración del usuario-->
+			<p><?= Html::encode($comentario->texto) ?></p>	<!-- Resumen del comentario -->
+			
+			<?php $form = ActiveForm::begin([
+			'action' => ['comentario'],
+			'method' => 'post',
+			'options' => [
+			'data-pjax' => 1
+			],
+			]); ?>		
+			<?= $form->field($nuevoComentario, 'libro_id')->hiddenInput(['value'=> $libro->id])->label(false) ?>
+			<?= $form->field($nuevoComentario, 'comentario_id')->hiddenInput(['value'=> $comentario->id])->label(false) ?>
+			<?= $form->field($nuevoComentario, 'texto')->textarea(['rows' => 1]) ?>
+			</br>
+			<?= Html::submitButton(Yii::t('app', 'Responder al Comentario'), ['class' => 'btn btn-primary']) ?>									
+			<?php ActiveForm::end(); ?>
+			
+			<?= Html::a(Yii::t('app', 'Denunciar Comentario'), ['denunciarcomentario', 'id'=>$comentario->id], ['class' => 'btn btn-danger']);?>
+
+			<?php
+			foreach($comentarios as $comentarioInterno) // cada comentario anidado de los comentarios originales
+			{
+				if($comentarioInterno->comentario_id ===$comentario->id){
+				//echo $libro->id;?>
+				<p><?= Html::encode($comentarioInterno->usuario->nick) ?> <!-- Nombre del usuario-->
+				ha comentado:
+				<?= Html::encode($comentarioInterno->texto) ?></p>	<!-- Resumen del comentario -->		
+	<?php
+				}//if 	
+			}//foreach
+		}//if
 	} //foreach
 	?>
 

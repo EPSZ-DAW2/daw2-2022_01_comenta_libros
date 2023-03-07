@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Configuraciones;
 use app\models\Libros;
 use app\models\LibrosSearch;
 use app\models\Autores;
 use app\models\AutoresSearch;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -43,10 +45,20 @@ class AutoresController extends Controller
     {
         $searchModel = new AutoresSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $pagination = new Pagination([
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
+			'totalCount' => $dataProvider->query->count(),
+		]);        
+		$autores=$dataProvider->query->offset($pagination->offset)->limit($pagination->limit)->all();
 
+        $dataLetras = $searchModel->search([]);
+		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'autores' => $autores,
+            'pagination' => $pagination,
+            'letra'=>$letra
         ]);
     }
 

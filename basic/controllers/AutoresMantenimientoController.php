@@ -2,22 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Configuraciones;
-use app\models\Ilustradores;
-use app\models\IlustradoresSearch;
-use app\models\Libros;
-use app\models\LibrosSearch;
-use yii\data\Pagination;
+use app\models\Autores;
+use app\models\AutoresMantenimientoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii;
-
 
 /**
- * IlustradoresController implements the CRUD actions for Ilustradores model.
+ * AutoresMantenimientoController implements the CRUD actions for Autores model.
  */
-class IlustradoresController extends Controller
+class AutoresMantenimientoController extends Controller
 {
     /**
      * @inheritDoc
@@ -38,34 +32,23 @@ class IlustradoresController extends Controller
     }
 
     /**
-     * Lists all Ilustradores models.
+     * Lists all Autores models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new IlustradoresSearch();
+        $searchModel = new AutoresMantenimientoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        $pagination = new Pagination([
-			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
-			'totalCount' => $dataProvider->query->count(),
-		]);        
-		$ilustradores=$dataProvider->query->offset($pagination->offset)->limit($pagination->limit)->all();
-
-        $dataLetras = $searchModel->search([]);
-		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'ilustradores' => $ilustradores,
-            'pagination' => $pagination,
-            'letra'=>$letra
         ]);
     }
 
     /**
-     * Displays a single Ilustradores model.
+     * Displays a single Autores model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -78,13 +61,13 @@ class IlustradoresController extends Controller
     }
 
     /**
-     * Creates a new Ilustradores model.
+     * Creates a new Autores model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Ilustradores();
+        $model = new Autores();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -100,7 +83,7 @@ class IlustradoresController extends Controller
     }
 
     /**
-     * Updates an existing Ilustradores model.
+     * Updates an existing Autores model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -120,7 +103,7 @@ class IlustradoresController extends Controller
     }
 
     /**
-     * Deletes an existing Ilustradores model.
+     * Deletes an existing Autores model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -134,58 +117,18 @@ class IlustradoresController extends Controller
     }
 
     /**
-     * Finds the Ilustradores model based on its primary key value.
+     * Finds the Autores model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Ilustradores the loaded model
+     * @return Autores the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Ilustradores::findOne(['id' => $id])) !== null) {
+        if (($model = Autores::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
-	
-	
-	/*
-	*
-	*	Acción detalle para mostrar los libros ilustrados por el ilustrador elegido
-	*
-	*/
-	public function actionDetalle($id)
-    {
-        $ilustrador=Ilustradores::findOne(['id' => $id]);
-        $libro = Libros::findAll(['ilustrador_id' => $ilustrador->id]);
-		$searchModel = new LibrosSearch();
-        $dataProvider = $searchModel->buscadorIlu(Yii::$app->request->queryParams);
-		
-        return $this->render('detalle',array(
-            "ilustrador"=>$ilustrador,
-            "libro"=>$libro,
-			"searchModel" => $searchModel,
-            "dataProvider" => $dataProvider,
-        ));
-    }// actionDetalle
-	
-		public function actionBuscar($id)
-    {
-    $ilustrador=Ilustradores::findOne(['id' => $id]);
-    $searchModel = new LibrosSearch();
-    $libro = Libros::findAll(['ilustrador_id' => $ilustrador->id]);
-    $dataProvider = $searchModel->buscadorIlu(Yii::$app->request->queryParams);
-
-    return $this->render('resultadoBusqueda',array(
-        "ilustrador" => $ilustrador,
-        "searchModel" => $searchModel,
-        "libro"=>$libro,
-        "dataProvider" => $dataProvider,
-    ));
-	}
-	
-	
-	
-	
 }
