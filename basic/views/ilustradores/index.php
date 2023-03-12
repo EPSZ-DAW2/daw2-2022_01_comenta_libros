@@ -46,49 +46,4 @@ $this->params['breadcrumbs'][] = $this->title;
     }	
     ?>
 
-    <!-- ESTO ANTES ERA EL MANTENIMIENTO
-         SE HA COMENTADO POR SI HAY QUE VOLVER
-         A LO ANTERIOR-->
-
-    <!-- <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Ilustradores'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'nombre',
-            'url:ntext',
-            'descripcion:ntext',
-            'revisado',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Ilustradores $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-			
-						[
-			    'class' => 'yii\grid\ActionColumn',
-                'template' => '{verDetalle}',  
-                'buttons' => [
-                    'verDetalle' => function($url, $model, $key) {    
-                        return Html::a(Yii::t('app', 'Ver detalle'), ['detalle', 'id'=>$model->id], ['class' => 'btn btn-success']);
-                    }
-                ]
-            ]		
-        ],
-    ]); ?>
-
-    <?php Pjax::end(); ?> -->
-
 </div>
