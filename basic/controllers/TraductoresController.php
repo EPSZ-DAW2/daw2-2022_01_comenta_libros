@@ -184,5 +184,25 @@ class TraductoresController extends Controller
     ));
 	}
 	
-	
+	public function actionLetrafilter($filtroLetra)
+    {
+		$searchModel = new TraductoresSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+		$pagination = new Pagination([
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
+			'totalCount' => $dataProvider->query->count(),
+		]);
+		
+        $traductores=$dataProvider->query->where(['like','nombre',$filtroLetra.'%',false])->offset($pagination->offset)->limit($pagination->limit)->all();
+  
+		$dataLetras = $searchModel->search([]);
+		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
+		
+		return $this->render('index', [
+            'searchModel' => $searchModel,
+            'pagination' => $pagination,
+            'traductores' => $traductores,
+            'letra' => $letra,
+        ]);
+    }// actionLetra
 }
