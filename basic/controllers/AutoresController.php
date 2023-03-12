@@ -182,5 +182,27 @@ class AutoresController extends Controller
         "dataProvider" => $dataProvider,
     ));
 	}
+
+    public function actionLetrafilter($filtroLetra)
+    {
+		$searchModel = new AutoresSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+		$pagination = new Pagination([
+			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
+			'totalCount' => $dataProvider->query->count(),
+		]);
+		
+        $autores=$dataProvider->query->where(['like','nombre',$filtroLetra.'%',false])->offset($pagination->offset)->limit($pagination->limit)->all();
+  
+		$dataLetras = $searchModel->search([]);
+		$letra=$dataLetras->query->select(['SUBSTRING(nombre,1,1) as letra'])->distinct()->orderBy(['letra'=> SORT_ASC])->asArray()->all();
+		
+		return $this->render('index', [
+            'searchModel' => $searchModel,
+            'pagination' => $pagination,
+            'autores' => $autores,
+            'letra' => $letra,
+        ]);
+    }// actionLetra
 	
 }
