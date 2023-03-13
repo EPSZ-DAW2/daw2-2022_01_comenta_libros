@@ -159,7 +159,7 @@ class SiteController extends Controller
 						'totalCount' => $dataProvider->query->where(["visible" => 1])->count(),
 					]);
 		
-					$fichasresumen = $dataProvider->query->where(["visible" => 1])->orderBy(["id" => SORT_ASC])->offset($pagination->offset)->limit($pagination->limit)->all();
+					$fichasresumen = $dataProvider->query->where(["visible" => 1])->orderBy(["id" => SORT_DESC])->offset($pagination->offset)->limit($pagination->limit)->all();
 		
 					$mensaje = "Libros más nuevos:";
 					break;
