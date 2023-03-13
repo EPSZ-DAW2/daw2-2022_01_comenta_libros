@@ -156,10 +156,10 @@ class SiteController extends Controller
 				case "Nuevos":
 					$pagination = new Pagination([
 						'defaultPageSize' => $lineas,
-						'totalCount' => $dataProvider->query->where(["visible" => 1, "crea_fecha" => "not null"])->count(),
+						'totalCount' => $dataProvider->query->where(["visible" => 1])->count(),
 					]);
 		
-					$fichasresumen = $dataProvider->query->where(["visible" => 1, "crea_fecha" => "not null"])->orderBy(["crea_fecha" => SORT_ASC])->offset($pagination->offset)->limit($pagination->limit)->all();
+					$fichasresumen = $dataProvider->query->where(["visible" => 1])->orderBy(["id" => SORT_ASC])->offset($pagination->offset)->limit($pagination->limit)->all();
 		
 					$mensaje = "Libros más nuevos:";
 					break;
