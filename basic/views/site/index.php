@@ -5,6 +5,7 @@ use yii\bootstrap5\LinkPager;
 use \app\models\LibrosEventos;
 use yii\helpers\Html;
 use app\controllers\AdsController;
+use yii\helpers\Url;
 
 $this->title = "Principal";
 ?>
@@ -51,9 +52,23 @@ $this->title = "Principal";
     </div>
 	
 	<?php // Paginacion si la usa
-		if(isset($pagination)){
-			echo LinkPager::widget(['pagination' => $pagination]);
-		}
+	if(isset($pagination)){
+		// Eleccion de fichas por página
+		?>
+		<table >
+			<tr>
+				<td>Mostrar por página:</td>
+				<td><?= Html::a('10', ['site/filtro','filac' => $pet, 'cnt' => '10']) ?></td>
+				<td><?= Html::a($linConf, ['site/filtro','filac' => $pet, 'cnt' => $linConf]) ?></td>
+				<td><?= Html::a('50', ['site/filtro','filac' => $pet, 'cnt' => '50']) ?></td>
+				<td><?= Html::a('75', ['site/filtro','filac' => $pet, 'cnt' => '75']) ?></td>
+				<td><?= Html::a('100', ['site/filtro','filac' => $pet, 'cnt' => '100']) ?></td>
+			</tr>
+		</table>
+		<?php
+		// Paginacion
+		echo LinkPager::widget(['pagination' => $pagination]);
+	}
 	?>
 	
 	<div class="col-lg-4">

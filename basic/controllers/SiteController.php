@@ -90,155 +90,112 @@ class SiteController extends Controller
 		]);
     }
 	
-	/**
-	* Muestra ficha resumen de los libros que son visibles y están terminados
-	*
-	**/
-	public function actionTerminados()
+	public function actionFiltro()
 	{
 		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
-		
+		$lineas=8;
 		$searModel = new LibrosResumenSearch();
 		$dataProvider = $searModel->search($this->request->queryParams);
+		$peticiones = Yii::$app->request;
+		$linConf = Configuraciones::getConfiguracion("numero_lineas_pagina");
 		
-		$pagination = new Pagination([
-			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
-			'totalCount' => $dataProvider->query->where(["visible" => 1, "terminado" => 1])->count(),
-		]);
+		// Fichas que mostrara la vista
+		if($peticiones->get('cnt')){
+			$lineas = $peticiones->get('cnt');
+		} else {
+			$lineas = $linConf;
+		}
 		
-		$fichasresumen = $dataProvider->query->where(["visible" => 1, "terminado" => 1])->offset($pagination->offset)->limit($pagination->limit)->all();
-		
+		// Informacion a mostrar
 		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
 		
-		$mensaje = "Libros terminados:";
+		// Filtro activo, si no hay, render portada sin filtro
+		if($peticiones->get('filac')){
+			$accion = $peticiones->get('filac');
+			switch ($accion) {
+				case "MasVotados":
+					$pagination = new Pagination([
+						'defaultPageSize' => $lineas,
+						'totalCount' => $dataProvider->query->where(["visible" => 1])->count(),
+					]);
+				
+					$fichasresumen = $dataProvider->query->where(["visible" => 1])->orderBy(["totalVotos" => SORT_DESC])->offset($pagination->offset)->limit($pagination->limit)->all();
+				
+					$mensaje = "Libros con mayor número de votos:";
+					break;
+				case "MenosVotados":
+					$pagination = new Pagination([
+						'defaultPageSize' => $lineas,
+						'totalCount' => $dataProvider->query->where(["visible" => 1])->count(),
+					]);
+			
+					$fichasresumen = $dataProvider->query->where(["visible" => 1])->orderBy(["totalVotos" => SORT_ASC])->offset($pagination->offset)->limit($pagination->limit)->all();
+				
+					$mensaje = "Libros con menor número de votos:";
+					break;
+				case "Terminados":
+					$pagination = new Pagination([
+						'defaultPageSize' => $lineas,
+						'totalCount' => $dataProvider->query->where(["visible" => 1, "terminado" => 1])->count(),
+					]);
+				
+					$fichasresumen = $dataProvider->query->where(["visible" => 1, "terminado" => 1])->offset($pagination->offset)->limit($pagination->limit)->all();
+				
+					$mensaje = "Libros terminados:";
+					break;
+				case "Suspendidos":
+					$pagination = new Pagination([
+						'defaultPageSize' => $lineas,
+						'totalCount' => $dataProvider->query->where(["visible" => 1, "terminado" => 0])->count(),
+					]);
 		
+					$fichasresumen = $dataProvider->query->where(["visible" => 1, "terminado" => 0])->offset($pagination->offset)->limit($pagination->limit)->all();
+			
+					$mensaje = "Libros con suspendidos:";
+					break;
+				case "Nuevos":
+					$pagination = new Pagination([
+						'defaultPageSize' => $lineas,
+						'totalCount' => $dataProvider->query->where(["visible" => 1, "crea_fecha" => "not null"])->count(),
+					]);
+		
+					$fichasresumen = $dataProvider->query->where(["visible" => 1, "crea_fecha" => "not null"])->orderBy(["crea_fecha" => SORT_ASC])->offset($pagination->offset)->limit($pagination->limit)->all();
+		
+					$mensaje = "Libros más nuevos:";
+					break;
+				default: // Renderiza sin filtro activo
+					$total = Configuraciones::getConfiguracion("numero_libros_portada");
+					$fichasresumen = $dataProvider->query->limit($total)->where(["visible" => 1])->orderBy(["sumaValores" => SORT_DESC])->all();
+					$mensaje = "Libros más valorados:";
+		
+					return $this->render('index', [
+						'searchModel' => $searchModel,
+						'mensaje' => $mensaje,
+						'fichasresumen' => $fichasresumen,
+						'evento'=>$evento->all(),
+					]);
+				
+			}
+		} else { // Renderiza sin filtro activo
+			$total = Configuraciones::getConfiguracion("numero_libros_portada");
+			$fichasresumen = $dataProvider->query->limit($total)->where(["visible" => 1])->orderBy(["sumaValores" => SORT_DESC])->all();
+			$mensaje = "Libros más valorados:";
+		
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'mensaje' => $mensaje,
+				'fichasresumen' => $fichasresumen,
+				'evento'=>$evento->all(),
+			]);
+		}
+		
+		
+		// Renderizar con filtro activo
         return $this->render('index', [
 			'searchModel' => $searchModel,
 			'mensaje' => $mensaje,
-			'pagination' => $pagination,
-			'fichasresumen' => $fichasresumen,
-			'evento'=>$evento->all(),
-		]);
-	}
-	
-	/**
-	* Muestra ficha resumen de los libros que son visibles y son los más votados
-	*
-	**/
-	public function actionMasvotados()
-	{
-		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
-		
-		$searModel = new LibrosResumenSearch();
-		$dataProvider = $searModel->search($this->request->queryParams);
-		
-		$pagination = new Pagination([
-			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
-			'totalCount' => $dataProvider->query->where(["visible" => 1])->count(),
-		]);
-		
-		$fichasresumen = $dataProvider->query->where(["visible" => 1])->orderBy(["totalVotos" => SORT_DESC])->offset($pagination->offset)->limit($pagination->limit)->all();
-		
-		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
-		
-		$mensaje = "Libros con mayor número de votos:";
-		
-        return $this->render('index', [
-			'searchModel' => $searchModel,
-			'mensaje' => $mensaje,
-			'pagination' => $pagination,
-			'fichasresumen' => $fichasresumen,
-			'evento'=>$evento->all(),
-		]);
-	}
-	
-	/**
-	* Muestra ficha resumen de los libros que son visibles y son los menos votados
-	*
-	**/
-	public function actionMenosvotados()
-	{
-		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
-		
-		$searModel = new LibrosResumenSearch();
-		$dataProvider = $searModel->search($this->request->queryParams);
-		
-		$pagination = new Pagination([
-			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
-			'totalCount' => $dataProvider->query->where(["visible" => 1])->count(),
-		]);
-		
-		$fichasresumen = $dataProvider->query->where(["visible" => 1])->orderBy(["totalVotos" => SORT_ASC])->offset($pagination->offset)->limit($pagination->limit)->all();
-		
-		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
-		
-		$mensaje = "Libros con menor número de votos:";
-		
-        return $this->render('index', [
-			'searchModel' => $searchModel,
-			'mensaje' => $mensaje,
-			'pagination' => $pagination,
-			'fichasresumen' => $fichasresumen,
-			'evento'=>$evento->all(),
-		]);
-	}
-	
-	/**
-	* Muestra ficha resumen de los libros que son visibles y están suspendidos
-	*
-	**/
-	public function actionSuspendidos()
-	{
-		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
-		
-		$searModel = new LibrosResumenSearch();
-		$dataProvider = $searModel->search($this->request->queryParams);
-		
-		$pagination = new Pagination([
-			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
-			'totalCount' => $dataProvider->query->where(["visible" => 1, "terminado" => 0])->count(),
-		]);
-		
-		$fichasresumen = $dataProvider->query->where(["visible" => 1, "terminado" => 0])->offset($pagination->offset)->limit($pagination->limit)->all();
-		
-		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
-		
-		$mensaje = "Libros con suspendidos:";
-		
-        return $this->render('index', [
-			'searchModel' => $searchModel,
-			'mensaje' => $mensaje,
-			'pagination' => $pagination,
-			'fichasresumen' => $fichasresumen,
-			'evento'=>$evento->all(),
-		]);
-	}
-	
-	/**
-	* Muestra ficha resumen de los libros que son visibles y están suspendidos
-	*
-	**/
-	public function actionNuevos()
-	{
-		$searchModel = new LibrosSearch(); // Cambiar por fichas resumen mirar en las indicaciones
-		
-		$searModel = new LibrosResumenSearch();
-		$dataProvider = $searModel->search($this->request->queryParams);
-		
-		$pagination = new Pagination([
-			'defaultPageSize' => Configuraciones::getConfiguracion("numero_lineas_pagina"),
-			'totalCount' => $dataProvider->query->where(["visible" => 1, "crea_fecha" => "not null"])->count(),
-		]);
-		
-		$fichasresumen = $dataProvider->query->where(["visible" => 1, "crea_fecha" => "not null"])->orderBy(["crea_fecha" => SORT_ASC])->offset($pagination->offset)->limit($pagination->limit)->all();
-		
-		$evento=LibrosEventos::find()->where(['bloqueado'=>0]);
-		
-		$mensaje = "Libros más nuevos:";
-		
-        return $this->render('index', [
-			'searchModel' => $searchModel,
-			'mensaje' => $mensaje,
+			'pet' => $accion,
+			'linConf' => $linConf,
 			'pagination' => $pagination,
 			'fichasresumen' => $fichasresumen,
 			'evento'=>$evento->all(),
