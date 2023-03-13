@@ -57,7 +57,22 @@ class UsuarioLibros extends \yii\db\ActiveRecord
     }
 
     public function getFechaFormateada()
-{
+    {
     return Yii::$app->formatter->asDate($this->fecha_seguimiento, 'dd/MM/yyyy');
-}
+    }
+    public function getUsuarioname(){
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id']);
+    }// getAutores
+	
+	public function getUsuario(){
+		return $this->usuarioname->nombre;
+	}
+
+    public function getLibroname(){
+        return $this->hasOne(Libros::class, ['id' => 'local_id']);
+    }// getAutores
+	
+	public function getLibro(){
+		return $this->libroname->titulo;
+	}
 }

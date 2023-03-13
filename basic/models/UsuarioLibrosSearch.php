@@ -11,6 +11,8 @@ use app\models\UsuarioLibros;
  */
 class UsuarioLibrosSearch extends UsuarioLibros
 {
+    public $usuario;
+    public $libro;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +20,7 @@ class UsuarioLibrosSearch extends UsuarioLibros
     {
         return [
             [['id', 'usuario_id', 'local_id'], 'integer'],
-            [['fecha_seguimiento'], 'safe'],
+            [['fecha_seguimiento', 'usuario','libro'], 'safe'],
         ];
     }
 
@@ -43,6 +45,9 @@ class UsuarioLibrosSearch extends UsuarioLibros
         $query = UsuarioLibros::find();
 
         // add conditions that should always apply here
+        $query->joinWith(['usuarioname','libroname']);
+
+        
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -62,6 +67,8 @@ class UsuarioLibrosSearch extends UsuarioLibros
             'usuario_id' => $this->usuario_id,
             'local_id' => $this->local_id,
             'fecha_seguimiento' => $this->fecha_seguimiento,
+            'usuario' => $this->usuario,
+            'libro' => $this->libro,
         ]);
 
         return $dataProvider;

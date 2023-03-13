@@ -38,13 +38,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'usuario_id',
             
             //meter nombre de usuario
-           
+
+            [
+            'attribute' => 'usuario',
+            'label' => 'Usuario',
+
+            ],
             // 'local_id',
             [
                 'attribute' => 'local_id',
                 'label' => 'Libro ID',
 
             ],
+            [
+                'attribute' => 'libro',
+                'label' => 'Libro',
+
+            ],
+     
             'fecha_seguimiento',
             [
                 'class' => ActionColumn::className(),
