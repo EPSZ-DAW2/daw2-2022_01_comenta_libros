@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -141,14 +142,15 @@ class ConfiguracionesController extends Controller
     public function actionCopiaseguridad() {
 
         // Directorio que se desea copiar
-        $dir = Yii::getAlias('@app');
+        $dir = \Yii::getAlias('@app');
+        //die($dir);
 
         // Directorio donde se guardará la copia de seguridad
-        $backupDir = $dir .'\copia';
+        $backupDir = $dir .'/copia';
 
         // Excluir la carpeta 'exclude' de la copia de seguridad
-        $excludeDir = $dir.'\vendor';
-        $excludeDir2 = $dir.'\copia';
+        $excludeDir = $dir.'/vendor';
+        $excludeDir2 = $dir.'/copia';
 
         // Nombre del archivo de copia de seguridad
         $backupName = 'backup_' . date('Ymd_His') . '.zip';
@@ -164,15 +166,16 @@ class ConfiguracionesController extends Controller
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir), \RecursiveIteratorIterator::SELF_FIRST);
 
         foreach ($iterator as $file) {
+print_r($file);
             // Comprobar que el archivo o carpeta no es la carpeta a excluir
             if ( ($file->getPathname() != $excludeDir) && ($file->getPathname() != $excludeDir2)) {
                 // Comprobar si el archivo es un archivo regular
                 if ($file->isFile()) {
                     // Añadir el archivo al archivo ZIP
-                    $zip->addFile($file->getPathname(), $file->getSubPathname());
+                    $zip->addFile($file->getPathname(), $file->getPathname());
                 } elseif ($file->isDir()) {
                     // Añadir la carpeta al archivo ZIP
-                    $zip->addEmptyDir($file->getSubPathname());
+                    $zip->addEmptyDir($file->getPathname());
                 }
             }
         }
