@@ -243,7 +243,7 @@ class LibrosController extends Controller
 			
 			$nuevoComentario->save(false);
 			
-			if($nuevoComentario->comentario_id===0){
+			if($nuevoComentario->comentario_id==0){
 			$libro = Libros::findOne(['id' => $nuevoComentario->libro_id]);
 			$libro->totalVotos++;
 			$libro->sumaValores=$libro->sumaValores + $nuevoComentario->valoracion;
