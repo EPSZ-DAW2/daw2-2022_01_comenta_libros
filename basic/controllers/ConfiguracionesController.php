@@ -139,56 +139,114 @@ class ConfiguracionesController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-    public function actionCopiaseguridad() {
+     public function actionCopiaseguridad() {
 
-        // Directorio que se desea copiar
-        $dir = \Yii::getAlias('@app');
-        //die($dir);
+    //     // Directorio que se desea copiar
+    //     $dir = \Yii::getAlias('@app');
+    //     //die($dir);
 
-        // Directorio donde se guardará la copia de seguridad
-        $backupDir = $dir .'/copia';
+    //     // Directorio donde se guardará la copia de seguridad
+    //     $backupDir = $dir .'\copia';
 
-        // Excluir la carpeta 'exclude' de la copia de seguridad
-        $excludeDir = $dir.'/vendor';
-        $excludeDir2 = $dir.'/copia';
+    //     // Excluir la carpeta 'exclude' de la copia de seguridad
+    //     $Directorio = $dir.'\img';
 
-        // Nombre del archivo de copia de seguridad
-        $backupName = 'backup_' . date('Ymd_His') . '.zip';
+    //     // Nombre del archivo de copia de seguridad
+    //     $backupName = 'backup_' . date('Ymd_His') . '.zip';
 
-        // Crear la ruta completa al archivo de copia de seguridad
-        $backupPath = $backupDir . '/' . $backupName;
+    //     // Crear la ruta completa al archivo de copia de seguridad
+    //     $backupPath = $backupDir . '\\' . $backupName;
+    //     //echo $backupPath;
 
-        // Crear un objeto ZipArchive para crear el archivo ZIP
-        $zip = new \ZipArchive();
-        $zip->open($backupPath, \ZipArchive::CREATE);
+    //     // Crear un objeto ZipArchive para crear el archivo ZIP
+    //     $zip = new \ZipArchive();
+    //     $zip->open($backupPath, \ZipArchive::CREATE);
 
-        // Iterar sobre los archivos y carpetas del directorio
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir), \RecursiveIteratorIterator::SELF_FIRST);
+    //     // Iterar sobre los archivos y carpetas del directorio
+    //     $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir), \RecursiveIteratorIterator::SELF_FIRST);
 
-        foreach ($iterator as $file) {
-print_r($file);
-            // Comprobar que el archivo o carpeta no es la carpeta a excluir
-            if ( ($file->getPathname() != $excludeDir) && ($file->getPathname() != $excludeDir2)) {
-                // Comprobar si el archivo es un archivo regular
-                if ($file->isFile()) {
-                    // Añadir el archivo al archivo ZIP
-                    $zip->addFile($file->getPathname(), $file->getPathname());
-                } elseif ($file->isDir()) {
-                    // Añadir la carpeta al archivo ZIP
-                    $zip->addEmptyDir($file->getPathname());
-                }
-            }
-        }
+    //     foreach ($iterator as $file) {
+    //         echo "<br><br><br><br>";
 
-        // Cerrar el archivo ZIP
-        $zip->close();
+    //         //var_dump(basename($file->getPathname()));
+
+    //         $direccion= $file->getPathname();
+    //         //echo $direccion;
+    //         //echo $backupPath;
+    //         //echo $excludeDir;
+    //         // Comprobar que el archivo o carpeta no es la carpeta a excluir
+
+
+    //        // if (  && (basename($file->getPathname()) != ".") && (basename($file->getPathname()) != "..")) {
+    //         if ($direccion == $Directorio) {
+    //             // Comprobar si el archivo es un archivo regular
+    //             if ($file->isFile()) {
+    //                 // Añadir el archivo al archivo ZIP
+    //                 $zip->addFile($file->getPathname(), $file->getPathname());
+    //                 //var_dump($file->getPathname());
+    //             } elseif ($file->isDir()) {
+    //                 // Añadir la carpeta al archivo ZIP
+    //                 $zip->addEmptyDir($file->getPathname());
+    //             }
+    //         }
             
-            $searchModel = new ConfiguracionesSearch();
-            $dataProvider = $searchModel->search($this->request->queryParams);
+            
+    //     }
+
+    //     // Cerrar el archivo ZIP
+    //     $zip->close();
+            
+    //         $searchModel = new ConfiguracionesSearch();
+    //         $dataProvider = $searchModel->search($this->request->queryParams);
     
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
+    //         return $this->render('index', [
+    //             'searchModel' => $searchModel,
+    //             'dataProvider' => $dataProvider,
+    //         ]);
+    // }
+
+    // Directorio que se desea copiar
+$dir = \Yii::getAlias('@app');
+
+// Directorio donde se guardará la copia de seguridad
+$backupDir = $dir .'\copia';
+
+// Directorio que se desea comprimir
+$Directorio = $dir.'\img';
+
+// Nombre del archivo de copia de seguridad
+$backupName = 'backup_' . date('Ymd_His') . '.zip';
+
+// Crear la ruta completa al archivo de copia de seguridad
+$backupPath = $backupDir . '\\' . $backupName;
+
+// Crear un objeto ZipArchive para crear el archivo ZIP
+$zip = new \ZipArchive();
+$zip->open($backupPath, \ZipArchive::CREATE);
+
+// Iterar sobre los archivos y carpetas del directorio
+$iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($Directorio), \RecursiveIteratorIterator::SELF_FIRST);
+
+foreach ($iterator as $file) {
+    // Comprobar si el archivo es un archivo regular y si su dirección contiene el nombre del directorio que se quiere comprimir
+    if ($file->isFile() && strpos($file->getPathname(), $Directorio) !== false) {
+        // Añadir el archivo al archivo ZIP
+        $zip->addFile($file->getPathname(), $file->getPathname());
+    } elseif ($file->isDir()) {
+        // Añadir la carpeta al archivo ZIP
+        $zip->addEmptyDir($file->getPathname());
     }
 }
+
+// Cerrar el archivo ZIP
+$zip->close();
+
+$searchModel = new ConfiguracionesSearch();
+$dataProvider = $searchModel->search($this->request->queryParams);
+
+return $this->render('index', [
+    'searchModel' => $searchModel,
+    'dataProvider' => $dataProvider,
+]);
+     }
+    }
